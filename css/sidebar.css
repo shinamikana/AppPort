@@ -1,0 +1,33 @@
+.lefter{
+    position:absolute;
+    top:9%;
+    left:0;
+    width:150px;
+    height:91%;
+    border-right:1px solid black;
+}
+
+.lefter a{
+    line-height: 50px;
+    text-decoration: none;
+    color:black;
+    font-family: 'Kaisei Tokumin', serif;
+    font-size:20px;
+}
+
+.lefter ul{
+    margin-top:50px;
+}
+
+.lefter li{
+    font-family: 'Kaisei Tokumin', serif;
+}
+
+.righter{
+    position: absolute;
+    right:0;
+    top:9%;
+    width:100px;
+    height:91%;
+    
+}

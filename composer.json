@@ -1,0 +1,10 @@
+{
+    "require": {
+        "php":"8.0.10"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "heroku/heroku-buildpack-php": "*",
+        "panique/php-sass":"^1.0"
+    }
+}

@@ -1,0 +1,96 @@
+*{
+    box-sizing: border-box;
+}
+
+.bookWrapper{
+    height:auto;
+<<<<<<< HEAD
+=======
+    display:inline-block;
+>>>>>>> 45334808b9be55c56693b682be1604a6b8431e32
+    border:1px solid black;
+    width:50%;
+    float:left;
+}
+
+.bookmark{
+    margin:20px;
+}
+
+.bookmarking{
+    height:40px;
+    position: relative;
+    border:1px solid black;
+    margin:20px 0;
+    background-color: rgba(255,255,255,0.3);
+<<<<<<< HEAD
+=======
+    z-index:2;
+>>>>>>> 45334808b9be55c56693b682be1604a6b8431e32
+}
+
+.bookmarking a{
+    color:black;
+    text-decoration: none;
+    font-size:20px;
+    display:block;
+}
+
+#url{
+    font-size:15px;
+}
+
+#linkName{
+    font-size:15px;
+}
+
+#bookmarkTitle{
+    font-family: 'Kaisei Opti', serif;
+    margin-top:0;
+    border-bottom:1px solid black;
+    text-align: center;
+    font-weight:lighter;
+}
+
+#deltn1{
+    position: absolute;
+    bottom:0;
+    right:0;
+    height:40px;
+}
+
+.deload1{
+    display:none;
+    position: absolute;
+    right:10px;
+    top:5px;
+}
+
+#load1{
+    display:none;
+}
+
+.sliceUrl{
+    display:inline-block;
+    width:250px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+#submit1{
+    font-size:18px;
+    background-color: white;
+<<<<<<< HEAD
+=======
+}
+
+li{
+    list-style: none;
+}
+
+.bookUl{
+    height:40px;
+    width:600px;
+>>>>>>> 45334808b9be55c56693b682be1604a6b8431e32
+}
