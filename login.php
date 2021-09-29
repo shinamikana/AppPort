@@ -64,7 +64,7 @@ htmlspecialchars($message);
             <p>パスワード</p>
             <input type="password" name="pass">
             <br>
-            <button id="loginSubmit" class="g-recaptcha" data-sitekey="<?php echo getenv('APY_KEY_RE')?>" data-callback='onSubmit' data-action='submit'>ログイン</button>
+            <button id="loginSubmit" class="g-recaptcha" data-sitekey="<?php echo getenv('API_KEY_RE')?>" data-callback='onSubmit' data-action='submit'>ログイン</button>
         </form>
     </div>
     

@@ -70,7 +70,7 @@ htmlspecialchars($message);
             <p>パスワード(確認)</p>
             <input type="password" name="repass">
             <br>
-            <button id="loginSubmit" class="g-recaptcha" data-sitekey="<?php echo getenv('APY_KEY_RE')?>" data-callback='onSubmit' data-action='submit'>登録</button>
+            <button id="loginSubmit" class="g-recaptcha" data-sitekey="<?php echo getenv('API_KEY_RE')?>" data-callback='onSubmit' data-action='submit'>登録</button>
         </form>
     </div>
 

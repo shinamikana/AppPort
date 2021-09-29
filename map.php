@@ -14,17 +14,18 @@
     </main>
 
     <script
-      src="https://maps.googleapis.com/maps/api/js?key=<?php echo getenv('APY_KEY_MAP')?>&callback=initMap&v=weekly"
+      src="https://maps.googleapis.com/maps/api/js?key=<?php echo getenv('API_KEY_MAP')?>&callback=initMap&v=weekly"
       async
     ></script>
     <script>
     let map;
-    function initMap(){
-        map = new google.map.Map(document.getElementById('map'),{
-            center:{lat:-34.397,lang:150.644},
-            zoom:8,
-        });
-    }
+
+function initMap() {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: 35.675, lng: 139.74 },
+    zoom: 8,
+  });
+}
 </script>
 </body>
 </html>
