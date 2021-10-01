@@ -1,5 +1,10 @@
+<?php
+include('dateBase.php');
+include('mapData.php');
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -62,15 +67,14 @@ $(function(){
       type:'POST',
       url:'map.php',
       data:{'lat':lat,'lng':lng},
-      dataType:'json'
+      dataType:'json',
     }).done(function(data){
       alert('done');
     }).fail(function(HMLHttpRequest,status,e){
+      console.log('error number:'+ XMLHttpRequest +',status:'+ status +',thrown:'+ e);
       alert('fail');
     });
   }
-
-  console.log((new Blob(['aiueo'])).size);
 
 });
 

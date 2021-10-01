@@ -95,3 +95,11 @@ textarea{
 #deload{
     display:none;
 }
+
+#byte{
+    user-select: none;
+    position: relative;
+    bottom:60px;
+    left:300px;
+    color:gray;
+}

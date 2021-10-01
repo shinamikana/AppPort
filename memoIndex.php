@@ -2,7 +2,7 @@
 <h1 id="memoTitle">メモ</h1>
         <div class="column">
             <div class="delete">
-                <textarea type="text" name="memo" id="text" placeholder="本文"></textarea><button id="submit">送信</button><img src="/img/load.gif" alt="" id="load">
+                <textarea type="text" name="memo" id="text" placeholder="本文" onkeyup="byteCount()"></textarea><button id="submit">送信</button><img src="/img/load.gif" alt="" id="load"><span id="byte"></span>
             </div>
             <div id="memoWrapper">
                 
@@ -65,11 +65,13 @@
         });
 
         ///ブックマークをドラッグして持ってきた後に格納してホバーしたら表示する
-        $('.memo').find('.bookUl').hover(function(){
-            $(this).addClass('bookHover');
+
+        $('.memo').find('.bookUl').mouseover(function(){
             $(this).find('.bookLi').show();
-        },function(){
-            $(this)removeClass('bookHover');
+        });
+
+        $('.memo').find('.bookUl').mouseleave(function(){
+
             $(this).find('.bookLi').hide();
         });
 
