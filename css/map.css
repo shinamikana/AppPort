@@ -14,6 +14,7 @@ h1{
 
 .mapWrapper{
     border:1px solid black;
+    position: relative;
 }
 
 #map{
@@ -22,19 +23,119 @@ h1{
 }
 
 .showMark{
+    display: inline-block;
     border-top:1px solid black;
     border-bottom:1px solid black;
     font-size:18px;
     text-align: center;
     width:100%;
     background-color: rgba(255,255,255,0.7);
-    line-height: 18px;;
+    line-height: 18px;
 }
 
 .columnMark{
     margin:5px;
+    float: left;
+    margin-left:50px;
 }
 
 .markInput{
+    display:none;
+}
+
+.load{
+    height:300px;
+    width:100%;
+    background-color: rgba(255,255,255,.5);
+    position:absolute;
+    top:93px;
+    z-index:1;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+.mapDel{
+    -webkit-appearance: none;
+    float: right;
+    font-size:17px;
+    height:28px;
+    border-radius: 0px;
+    background-color:white;
+    box-shadow: 0px 0px;
+}
+
+.fa-edit,.fa-check{
+    position: relative;
+    top:5px;
+    left:10px;
+    float:left;
+    font-size:15px;
+    cursor: pointer;
+}
+
+.fa-check{
+    display: none;
+}
+
+.loadGif{
+    float: right;
+    margin-right:10px;
+    display: none;
+}
+
+.fa-bars{
+    float: right;
+    margin-right:10px;
+    font-size: 20px;
+    line-height: 25px;
+    border-radius: 50%;
+    width:30px;
+    cursor: pointer;
+}
+
+li{
+    list-style: none;
+}
+
+.mapEdit{
+    display: flex;
+    flex-flow: column;
+    float:right;
+    border:1px solid black;
+    margin:0;
+    padding:0;
+}
+
+.mapEdit li{
+    background-color:white;
+    cursor: pointer;
+    width:38px;
+    margin: 0;
+    padding:3px;
+    border-bottom:1px solid gray;
+    height:21px;
+    font-family: 'Kaisei Tokumin', serif;
+}
+
+.active{
+    display: block;
+}
+
+.markInput{
+    font-size: 18px;
+    border:0;
+    margin:5px;
+    float: left;
+    margin-left:50px;
+    border:1px solid black;
+}
+
+.markInput:focus{
+    outline:0;
+}
+
+.loadGif1{
+    float:left;
     display:none;
 }

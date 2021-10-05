@@ -13,9 +13,34 @@
     $mark -> close();
     $lat = $_POST['lat'];
     $lng = $_POST['lng'];
-    $data = array('lat' => $lat,'lng' => $lng);
+    $insertId = $mysqli -> insert_id;
+    $data = array('lat' => $lat,'lng' => $lng,'insert_id' => $insertId);
     header("Content-type: application/json; charset=UTF-8");
     echo json_encode($data);
     exit;
+    }
+
+    if(isset($_POST['mapDel'])){
+        $mapDel = $mysqli -> prepare('DELETE FROM map WHERE id = ?');
+        $mapDel -> bind_param('i',$_POST['mapDel']);
+        $mapDel -> execute();
+        $mapDel -> close();
+        $delId = $_POST['mapDel'];
+        $data = array('mapdel' => $delId);
+        header("Content-type: application/json; charset=UTF-8");
+        echo json_encode($data);
+        exit;
+    }
+
+    if(isset($_POST['mapEdit']) && isset($_POST['mapEditId'])){
+        $edit = $_POST['mapEdit'];
+        $editId = $_POST['mapEditId'];
+        $mapEdit = $mysqli -> prepare('UPDATE map set field_name = ? WHERE id = ?');
+        $mapEdit -> bind_param('si',$edit,$editId);
+        $mapEdit -> execute();
+        $data = array('mapEdit' => $edit ,'mapEditId' => $editId);
+        header('Content-type:application/json;charset=UTF-8');
+        echo json_encode($data);
+        exit;
     }
 ?>

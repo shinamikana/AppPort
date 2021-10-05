@@ -11,14 +11,18 @@ session_regenerate_id(TRUE);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/pass.css">
-    <title>App Port</title>
+    <title>パスワードアプリ</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
     <?php include('miniLogo.php'); ?>
-    <h1>パスワード生成</h1>
-    <input type="text" id="genPass"><button id="passBtn">生成する</button><button id="passKeep">保存する</button>
-    <div class="pass">
-
+    <div class="passWrapper">
+        <h1>パスワード生成</h1>
+        <input type="text" id="genPass">
+        <button id="passBtn">生成</button>
+        <button id="passKeep">保存</button>
+        <div class="pass">
+        </div>
     </div>
     
 
@@ -43,6 +47,24 @@ session_regenerate_id(TRUE);
             }
         });
 
+
+        $(()=>{
+            $('#passKeep').on('click',function(){
+                let passValue = $('#genPass').val();
+                $.ajax({
+                    type:'POST',
+                    url:'pass.php',
+                    data:{'pass':passValue},
+                    dataType:'json',
+                }).done(function(data){
+                    alert('done');
+                }).fail(function(HMLHttpRequest,status,e){
+                    console.log('error number:'+ XMLHttpRequest +',status:'+ status +',thrown:'+ e);
+                    alert('fail');
+                });
+            });
+
+        }):
     </script>
 </body>
 </html>
