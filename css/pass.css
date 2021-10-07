@@ -2,3 +2,57 @@ html,body{
     background-image: url(/img/background.jpg);
     background-size: cover;
 }
+
+.passWrapper{
+    text-align: center;
+    width:50%;
+    border:1px solid black;
+}
+
+.passWrapper h1{
+    font-family: 'Kaisei Opti', serif;
+    margin-top:0;
+    border-bottom:1px solid black;
+    text-align: center;
+    font-weight:lighter;
+}
+
+#genPass{
+    margin:0 40px;
+    text-align: center;
+    font-size:18px;
+    color:darkslategray;
+    display: inline;
+    background-color: rgba(255,255,255,0.8);
+}
+
+#passBtn,#passKeep,#passInput{
+    font-size:18px;
+}
+
+#passAfterView{
+    display:none;
+}
+
+.passColumn{
+    background-color: rgba(255,255,255,0.8);
+    border:1px solid black;
+    
+    width:100%;
+}
+
+.passColumn p{
+    margin:0;
+}
+
+#dummyPass1,#dummyPass2{
+    display: block;
+    font-size: 17px;
+    overflow: hidden;
+}
+
+#passTitle{
+    text-align: center;
+    font-size:18px;
+    width:300px;
+}

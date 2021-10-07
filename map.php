@@ -1,6 +1,11 @@
 <?php
-include('dateBase.php');
-include('mapData.php');
+  include('dateBase.php');
+  include('mapData.php');
+
+  if(empty($_SESSION['username']) ){
+    header('Location:login.php');
+  }
+
 ?>
 
 <!DOCTYPE html>

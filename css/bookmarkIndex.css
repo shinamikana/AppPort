@@ -3,11 +3,8 @@
 }
 
 .bookWrapper{
-    height:auto;
-<<<<<<< HEAD
-=======
+    height:100%;
     display:inline-block;
->>>>>>> 45334808b9be55c56693b682be1604a6b8431e32
     border:1px solid black;
     width:50%;
     float:left;
@@ -23,10 +20,7 @@
     border:1px solid black;
     margin:20px 0;
     background-color: rgba(255,255,255,0.3);
-<<<<<<< HEAD
-=======
     z-index:2;
->>>>>>> 45334808b9be55c56693b682be1604a6b8431e32
 }
 
 .bookmarking a{
@@ -81,8 +75,6 @@
 #submit1{
     font-size:18px;
     background-color: white;
-<<<<<<< HEAD
-=======
 }
 
 li{
@@ -92,5 +84,4 @@ li{
 .bookUl{
     height:40px;
     width:600px;
->>>>>>> 45334808b9be55c56693b682be1604a6b8431e32
 }

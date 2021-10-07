@@ -2,6 +2,10 @@
 include('dateBase.php');
 include('memoData.php');
 include('bookmarkData.php');
+
+if(empty($_SESSION['username']) ){
+    header('Location:login.php');
+}
 ?>
 
 <!DOCTYPE html>

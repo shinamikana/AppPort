@@ -1,6 +1,9 @@
 <?php
     include('dateBase.php');
     include('memoData.php'); 
+    if(empty($_SESSION['username']) ){
+        header('Location:login.php');
+    }
 ?>
 
 <!DOCTYPE html>
