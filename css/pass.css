@@ -18,12 +18,12 @@ html,body{
 }
 
 #genPass{
-    margin:0 40px;
+    margin:0 20px;
     text-align: center;
     font-size:18px;
-    color:darkslategray;
+    color:black;
     display: inline;
-    background-color: rgba(255,255,255,0.8);
+    background-color: rgba(255,255,255,0.7);
 }
 
 #passBtn,#passKeep,#passInput{
@@ -37,12 +37,16 @@ html,body{
 .passColumn{
     background-color: rgba(255,255,255,0.8);
     border:1px solid black;
-    
+    display: inline-block;
     width:100%;
+    line-height: 20px;
+    padding: 5px 0;
+    position: relative;
 }
 
-.passColumn p{
+.passColumn span{
     margin:0;
+    font-size: 20px;
 }
 
 #dummyPass1,#dummyPass2{
@@ -55,4 +59,40 @@ html,body{
     text-align: center;
     font-size:18px;
     width:300px;
+}
+
+.fa-copy{
+    font-size: 20px;
+    float: right;
+    margin-right:10px;
+    height:auto;
+    cursor: pointer;
+}
+
+#passInput{
+    display: none;
+}
+
+.passNameInput{
+    display:none;
+    font-size:20px;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.passNameInput:focus{
+    outline: none;
+}
+
+.passColumn .fa-edit{
+    display: block;
+    float:left;
+    margin-left:10px;
+    cursor: pointer;
+}
+
+.fa-check{
+    cursor: pointer;
+    margin-left:10px;
+    float:left;
 }

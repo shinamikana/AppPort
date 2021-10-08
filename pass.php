@@ -14,6 +14,7 @@ session_regenerate_id(TRUE);
     <link rel="stylesheet" href="/css/pass.css">
     <title>パスワードアプリ</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel ="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
 </head>
 <body>
     <?php include('miniLogo.php'); ?>
@@ -32,7 +33,7 @@ session_regenerate_id(TRUE);
         <div class="pass">
             <?php foreach($passResult as $pass): ?>
                 <div class="passColumn">
-                    <p><?php echo $pass['passName'] ?></p>
+                <i class="fas fa-check"></i><i class="fas fa-edit"></i><span class="passName"><?php echo $pass['passName'] ?></span><input type="text" class="passNameInput" value="<?php echo $pass['passName'] ?>" autofocus><i class="far fa-copy wcopy"></i><i class="fas fa-copy bcopy"></i><input type="hidden" value="<?php echo $pass['pass'] ?>" class="password">
                 </div>
                 <?php endforeach ?>
         </div>
@@ -105,6 +106,59 @@ session_regenerate_id(TRUE);
 
             $('#passInput').click(function(){
                 $('#passAfterView').show();
+                $('#genPass').css('background-color','black');
+            });
+
+            $('#passBtn').click(function(){
+                $('#passAfterView').hide();
+                $('#genPass').css('background-color','white');
+                $(this).text('パスワード再生成');
+                $('#passInput').show();
+            });
+
+            //font awesomeはcssの設定が面倒
+            //(displayはfaやfasで指定されている)(cssでdisplayを指定するならimportantが必要だがjQueryでshowできない)
+            //なので、jQueryで消した方が早い
+            $('.bcopy').hide();
+            $('.fa-check').hide();
+
+            $('.wcopy').click(function(){
+                let text = $(this).parent().find('.password').val();
+                $(this).append('<textarea id="clip">'+text+'</textarea>');
+                $('#clip').select();
+                document.execCommand('copy');
+                $('#clip').remove();
+                $(this).hide().delay(1000).queue(function(){
+                    $(this).show().dequeue();
+                });
+
+                $(this).parent().find('.bcopy').show().delay(1000).queue(function(){
+                    $(this).hide().dequeue();
+                });
+
+            });
+
+            $('.fa-edit').click(function(){
+                $(this).parent().find('.passName').hide();
+                $(this).parent().find('.passNameInput').show();
+                $(this).hide();
+                $(this).parent().find('.fa-check').show();
+            });
+
+            $('.fa-check').click(function(){
+                let $thisParent = $(this).parent();
+                let passName = $thisParent.find('.passName').text();
+                let passNameInput = $thisParent.find('.passNameInput').val();
+                if(passName == passNameInput){
+                    $thisParent.find('.passNameInput').hide();
+                    $thisParent.find('.passName').show();
+                    $(this).hide();
+                    $thisParent.find('.fa-edit').show();
+
+                }else{
+
+                }
+
             });
 
         });
