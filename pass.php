@@ -27,13 +27,13 @@ session_regenerate_id(TRUE);
         <button id="passBtn">パスワード生成</button>
         <button id="passInput">気に入った！</button>
         <div id="passAfterView">
-            <input type="text" id="passTitle" placeholder="サイト名ではなく識別できる名前">
+            <input type="text" id="passTitle" placeholder="サイト名は禁止です">
             <button id="passKeep">保存</button>
         </div>
         <div class="pass">
             <?php foreach($passResult as $pass): ?>
                 <div class="passColumn">
-                <i class="fas fa-check"></i><i class="fas fa-edit"></i><span class="passName"><?php echo $pass['passName'] ?></span><input type="text" class="passNameInput" value="<?php echo $pass['passName'] ?>" autofocus><i class="far fa-copy wcopy"></i><i class="fas fa-copy bcopy"></i><input type="hidden" value="<?php echo $pass['pass'] ?>" class="password">
+                <i class="fas fa-check"></i><i class="fas fa-edit"></i><span class="passName"><?php echo $pass['passName'] ?></span><input type="text" class="passNameInput" value="<?php echo $pass['passName'] ?>" autofocus><i class="far fa-copy wcopy"></i><i class="fas fa-copy bcopy"></i><input type="hidden" value="<?php echo $pass['pass'] ?>" class="password"><input type="hidden" value="<?php echo $pass['id'] ?>" class="passId">
                 </div>
                 <?php endforeach ?>
         </div>
@@ -149,6 +149,7 @@ session_regenerate_id(TRUE);
                 let $thisParent = $(this).parent();
                 let passName = $thisParent.find('.passName').text();
                 let passNameInput = $thisParent.find('.passNameInput').val();
+                let passId = $thisParent.find('.passId').val();
                 if(passName == passNameInput){
                     $thisParent.find('.passNameInput').hide();
                     $thisParent.find('.passName').show();
@@ -156,7 +157,17 @@ session_regenerate_id(TRUE);
                     $thisParent.find('.fa-edit').show();
 
                 }else{
-
+                    $.ajax({
+                        type:'POST',
+                        url:'pass.php',
+                        data:{'passUp':passNameInput,'passId':passId},
+                        dataType:'json'
+                    }).done(function(data){
+                        alert('done');
+                    }).fail(function(XMLHttpRequest,status,e){
+                        console.log('error number:'+ XMLHttpRequest +',status:'+ status +',thrown:'+ e);
+                        alert('fail');
+                    });
                 }
 
             });

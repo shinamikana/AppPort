@@ -17,4 +17,12 @@ if(isset($_POST['pass']) && isset($_POST['passTitle'])){
     
 }
 
+if(isset($_POST['passUp']) && isset($_POST['passId'])){
+    $passUp = $_POST['passUp'];
+    $passId = $_POST['passId'];
+    $passNameUp = $mysqli -> prepare('UPDATE pass SET passName = ? WHERE id = ?');
+    $passNameUp -> bind_param('si',$passUp,$passId);
+    $passNameUp -> execute();
+}
+
 ?>
