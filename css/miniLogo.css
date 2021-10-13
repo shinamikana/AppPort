@@ -12,3 +12,8 @@
     padding:0 10px;
     line-height:35px;
 }
+
+#info{
+    float: right;
+    border-left:1px solid black;
+}

@@ -20,20 +20,23 @@ session_regenerate_id(TRUE);
     <?php include('miniLogo.php'); ?>
     <div class="passWrapper">
         <h1>パスワード生成</h1>
+        <div id="passError">
+            <p id="passErrorText"></p>
+        </div>
         <span id="dummyPass1">ここはダミーです</span>
         <span id="dummyLeft">ダミーです</span><p id="genPass">生成ボタンを押してください</p><span id="dummyRight">ダミーです</span>
         <span id="dummyPass2">ここはダミーです</span>
         <br>
-        <button id="passBtn">パスワード生成</button>
+        <input type="text" id="passLen" value="12" autofocus><span id="lenSpan">桁</span><button id="passBtn">パスワード生成</button>
         <button id="passInput">気に入った！</button>
         <div id="passAfterView">
-            <input type="text" id="passTitle" placeholder="サイト名は禁止です">
+            <input type="text" id="passTitle" placeholder="パスワード名（サイト名は禁止）">
             <button id="passKeep">保存</button>
         </div>
         <div class="pass">
             <?php foreach($passResult as $pass): ?>
                 <div class="passColumn">
-                <i class="fas fa-check"></i><i class="fas fa-edit"></i><span class="passName"><?php echo $pass['passName'] ?></span><input type="text" class="passNameInput" value="<?php echo $pass['passName'] ?>" autofocus><i class="far fa-copy wcopy"></i><i class="fas fa-copy bcopy"></i><input type="hidden" value="<?php echo $pass['pass'] ?>" class="password"><input type="hidden" value="<?php echo $pass['id'] ?>" class="passId">
+                <i class="fas fa-check"></i><i class="fas fa-edit"></i><span class="passName"><?php echo $pass['passName'] ?></span><input type="text" class="passNameInput" value="<?php echo $pass['passName'] ?>" autofocus><i class="far fa-copy wcopy"></i><i class="fas fa-copy bcopy"></i><input type="hidden" value="<?php echo $pass['pass'] ?>" class="password"><input type="hidden" value="<?php echo $pass['id'] ?>" class="passId"><i class="fas fa-bars"></i><ul class="passEdit"><li class="passDel">削除</li></ul>
                 </div>
                 <?php endforeach ?>
         </div>
@@ -44,8 +47,7 @@ session_regenerate_id(TRUE);
         let str = 'abcdefghijklmnopqrstuvxwyz';
         let num = '1234567890';
         let sym = '!#$%&?()';
-        let string = str + str.toUpperCase() + num + sym;
-        let len = 12;
+        let string = str + str.toUpperCase() + num + sym + sym;
         let dummyLen = 50;
         let pass = '';
         let passBtn = document.getElementById('passBtn');
@@ -54,54 +56,91 @@ session_regenerate_id(TRUE);
         let dummyPassText2 = document.getElementById('dummyPass2');
         let dummyPassTextLeft = document.getElementById('dummyLeft');
         let dummyPassTextRight = document.getElementById('dummyRight');
+        let passLen = document.getElementById('passLen');
+        let passErrorText = document.getElementById('passErrorText');
         let dummyPass1 = '';
         let dummyPass2 = '';
         let dummyPassLeft = '';
         let dummyPassRight = '';
+        let len = 12;
         passBtn.addEventListener('click',function(){
-            genPass.innerText = '';
-            pass = '';
-            dummyPass1 = '';
-            dummyPass2 = '';
-            dummyPassLeft = '';
-            dummyPassRight = '';
-            for(let i=0;i < len;i++){
-                pass += string.charAt(Math.floor(Math.random() * string.length));
-                dummyPassLeft += string.charAt(Math.floor(Math.random() * string.length));
-                dummyPassRight += string.charAt(Math.floor(Math.random() * string.length));
-                if(i < len){
-                genPass.innerText = pass;
-                dummyPassTextLeft.innerText = dummyPassLeft;
-                dummyPassTextRight.innerText = dummyPassRight;
+            len = passLen.value;
+            console.log(len);
+            if(isNaN(len)){
+                passErrorText.innerText = '半角数字で入力してください！';
+            }else{
+                passErrorText.innerText = '';
+                genPass.innerText = '';
+                pass = '';
+                dummyPass1 = '';
+                dummyPass2 = '';
+                dummyPassLeft = '';
+                dummyPassRight = '';
+                for(let i=0;i < len;i++){
+                    pass += string.charAt(Math.floor(Math.random() * string.length));
+                    dummyPassLeft += string.charAt(Math.floor(Math.random() * string.length));
+                    dummyPassRight += string.charAt(Math.floor(Math.random() * string.length));
+                    if(i < len){
+                    genPass.innerText = pass;
+                    dummyPassTextLeft.innerText = dummyPassLeft;
+                    dummyPassTextRight.innerText = dummyPassRight;
+                    }
                 }
-            }
 
-            for(let i=0;i<dummyLen;i++){
-                dummyPass1 += string.charAt(Math.floor(Math.random() * string.length));
-                dummyPass2 += string.charAt(Math.floor(Math.random() * string.length));
-                if(i < dummyLen){
-                    dummyPassText1.innerText = dummyPass1;
-                    dummyPassText2.innerText = dummyPass2;
+                for(let i=0;i<dummyLen;i++){
+                    dummyPass1 += string.charAt(Math.floor(Math.random() * string.length));
+                    dummyPass2 += string.charAt(Math.floor(Math.random() * string.length));
+                    if(i < dummyLen){
+                        dummyPassText1.innerText = dummyPass1;
+                        dummyPassText2.innerText = dummyPass2;
+                    }
                 }
             }
         });
 
 
         $(()=>{
+            $('.passEdit').slideUp(0);
+
+            function slideToggle(){
+                $('.fa-bars').click(function(){
+                $(this).parent().find('.passEdit').slideToggle(200);
+                });
+            }
+
+            let $error = $('#passErrorText');
+            let $dbError = 'データベースに問題があります！<br />管理人に問い合わせるか気長に待っていてください！';
+            
+
+            slideToggle();
+
             $('#passKeep').on('click',function(){
                 let passText = $('#genPass').text();
                 let passTitle = $('#passTitle').val();
-                $.ajax({
-                    type:'POST',
-                    url:'pass.php',
-                    data:{'pass':passText,'passTitle':passTitle},
-                    dataType:'json',
-                }).done(function(data){
-                    alert('done');
-                }).fail(function(HMLHttpRequest,status,e){
-                    console.log('error number:'+ XMLHttpRequest +',status:'+ status +',thrown:'+ e);
-                    alert('fail');
-                });
+                if(passTitle == ''){
+                    $error.text('パスワード名を入力してください！');
+                }else{
+                    $error.text('');
+                    $.ajax({
+                        type:'POST',
+                        url:'pass.php',
+                        data:{'pass':passText,'passTitle':passTitle},
+                        dataType:'json',
+                    }).done(function(data){
+                        $('.pass').prepend('<div class="passColumn"><i class="fas fa-check"></i><i class="fas fa-edit"></i><span class="passName">'+data.passTitle+'</span><input type="text" class="passNameInput" value="'+data.passTitle+'" autofocus><i class="far fa-copy wcopy"></i><i class="fas fa-copy bcopy"></i><input type="hidden" value="'+data.pass+'" class="password"><input type="hidden" value="'+data.insertId+'" class="passId"><i class="fas fa-bars"></i><ul class="passEdit"><li class="passDel">削除</li></ul></div>');
+                        $('.bcopy').hide();
+                        $('.fa-check').hide();
+                        $('.passEdit').slideUp(0);
+                        slideToggle();
+                        passCopy();
+                        passEdit();
+                        passCheck();
+                        passDel();
+                    }).fail(function(HMLHttpRequest,status,e){
+                        console.log('error number:'+ XMLHttpRequest +',status:'+ status +',thrown:'+ e);
+                        $error.text($dbError);
+                    });
+                }
             });
 
             $('#passInput').click(function(){
@@ -122,55 +161,85 @@ session_regenerate_id(TRUE);
             $('.bcopy').hide();
             $('.fa-check').hide();
 
-            $('.wcopy').click(function(){
-                let text = $(this).parent().find('.password').val();
-                $(this).append('<textarea id="clip">'+text+'</textarea>');
-                $('#clip').select();
-                document.execCommand('copy');
-                $('#clip').remove();
-                $(this).hide().delay(1000).queue(function(){
-                    $(this).show().dequeue();
+            const passCopy = function(){
+                $('.wcopy').click(function(){
+                    let text = $(this).parent().find('.password').val();
+                    $(this).append('<textarea id="clip">'+text+'</textarea>');
+                    $('#clip').select();
+                    document.execCommand('copy');
+                    $('#clip').remove();
+                    $(this).hide().delay(1000).queue(function(){
+                        $(this).show().dequeue();
+                    });
+
+                    $(this).parent().find('.bcopy').show().delay(1000).queue(function(){
+                        $(this).hide().dequeue();
+                    });
+
                 });
+            }
+            passCopy();
 
-                $(this).parent().find('.bcopy').show().delay(1000).queue(function(){
-                    $(this).hide().dequeue();
-                });
-
-            });
-
-            $('.fa-edit').click(function(){
-                $(this).parent().find('.passName').hide();
-                $(this).parent().find('.passNameInput').show();
-                $(this).hide();
-                $(this).parent().find('.fa-check').show();
-            });
-
-            $('.fa-check').click(function(){
-                let $thisParent = $(this).parent();
-                let passName = $thisParent.find('.passName').text();
-                let passNameInput = $thisParent.find('.passNameInput').val();
-                let passId = $thisParent.find('.passId').val();
-                if(passName == passNameInput){
-                    $thisParent.find('.passNameInput').hide();
-                    $thisParent.find('.passName').show();
+            const passEdit = function(){
+                $('.fa-edit').click(function(){
+                    $(this).parent().find('.passName').hide();
+                    $(this).parent().find('.passNameInput').show();
                     $(this).hide();
-                    $thisParent.find('.fa-edit').show();
+                    $(this).parent().find('.fa-check').show();
+                });
+            }
+            passEdit();
 
-                }else{
+            const passCheck = function(){
+                $('.fa-check').click(function(){
+                    let $thisParent = $(this).parent();
+                    let passName = $thisParent.find('.passName').text();
+                    let passNameInput = $thisParent.find('.passNameInput').val();
+                    let passId = $thisParent.find('.passId').val();
+                    if(passName == passNameInput){
+                        $thisParent.find('.passNameInput').hide();
+                        $thisParent.find('.passName').show();
+                        $(this).hide();
+                        $thisParent.find('.fa-edit').show();
+                    }else{
+                        $.ajax({
+                            type:'POST',
+                            url:'pass.php',
+                            data:{'passUp':passNameInput,'passId':passId},
+                            dataType:'json'
+                        }).done(function(data){
+                            $thisParent.find('.passName').text(passNameInput);
+                            $thisParent.find('.passName').show();
+                            $thisParent.find('.passNameInput').hide();
+                            $thisParent.find('.fa-edit').show();
+                            $thisParent.find('.fa-check').hide();
+                        }).fail(function(XMLHttpRequest,status,e){
+                            $error.text($dbError);
+                        });
+                    }
+                });
+            }
+            passCheck();
+
+            const passDel = function(){
+                $('.passDel').click(function(){
+                    let $this = $(this);
+                    let $thisParent = $(this).parent();
+                    let passDel = $thisParent.parent().find('.passId').val();
+                    $thisParent.parent().css('opacity','0.5');
                     $.ajax({
                         type:'POST',
                         url:'pass.php',
-                        data:{'passUp':passNameInput,'passId':passId},
+                        data:{'passDel':passDel},
                         dataType:'json'
                     }).done(function(data){
-                        alert('done');
+                        $thisParent.parent().remove();
                     }).fail(function(XMLHttpRequest,status,e){
-                        console.log('error number:'+ XMLHttpRequest +',status:'+ status +',thrown:'+ e);
-                        alert('fail');
+                        $error.text($dbError);
                     });
-                }
-
-            });
+                });
+            }
+            passDel();
 
         });
     </script>

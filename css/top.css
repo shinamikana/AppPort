@@ -12,8 +12,10 @@ li {
   list-style: none;
 }
 #logo {
-  height: 9%;
+  position: relative;
+  z-index:1;
   width: 100%;
+  background-color:whitesmoke;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
@@ -81,4 +83,13 @@ li {
   padding: 40px 0;
   line-height: 30px !important;
   display: block;
+}
+
+#info{
+  font-size:15px;
+  position:absolute;
+  right:20px;
+  top:0;
+  padding-left:20px;
+  border-left:1px solid black;
 }

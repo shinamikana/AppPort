@@ -21,7 +21,7 @@
 <body>
     <?php include('sidebar.php'); ?>
 
-    <h1 id="logo"><?php if(isset($_SESSION['username'])): ?><span>こんにちは、<?php echo $_SESSION['username'] ?>!</span><?php endif ?><a href="index.php">AppPort</a></h1>
+    <h1 id="logo"><?php if(isset($_SESSION['username'])): ?><span>こんにちは、<?php echo $_SESSION['username'] ?>!</span><?php endif ?><a href="index.php">AppPort</a><a href="info.php" id="info">お問い合わせ</a></h1>
     
         <ul>
         </ul>

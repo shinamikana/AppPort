@@ -8,4 +8,5 @@
 
 <div class="miniLogo">
     <a href="index.php">AppPort</a>
+    <a href="info.php" id="info">お問い合わせ</a>
 </div>

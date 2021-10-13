@@ -1,0 +1,26 @@
+html,body{
+    background-image: url(/img/background.jpg);
+    background-size: cover;
+}
+
+h1{
+    margin:0;
+    padding:0;
+    border-bottom:1px solid black;
+}
+
+main{
+    font-family: 'Kaisei Tokumin', serif;
+    border:1px solid black;
+    width:70%;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:30px;
+    text-align: center;
+    font-size:18px;
+    padding-bottom:50px;
+}
+
+#pHead{
+    margin-top:50px;
+}

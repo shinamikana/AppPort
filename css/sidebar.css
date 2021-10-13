@@ -1,9 +1,9 @@
 .lefter{
     position:absolute;
-    top:9%;
+    bottom:0;
     left:0;
     width:150px;
-    height:91%;
+    height:100%;
     border-right:1px solid black;
 }
 
