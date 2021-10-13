@@ -51,22 +51,25 @@ htmlspecialchars($message);
 <body>
     <?php include('miniLogo.php'); ?>
 
-    <?php if($message !== ''): ?>
-        <div class="error">
-            <p><?php echo $message ?></p>
-        </div>
-    <?php endif ?>
+    <main>
+        <h1>ログイン</h1>
 
-    <div class="form">
-        <form action="login.php" method="POST" id="loginForm">
-            <p>メールアドレス</p>
-            <input type="text" name="email" value="<?php if(isset($_POST['email'])){ echo $_POST['email']; }?>">
-            <p>パスワード</p>
-            <input type="password" name="pass">
-            <br>
-            <button id="loginSubmit" class="g-recaptcha" data-sitekey="<?php echo getenv('API_KEY_RE')?>" data-callback='onSubmit' data-action='submit'>ログイン</button>
-        </form>
-    </div>
+        <?php if($message !== ''): ?>
+            <div class="error">
+                <p><?php echo $message ?></p>
+            </div>
+        <?php endif ?>
+        <div class="form">
+            <form action="login.php" method="POST" id="loginForm">
+                <p>メールアドレス</p>
+                <input type="text" name="email" value="<?php if(isset($_POST['email'])){ echo $_POST['email']; }?>">
+                <p>パスワード</p>
+                <input type="password" name="pass">
+                <br>
+                <button id="loginSubmit" class="g-recaptcha" data-sitekey="<?php echo getenv('API_KEY_RE')?>" data-callback='onSubmit' data-action='submit'>ログイン</button>
+            </form>
+        </div>
+    </main>
     
 <script>
     function onSubmit(token) {

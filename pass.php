@@ -3,6 +3,10 @@ include('dateBase.php');
 include('passData.php');
 session_regenerate_id(TRUE);
 
+if(empty($_SESSION['username']) ){
+    header('Location:login.php');
+  }
+
 ?>
 
 <!DOCTYPE html>

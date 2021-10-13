@@ -53,29 +53,36 @@ htmlspecialchars($message);
 <body>
     <?php include('miniLogo.php'); ?>
 
-    <?php if($message !== ''): ?>
-        <div class="error">
-            <p><?php echo $message ?></p>
-        </div>
-    <?php endif ?>
+    
 
-    <div class="form">
-        <form action="signup.php" method="POST" id="signupForm">
-            <p>ユーザー名</p>
-            <input type="text" name="username" value="<?php if(isset($_POST['username'])){echo $_POST['username'];} ?>">
-            <p>メールアドレス</p>
-            <input type="text" name="email" value="<?php if(isset($_POST['email'])){echo $_POST['email'];} ?>">
-            <p>パスワード</p>
-            <input type="password" name="pass">
-            <p>パスワード(確認)</p>
-            <input type="password" name="repass">
-            <br>
-            <button id="loginSubmit" class="g-recaptcha" data-sitekey="<?php echo getenv('API_KEY_RE')?>" data-callback='onSubmit' data-action='submit'>登録</button>
-        </form>
-    </div>
+    <main>
+        <h1>新規登録</h1>
+
+        <?php if($message !== ''): ?>
+            <div class="error">
+                <p><?php echo $message ?></p>
+            </div>
+        <?php endif ?>
+
+        <div class="form">
+            <form action="signup.php" method="POST" id="signupForm">
+                <p>ユーザー名</p>
+                <input type="text" name="username" value="<?php if(isset($_POST['username'])){echo $_POST['username'];} ?>">
+                <p>メールアドレス</p>
+                <input type="text" name="email" value="<?php if(isset($_POST['email'])){echo $_POST['email'];} ?>">
+                <p>パスワード</p>
+                <input type="password" name="pass">
+                <p>パスワード(確認)</p>
+                <input type="password" name="repass">
+                <br>
+                <button id="loginSubmit" class="g-recaptcha" data-sitekey="<?php echo getenv('API_KEY_RE')?>" data-callback='onSubmit' data-action='submit'>新規登録</button>
+            </form>
+        </div>
+
+    </main>
 
     <script>
-        function(token){
+        function onSubmit(token){
             document.getElementById("signupForm").submit();
         }
     </script>

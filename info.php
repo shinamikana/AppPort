@@ -34,19 +34,18 @@ if(!count($_POST) == 0){
             $mail -> send();
             header('Location:infoDone.php');
         }catch(Exception $e){
-            $error = '問い合わせもエラーのようです。。。。世界が終わったの？';
+            $error = '';
+            if(empty($_POST['username'])){
+                $error = '<p>ユーザーネームが入力されていません！</p>';
+            }
+            if(empty($_POST['subject'])){
+                $error = $error.'<p>件名が入力されていません！</p>';
+            }
+            if(empty($_POST['text'])){
+                $error = $error.'<p>本文が入力されていません！</p>';
+            }
         }
     }else{
-        if(empty($_POST['username'])){
-            $error = '<p>ユーザーネームが入力されていません！</p>';
-        }
-        if(empty($_POST['subject'])){
-            $error = $error.'<p>件名が入力されていません！</p>';
-        }
-    
-        if(empty($_POST['text'])){
-            $error = $error.'<p>本文が入力されていません！</p>';
-        }
     }
 }else{
     $error = '';
@@ -64,15 +63,19 @@ if(!count($_POST) == 0){
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kaisei+Tokumin:wght@500&display=swap" rel="stylesheet">
+    <script src="https://www.google.com/recaptcha/api.js"></script>
 </head>
 <body>
     <?php include('miniLogo.php') ?>
     <main>
     <h1>お問い合わせ</h1>
-    <div class="error">
-        <p id="infoError"><?php echo $error ?></p>
-    </div>
-        <form action="info.php" method="POST">
+    <?php if($error !== ''): ?>
+        <div class="error">
+            <p class="infoError"><?php echo $error ?></p>
+        </div>
+    <?php endif ?>
+    
+        <form action="info.php" method="POST" id="infoForm">
             <p>ユーザーネーム</p>
             <input type="text" id="username" name="username" value="<?php if(isset($_POST['username'])){ echo $_POST['username'];} ?>">
             <p>件名</p>
@@ -80,8 +83,13 @@ if(!count($_POST) == 0){
             <p>お問い合わせ内容</p>
             <textarea name="text" cols="30" rows="10" id="text"><?php if(isset($_POST['text'])){ echo $_POST['text'];} ?></textarea>
             <br>
-            <input type="submit" id="button">
+            <input type="submit" id="button" class="g-recaptcha" data-sitekey="<?php echo getenv('API_KEY_RE')?>" data-action='submit' data-callback='onSubmit'>
         </form>
     </main>
+    <script>
+        function onSubmit(token){
+            document.getElementById('infoForm').submit();
+        }
+    </script>
 </body>
 </html>
