@@ -5,21 +5,18 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 if(!count($_POST) == 0){
     
-    
-
-    if(isset($_POST['username']) && isset($_POST['subject']) && isset($_POST['text'])){
+    if(!empty($_POST['username']) && !empty($_POST['subject']) && !empty($_POST['text'])){
         $username = htmlspecialchars($_POST['username'],ENT_QUOTES);
-        $subject = htmlspecialchars($_POST['subject'],ENT_QUOTES);
+        $subjectText = htmlspecialchars($_POST['subject'],ENT_QUOTES);
         $text = htmlspecialchars($_POST['text'],ENT_QUOTES);
         $pass = getenv('MAIL_PASSWORD');
         $to = getenv('MAIL_TO');
         $from = getenv('MAIL_FROM');
-        $subject = 'AppPortだけど'.$username.'さんから'.$subject.'についてのお問い合わせです';
+        $subject = 'AppPortだけど'.$username.'さんから'.$subjectText.'についてのお問い合わせです';
         mb_language('Japanese');
         mb_internal_encoding('UTF-8');
         require 'vendor/autoload.php';
         $mail = new PHPMailer(true);
-        try{
             $mail -> isSMTP();
             $mail -> Host = 'smtp.gmail.com';
             $mail -> SMTPAuth = true;
@@ -31,21 +28,24 @@ if(!count($_POST) == 0){
             $mail -> addAddress($to,mb_encode_mimeheader('shinami','ISO-2022-JP'));
             $mail -> Subject = mb_encode_mimeheader($subject,'ISO-2022-JP');
             $mail -> Body = mb_convert_encoding($text,'JIS','UTF-8');
-            $mail -> send();
-            header('Location:infoDone.php');
-        }catch(Exception $e){
-            $error = '';
-            if(empty($_POST['username'])){
-                $error = '<p>ユーザーネームが入力されていません！</p>';
+            if($mail -> send()){
+                header('Location:infoDone.php');
+            }else{
+                $error = '<p>サイトかメールアカウントに何かあったようです。</p>';
+                $error = $error.'<p>お手数ですが<a href="https://twitter.com/tunanikan">こちら</a>のツイッターまで至急ご連絡ください。</p>';
             }
-            if(empty($_POST['subject'])){
-                $error = $error.'<p>件名が入力されていません！</p>';
-            }
-            if(empty($_POST['text'])){
-                $error = $error.'<p>本文が入力されていません！</p>';
-            }
-        }
+            
     }else{
+        $error = '';
+        if(empty($_POST['username'])){
+            $error = '<p>ユーザーネームが入力されていません！</p>';
+        }
+        if(empty($_POST['subject'])){
+            $error = $error.'<p>件名が入力されていません！</p>';
+        }
+        if(empty($_POST['text'])){
+            $error = $error.'<p>本文が入力されていません！</p>';
+        }
     }
 }else{
     $error = '';

@@ -36,6 +36,7 @@ input:focus{
 
 input{
     letter-spacing: 1px;
+    border:1px solid gray;
 }
 
 textarea{

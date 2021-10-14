@@ -86,7 +86,6 @@ $(function(){
       dataType:'json',
     }).done(function(data){
       $this.parent().parent().remove();
-      $('.mapEdit').show();
       $('.loadGif').hide();
       $('.fa-bars').show();
       $('.fa-edit').show();

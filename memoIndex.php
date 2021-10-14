@@ -12,7 +12,7 @@
                             <p id="mainText"><span><?php echo h($memo['text']) ?></span></p>
                             <p id="date"><?php echo h($memo['date']) ?></p>
                             <button type="submit" value="<?php echo $memo['id'] ?>" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload">
-                            <ul class="bookUl"><div class="container"></div></ul>
+                            <ul class="dragUl">ここにドロップ</ul>
                         </div>
                     <?php endforeach ?>
                 <?php endif ?>
@@ -62,17 +62,6 @@
                 $('#memoWrapper').find('p').remove();
                 
             });
-        });
-
-        ///ブックマークをドラッグして持ってきた後に格納してホバーしたら表示する
-
-        $('.memo').find('.bookUl').mouseover(function(){
-            $(this).find('.bookLi').show();
-        });
-
-        $('.memo').find('.bookUl').mouseleave(function(){
-
-            $(this).find('.bookLi').hide();
         });
 
     });

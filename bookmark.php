@@ -23,8 +23,9 @@ if(empty($_SESSION['username']) ){
     <link href="https://fonts.googleapis.com/css2?family=Kaisei+Tokumin:wght@500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Kaisei+Opti:wght@700&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
+    
 </head>
 <body>
     <?php include('miniLogo.php'); ?>
@@ -38,9 +39,16 @@ if(empty($_SESSION['username']) ){
         //ブックマークのドラッグ＆ドロップ処理
         $(()=>{
             $('.bookUl').sortable({
+                connectWith:'.dragUl',
+                placeholder:'memoDiv'
+            });
+
+            $('.dragUl').sortable({
                 connectWith:'.bookUl',
                 placeholder:'memoDiv'
             });
+
+            $('.bookUl').disableSelection();
         });
     </script>
 </body>
