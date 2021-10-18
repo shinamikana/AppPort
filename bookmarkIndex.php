@@ -19,7 +19,7 @@
                     <li class="bookLi"></li>
                     <?php if(isset($showResult)): ?>
                         <?php foreach($showResult as $show): ?>
-                            <li class="bookLi">
+                            <li class="bookLi" id="<?php echo $show['id'] ?>">
                             <div class="bookmarking">
                                 <a href="<?php echo h($show['link']) ?>" target="_blank" rel="noopener noreferrer">　<?php echo h($show['link_name']) ?>　　　　　<span class="sliceUrl"><?php echo mb_strimwidth(h($show['link']),0,25,'...') ?></span></a><button id="deltn1" value="<?php echo h($show['id']) ?>">削除</button><img src="/img/load.gif" alt="" class="deload1">
                             </div>

@@ -11,8 +11,15 @@
                         <div class="memo">
                             <p id="mainText"><span><?php echo h($memo['text']) ?></span></p>
                             <p id="date"><?php echo h($memo['date']) ?></p>
-                            <button type="submit" value="<?php echo $memo['id'] ?>" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload">
-                            <ul class="dragUl">ここにドロップ</ul>
+                            <button type="submit" value="<?php echo $memo['memo_id'] ?>" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload"><input type="hidden" value="<?php echo $memo['memo_id'] ?>" class="memoId">
+                            <ul class="dragUl">ここにドロップ
+                                <?php if($memo['link_name'] != ''): ?>
+                                    <li class="bookLi" id="<?php echo $memo['id'] ?>">
+                                        <div class="bookmarking">
+                                            <a href="<?php echo $memo['link'] ?>" target="_blank" rel="noopener noreferrer">　<?php echo $memo['link_name'] ?>　　　　　<span class="sliceUrl"><?php echo mb_strimwidth($memo['link'],0,25,'...') ?></span></a><button id="deltn1" value="<?php echo $memo['id'] ?>">削除</button><img src="/img/load.gif" alt="" class="deload1">
+                                        </div>
+                                    </li>
+                                <?php endif ?></ul>
                         </div>
                     <?php endforeach ?>
                 <?php endif ?>

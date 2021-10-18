@@ -1,0 +1,1 @@
+SELECT * FROM bookmark LEFT JOIN book_memo ON bookmark.id = book_memo.book_id LEFT JOIN memo ON book_memo.memo_id = memo.id WHERE bookmark.user_id = ? ORDER BY bookmark.id DESC

@@ -66,6 +66,7 @@ html,body{
     position: absolute;
     top:0;
     right:0;
+    cursor: pointer;
 }
 
 button{
@@ -96,6 +97,7 @@ textarea{
     position: relative;
     top:-40px;
     left:5px;
+    cursor: pointer;
 }
 
 #load{
@@ -141,6 +143,7 @@ textarea{
     margin-bottom:30px;
     padding: 0;
     border:1px solid gray;
+    text-align: center;
 }
 
 .bookHover{

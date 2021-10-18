@@ -30,4 +30,17 @@ $showResult = $show -> get_result();
         echo json_encode($data);
         exit;
     }
+
+    if(isset($_POST['memoId']) && isset($_POST['dragId'])){
+        $memoId = $_POST['memoId'];
+        $dragId = $_POST['dragId'];
+        $mbDrag = $mysqli -> prepare('INSERT INTO book_memo(memo_id,book_id) VALUES(?,?)');
+        $mbDrag -> bind_param('ii',$memoId,$dragId);
+        $mbDrag -> execute();
+        $mbDrag -> close();
+        $data = array('memoId' => $memoId,'dragId' => $dragId);
+        header("Content-type:application/json;charset=UTF-8");
+        echo json_encode($data);
+        exit;
+    }
 ?>

@@ -3,7 +3,7 @@ function h($str){
     return htmlspecialchars($str,ENT_QUOTES,'UTF-8');
 }
 
-$showMemo = $mysqli -> prepare('SELECT * FROM memo WHERE user_id = ? ORDER BY id DESC');
+$showMemo = $mysqli -> prepare('SELECT *, memo.id AS memo_id FROM memo LEFT JOIN book_memo ON memo.id = book_memo.memo_id LEFT JOIN bookmark ON book_memo.book_id = bookmark.id WHERE memo.user_id = ? ORDER BY memo.id DESC');
 $showMemo -> bind_param('i',$_SESSION['id']);
 $showMemo -> execute();
 $memoResult = $showMemo -> get_result();

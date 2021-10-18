@@ -45,7 +45,25 @@ if(empty($_SESSION['username']) ){
 
             $('.dragUl').sortable({
                 connectWith:'.bookUl',
-                placeholder:'memoDiv'
+                placeholder:'memoDiv',
+                update:function(ev,ui){
+                    //ドロップされるメモのid
+                    let memoId = $(this).parent().find('.memoId').val();
+                    //ドロップされたブックマークのid
+                    let dragId = $(this).sortable('toArray').join(',');
+                    
+                    $.ajax({
+                        type:'POST',
+                        url:'bookmark.php',
+                        data:{'memoId':memoId,'dragId':dragId},
+                        dataType:'json',
+                    }).done(function(data){
+                        alert('done');
+                    }).fail(function(XMLHttpRequest,status,e){
+                        alert('fail');
+                    });
+                }
+
             });
 
             $('.bookUl').disableSelection();
