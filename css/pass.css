@@ -24,24 +24,34 @@ html,body{
     font-size:18px;
     color:black;
     display: inline;
+    background-color: white;
 }
 
 #passBtn,#passKeep,#passInput{
     font-size:18px;
 }
 
+#passBtn{
+    cursor: pointer;
+    background-color: rgba(255,255,255,0.5);
+    border-radius: 0;
+    border: 1px solid gray;
+}
+
 #passAfterView{
     display:none;
+    margin-top:10px;
 }
 
 .passColumn{
-    background-color: rgba(255,255,255,0.8);
+    background-color: rgba(255,255,255,0.5);
     border:1px solid black;
     display: inline-block;
     width:100%;
     line-height: 20px;
     padding: 5px 0;
     position: relative;
+    cursor: grab;
 }
 
 .passColumn span{
@@ -71,6 +81,10 @@ html,body{
 
 #passInput{
     display: none;
+    cursor: pointer;
+    background-color: rgba(255,255,255,0.5);
+    border-radius: 0;
+    border: 1px solid gray;
 }
 
 .passNameInput{
@@ -161,4 +175,28 @@ li{
     border-bottom:1px solid gray;
     height:21px;
     font-family: 'Kaisei Tokumin', serif;
+}
+
+#passKeep{
+    cursor: pointer;
+    background-color: rgba(255,255,255,0.5);
+    border-radius: 0;
+    border: 1px solid gray;
+}
+
+#passLoad{
+    display: none;
+}
+
+.passCheckLoad{
+    float: left;
+    display: none;
+}
+
+.pass{
+    margin-top:10px;
+}
+
+.passBlack{
+    background-color:black;
 }

@@ -26,6 +26,17 @@
             </div>
         </div>
     </div>
+    <script>
+    document.getElementById('byte').innerText = '0/500';
+        const byteCount = function(){
+            const memoByte = document.getElementById('text').value;
+            let byte = (new Blob([memoByte])).size;
+            document.getElementById('byte').innerText = `${byte}/500`;
+            if(byte > 500){
+                document.getElementById('byte').innerText = '文字数オーバーです';
+            }
+        }
+</script>
     <script>$(function(){
         let $memoDel = function(){
             $('.memo').find('#delbtn').on('click',function(){

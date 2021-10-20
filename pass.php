@@ -19,6 +19,8 @@ if(empty($_SESSION['username']) ){
     <title>パスワードアプリ</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel ="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
 </head>
 <body>
     <?php include('miniLogo.php'); ?>
@@ -35,12 +37,12 @@ if(empty($_SESSION['username']) ){
         <button id="passInput">気に入った！</button>
         <div id="passAfterView">
             <input type="text" id="passTitle" placeholder="パスワード名（サイト名は禁止）">
-            <button id="passKeep">保存</button>
+            <button id="passKeep">保存</button><img src="/img/load.gif" alt="" id="passLoad">
         </div>
         <div class="pass">
             <?php foreach($passResult as $pass): ?>
                 <div class="passColumn">
-                <i class="fas fa-check"></i><i class="fas fa-edit"></i><span class="passName"><?php echo $pass['passName'] ?></span><input type="text" class="passNameInput" value="<?php echo $pass['passName'] ?>" autofocus><i class="far fa-copy wcopy"></i><i class="fas fa-copy bcopy"></i><input type="hidden" value="<?php echo $pass['pass'] ?>" class="password"><input type="hidden" value="<?php echo $pass['id'] ?>" class="passId"><i class="fas fa-bars"></i><ul class="passEdit"><li class="passDel">削除</li></ul>
+                <i class="fas fa-check"></i><i class="fas fa-edit"></i><img src="/img/load.gif" alt="" class="passCheckLoad"><span class="passName"><?php echo $pass['passName'] ?></span><input type="text" class="passNameInput" value="<?php echo $pass['passName'] ?>" autofocus><i class="far fa-copy wcopy"></i><i class="fas fa-copy bcopy"></i><input type="hidden" value="<?php echo $pass['pass'] ?>" class="password"><input type="hidden" value="<?php echo $pass['id'] ?>" class="passId"><i class="fas fa-bars"></i><ul class="passEdit"><li class="passDel">削除</li></ul>
                 </div>
                 <?php endforeach ?>
         </div>
@@ -70,7 +72,7 @@ if(empty($_SESSION['username']) ){
         passBtn.addEventListener('click',function(){
             len = passLen.value;
             console.log(len);
-            if(isNaN(len)){
+            if(isNaN(len) || len == ''){
                 passErrorText.innerText = '半角数字で入力してください！';
             }else{
                 passErrorText.innerText = '';
@@ -118,12 +120,16 @@ if(empty($_SESSION['username']) ){
 
             slideToggle();
 
+            //パスワードの保存処理
             $('#passKeep').on('click',function(){
                 let passText = $('#genPass').text();
                 let passTitle = $('#passTitle').val();
+                let $this = $(this);
                 if(passTitle == ''){
                     $error.text('パスワード名を入力してください！');
                 }else{
+                    $this.hide();
+                    $('#passLoad').show();
                     $error.text('');
                     $.ajax({
                         type:'POST',
@@ -134,12 +140,18 @@ if(empty($_SESSION['username']) ){
                         $('.pass').prepend('<div class="passColumn"><i class="fas fa-check"></i><i class="fas fa-edit"></i><span class="passName">'+data.passTitle+'</span><input type="text" class="passNameInput" value="'+data.passTitle+'" autofocus><i class="far fa-copy wcopy"></i><i class="fas fa-copy bcopy"></i><input type="hidden" value="'+data.pass+'" class="password"><input type="hidden" value="'+data.insertId+'" class="passId"><i class="fas fa-bars"></i><ul class="passEdit"><li class="passDel">削除</li></ul></div>');
                         $('.bcopy').hide();
                         $('.fa-check').hide();
-                        $('.passEdit').slideUp(0);
-                        slideToggle();
+                        $('.passColumn').first().find('.fa-bars').click(function(){
+                            $(this).parent().find('.passEdit').slideToggle(200);
+                        });
+                        $('.passEdit').first().slideUp(0);
                         passCopy();
                         passEdit();
                         passCheck();
                         passDel();
+                        $this.show();
+                        $('#passLoad').hide();
+                        $('#passAfterView').hide();
+                        $('#passTitle').text('');
                     }).fail(function(HMLHttpRequest,status,e){
                         console.log('error number:'+ XMLHttpRequest +',status:'+ status +',thrown:'+ e);
                         $error.text($dbError);
@@ -196,6 +208,9 @@ if(empty($_SESSION['username']) ){
 
             const passCheck = function(){
                 $('.fa-check').click(function(){
+                    $(this).hide();
+                    let $this = $(this);
+                    $this.parent().find('.passCheckLoad').show();
                     let $thisParent = $(this).parent();
                     let passName = $thisParent.find('.passName').text();
                     let passNameInput = $thisParent.find('.passNameInput').val();
@@ -217,6 +232,7 @@ if(empty($_SESSION['username']) ){
                             $thisParent.find('.passNameInput').hide();
                             $thisParent.find('.fa-edit').show();
                             $thisParent.find('.fa-check').hide();
+                            $this.parent().find('.passCheckLoad').hide();
                         }).fail(function(XMLHttpRequest,status,e){
                             $error.text($dbError);
                         });
@@ -245,7 +261,15 @@ if(empty($_SESSION['username']) ){
             }
             passDel();
 
+            $('.pass').sortable({
+
+            });
+
+            
+
         });
+
+        
     </script>
 </body>
 </html>

@@ -164,3 +164,11 @@ textarea{
     width:500px;
     border:5px solid red;
 }
+
+#byte{
+    user-select: none;
+    position: relative;
+    bottom:60px;
+    left:270px;
+    color:gray;
+}
