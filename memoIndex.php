@@ -16,7 +16,7 @@
                                 <?php if($memo['link_name'] != ''): ?>
                                     <li class="bookLi" id="<?php echo $memo['id'] ?>">
                                         <div class="bookmarking">
-                                            <a href="<?php echo $memo['link'] ?>" target="_blank" rel="noopener noreferrer">　<?php echo $memo['link_name'] ?>　　　　　<span class="sliceUrl"><?php echo mb_strimwidth($memo['link'],0,25,'...') ?></span></a><button id="deltn1" value="<?php echo $memo['id'] ?>">削除</button><img src="/img/load.gif" alt="" class="deload1">
+                                            <a href="<?php echo $memo['link'] ?>" target="_blank" rel="noopener noreferrer"><?php echo $memo['link_name'] ?></a><button id="deltn1" value="<?php echo $memo['id'] ?>">削除</button><img src="/img/load.gif" alt="" class="deload1">
                                         </div>
                                     </li>
                                 <?php endif ?></ul>

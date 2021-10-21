@@ -43,4 +43,41 @@ $showResult = $show -> get_result();
         echo json_encode($data);
         exit;
     }
+
+    if(isset($_POST['bookName']) && isset($_POST['bookLink'])){
+        $bookName = $_POST['bookName'];
+        $bookLink = $_POST['bookLink'];
+        $bookId = $_POST['bookId'];
+        $bookUpdate = $mysqli -> prepare('UPDATE bookmark SET link = ?,link_name = ? WHERE id = ?');
+        $bookUpdate -> bind_param('ssi',$bookLink,$bookName,$bookId);
+        $bookUpdate -> execute();
+        $bookUpdate -> close();
+        $data = array('bookName' => $bookName,'bookLink' => $bookLink,'bookId' => $bookId);
+        header('Content-type:application/json;charset=UTF-8');
+        echo json_encode($data);
+        exit();
+
+    }else if(isset($_POST['bookName'])){
+        $bookName = $_POST['bookName'];
+        $bookId = $_POST['bookId'];
+        $bookUpdate = $mysqli -> prepare('UPDATE bookmark SET link_name = ? WHERE id = ?');
+        $bookUpdate -> bind_param('si',$bookName,$bookId);
+        $bookUpdate -> execute();
+        $bookUpdate -> close();
+        $data = array('bookName' => $bookName,'bookId' => $bookId);
+        header('Content-type:application/json;charset=UTF-8');
+        echo json_encode($data);
+        exit();
+    }else if(isset($_POST['bookLink'])){
+        $bookName = $_POST['bookLink'];
+        $bookId = $_POST['bookId'];
+        $bookUpdate = $mysqli -> prepare('UPDATE bookmark SET link = ? WHERE id = ?');
+        $bookUpdate -> bind_param('si',$bookLink,$bookId);
+        $bookUpdate -> execute();
+        $bookUpdate -> close();
+        $data = array('bookLink' => $bookLink,'bookId' => $bookId);
+        header('Content-type:application/json;charset=UTF-8');
+        echo json_encode($data);
+        exit();
+    }
 ?>

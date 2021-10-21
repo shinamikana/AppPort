@@ -1,6 +1,7 @@
 .miniLogo{
     border:1px solid black;
     height:35px;
+    margin-bottom:10px;
 }
 
 .miniLogo a{
@@ -16,4 +17,5 @@
 #info{
     float: right;
     border-left:1px solid black;
+    display:inline-block;
 }
