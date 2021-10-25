@@ -80,4 +80,16 @@ $showResult = $show -> get_result();
         echo json_encode($data);
         exit();
     }
+
+    if(isset($_POST['removeDrag'])){
+        $removeDragId = $_POST['removeDrag'];
+        $removeDrag = $mysqli -> prepare('DELETE FROM book_memo WHERE book_id = ?');
+        $removeDrag -> bind_param('i',$removeDragId);
+        $removeDrag -> execute();
+        $removeDrag -> close();
+        $data = array('removeDrag' => $removeDragId);
+        header('Content-type:application/json;charset=UTF-8');
+        echo json_encode($data);
+        exit();
+    }
 ?>

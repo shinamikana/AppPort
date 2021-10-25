@@ -41,19 +41,38 @@ if(empty($_SESSION['username']) ){
         $(()=>{
             $('.bookUl').sortable({
                 connectWith:'.dragUl',
-                placeholder:'memoDiv'
+                placeholder:'memoDiv',
+                update:function(ev,ui){
+                    let bookId = $(this).parent().find('.drag').find('.bookId').val();
+                    console.log(bookId);
+                    if(bookId != undefined){
+                    $.ajax({
+                        type:'POST',
+                        url:'bookmark.php',
+                        data:{'removeDrag':bookId},
+                        dataType:'json',
+                    }).done(function(data){
+                        alert('done');
+                    }).fail(function(XMLHttpRequest,status,e){
+                        alert('fail');
+                    });
+                    }
+                }
             });
 
             $('.dragUl').sortable({
                 connectWith:'.bookUl',
                 placeholder:'memoDiv',
                 update:function(ev,ui){
+                    ///ドラッグされた要素と分るようにdragクラスを付与
+                    //メモアプリ自体にもブックマークが紐付けしていればdragクラスを持ったまま表示するようにしてある
+                    $(this).find('.bookmarking').addClass('drag');
                     //ドロップされるメモのid
                     let memoId = $(this).parent().find('.memoId').val();
                     //ドロップされたブックマークのid
                     let dragId = $(this).sortable('toArray').join(',');
-                    
-                    $.ajax({
+                    if(dragId != 0){
+                        $.ajax({
                         type:'POST',
                         url:'bookmark.php',
                         data:{'memoId':memoId,'dragId':dragId},
@@ -63,6 +82,8 @@ if(empty($_SESSION['username']) ){
                     }).fail(function(XMLHttpRequest,status,e){
                         alert('fail');
                     });
+                    }
+                    
                 }
 
             });

@@ -14,7 +14,7 @@
                             <button type="submit" value="<?php echo $memo['memo_id'] ?>" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload"><input type="hidden" value="<?php echo $memo['memo_id'] ?>" class="memoId">
                             <ul class="dragUl">ここにドロップ
                                 <?php if($memo['link_name'] != ''): ?>
-                                    <li class="bookLi" id="<?php echo $memo['id'] ?>">
+                                    <li class="bookLi drag" id="<?php echo $memo['id'] ?>">
                                         <div class="bookmarking">
                                         <i class="fas fa-check"></i><i class="far fa-edit"></i><i class="fas fa-times"></i><a href="<?php echo $memo['link'] ?>" target="_blank" rel="noopener noreferrer" class="bookA"><?php echo $memo['link_name'] ?></a><input type="text" value="<?php echo h($memo['link_name']) ?>" class="bookNameInput"><input type="text" value="<?php echo h($memo['link']) ?>" class="bookLinkInput"><button id="deltn1" value="<?php echo $memo['id'] ?>">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="<?php echo h($memo['id']) ?>">
                                         </div>
