@@ -19,9 +19,9 @@
                     <li class="bookLi"></li>
                     <?php if(isset($showResult)): ?>
                         <?php foreach($showResult as $show): ?>
-                            <li class="bookLi" id="<?php echo $show['id'] ?>">
+                            <li class="bookLi" id="<?php echo $show['bookmark_id'] ?>">
                             <div class="bookmarking">
-                            <i class="fas fa-check"></i><i class="far fa-edit"></i><a href="<?php echo h($show['link']) ?>" target="_blank" rel="noopener noreferrer" class="bookA"><?php echo h($show['link_name']) ?></a><i class="fas fa-times"></i><input type="text" value="<?php echo h($show['link_name']) ?>" class="bookNameInput"><input type="text" value="<?php echo h($show['link']) ?>" class="bookLinkInput"><button id="deltn1" value="<?php echo h($show['id']) ?>">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="<?php echo h($show['id']) ?>">
+                            <i class="fas fa-check"></i><i class="far fa-edit"></i><a href="<?php echo h($show['link']) ?>" target="_blank" rel="noopener noreferrer" class="bookA"><?php echo h($show['link_name']) ?></a><i class="fas fa-times"></i><input type="text" value="<?php echo h($show['link_name']) ?>" class="bookNameInput"><input type="text" value="<?php echo h($show['link']) ?>" class="bookLinkInput"><button id="deltn1" value="<?php echo h($show['bookmark_id']) ?>">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="<?php echo h($show['bookmark_id']) ?>">
                             </div>
                         </li>
                         <?php endforeach ?>
@@ -31,13 +31,23 @@
         </div>
     </div>
 
-    <div class="bookConfirm">
-        <p>URLが変更されています。</p>
-        <p>このまま送信しますか？</p>
-        <button id="bookConfirmNo">いいえ</button><button id="bookConfirmNo">はい</button>
+    <div id="confirmBigWrap">
+        <div id="confirmWrapper">
+            <div id="bookConfirm">
+                <p id="alert">お知らせ</p>
+                <p>URLが変更されています。</p>
+                <p>このまま送信しますか？</p>
+                <button id="bookConfirmNo">いいえ</button><button id="bookConfirmYes">はい</button>
+            </div>
+        </div>
     </div>
 
     <script>$(function(){
+
+                $('#bookConfirmNo').click(function(){
+                    $('#confirmBigWrap').hide();
+                });
+
         $('#submit1').on('click',function(event){
             let val1 = $('#url').val();
             let val2 = $('#linkName').val();
@@ -127,22 +137,26 @@
             let bookName = $this.parent().find('.bookA').text();
             let bookLink = $this.parent().find('.bookA').attr('href');
             let bookId = $this.parent().find('.bookId').val();
-            $this.parent().css('opacity','0.5');
             if(bookNameVal != bookName && bookLinkVal != bookLink){
-                $.ajax({
-                    type:'POST',
-                    url:'bookmark.php',
-                    data:{'bookName':bookNameVal,'bookLink':bookLinkVal,'bookId':bookId},
-                    dataType:'json',
-                }).done(function(data){
-                    $this.parent().find('.bookA').text(bookNameVal);
-                    $this.parent().find('.bookA').attr('href',bookLinkVal);
-                    bookEditShow($this);
-                }).fail(function(XMLHttpRequest,status,e){
-                    console.log('error number:'+ XMLHttpRequest +',status:'+ status +',thrown:'+ e);
+                $('#confirmBigWrap').show();
+                $('#bookConfirmYes').click(function(){
+                    $this.parent().css('opacity','0.5');
+                    $('#confirmBigWrap').hide();
+                    $.ajax({
+                        type:'POST',
+                        url:'bookmark.php',
+                        data:{'bookName':bookNameVal,'bookLink':bookLinkVal,'bookId':bookId},
+                        dataType:'json',
+                    }).done(function(data){
+                        $this.parent().find('.bookA').text(bookNameVal);
+                        $this.parent().find('.bookA').attr('href',bookLinkVal);
+                        bookEditShow($this);
+                    }).fail(function(XMLHttpRequest,status,e){
+                    });
                 });
-
+                
             }else if(bookNameVal != bookName){
+                $this.parent().css('opacity','0.5');
                 $.ajax({
                     type:'POST',
                     url:'bookmark.php',
@@ -151,21 +165,25 @@
                 }).done(function(data){
                     $this.parent().find('.bookA').text(bookNameVal);
                     bookEditShow($this);
+                    $this.parent().css('opacity','1');
                 }).fail(function(XMLHttpRequest,status,e){
-                    console.log('error number:'+ XMLHttpRequest +',status:'+ status +',thrown:'+ e);
                 });
 
             }else if(bookLinkVal != bookLink){
-                $.ajax({
-                    type:'POST',
-                    url:'bookmark.php',
-                    data:{'bookLink':bookLinkVal,'bookId':bookId},
-                    dataType:'json',
-                }).done(function(data){
-                    $this.parent().find('.bookA').attr('href',bookLinkVal);
-                    bookEditShow($this);
-                }).fail(function(XMLHttpRequest,status,e){
-                    console.log('error number:'+ XMLHttpRequest +',status:'+ status +',thrown:'+ e);
+                $('#confirmBigWrap').show();
+                $('#bookConfirmYes').click(function(){
+                    $this.parent().css('opacity','0.5');
+                    $('#confirmBigWrap').hide();
+                    $.ajax({
+                        type:'POST',
+                        url:'bookmark.php',
+                        data:{'bookLink':bookLinkVal,'bookId':bookId},
+                        dataType:'json',
+                    }).done(function(data){
+                        $this.parent().find('.bookA').attr('href',bookLinkVal);
+                        bookEditShow($this);
+                    }).fail(function(XMLHttpRequest,status,e){
+                    });
                 });
             }else{
                 bookEditShow($this);

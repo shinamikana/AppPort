@@ -16,7 +16,7 @@
                                 <?php if($memo['link_name'] != ''): ?>
                                     <li class="bookLi" id="<?php echo $memo['id'] ?>">
                                         <div class="bookmarking">
-                                            <a href="<?php echo $memo['link'] ?>" target="_blank" rel="noopener noreferrer"><?php echo $memo['link_name'] ?></a><button id="deltn1" value="<?php echo $memo['id'] ?>">削除</button><img src="/img/load.gif" alt="" class="deload1">
+                                        <i class="fas fa-check"></i><i class="far fa-edit"></i><i class="fas fa-times"></i><a href="<?php echo $memo['link'] ?>" target="_blank" rel="noopener noreferrer" class="bookA"><?php echo $memo['link_name'] ?></a><input type="text" value="<?php echo h($memo['link_name']) ?>" class="bookNameInput"><input type="text" value="<?php echo h($memo['link']) ?>" class="bookLinkInput"><button id="deltn1" value="<?php echo $memo['id'] ?>">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="<?php echo h($memo['id']) ?>">
                                         </div>
                                     </li>
                                 <?php endif ?></ul>

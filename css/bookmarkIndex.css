@@ -134,6 +134,50 @@ li{
     font-size: 20px;
 }
 
-.bookConfirm{
+#confirmWrapper{
+    position: fixed;
+    height:100%;
+    width:100%;
+    background-color: rgba(255,255,255,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index:3;
+}
+
+#bookConfirm{
+    letter-spacing: 1px;
+    padding:10px 30px;
+    background-color: rgba(255,255,255,0.9);
+    border:1px solid gray;
+    box-shadow: 3px 3px 3px gray;
+    border-radius: 10px;
+    font-family: 'Kaisei Opti', serif;
+}
+
+#bookConfirmNo ,#bookConfirmYes{
+    background-color: rgba(255,255,255,0.2);
+    border:1px solid gray;
+    font-size:17px;
+    cursor: pointer;
+    box-shadow: 2px 2px 2px gray;
+}
+
+#bookConfirmNo{
+    float: left;
+}
+
+#bookConfirmYes{
+    float: right;
+}
+
+#alert{
+    text-align: center;
+    padding: 0;
+    margin:0;
+    border-bottom:1px solid black;
+}
+
+#confirmBigWrap{
     display: none;
 }

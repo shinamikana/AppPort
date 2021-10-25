@@ -1,6 +1,6 @@
 <?php
 
-$show = $mysqli -> prepare('SELECT * FROM bookmark WHERE user_id = ? ORDER BY id DESC');
+$show = $mysqli -> prepare('SELECT *,bookmark.id AS bookmark_id FROM bookmark LEFT JOIN book_memo ON bookmark.id = book_memo.book_id WHERE bookmark.user_id = ? AND book_memo.id IS NULL ORDER BY bookmark.id DESC');
 $show -> bind_param('i',$_SESSION['id']);
 $show -> execute();
 $showResult = $show -> get_result();

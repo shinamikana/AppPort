@@ -18,6 +18,7 @@ html,body{
     padding-bottom:50px;
     margin-bottom:100px;
     width:50%;
+    position: fixed;
 }
 
 h1{
