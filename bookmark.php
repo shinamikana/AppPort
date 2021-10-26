@@ -39,6 +39,7 @@ if(empty($_SESSION['username']) ){
     <script>
         //ブックマークのドラッグ＆ドロップ処理
         $(()=>{
+            window.bookSortable = function(){
             $('.bookUl').sortable({
                 connectWith:'.dragUl',
                 placeholder:'memoDiv',
@@ -59,7 +60,10 @@ if(empty($_SESSION['username']) ){
                     }
                 }
             });
+            }
+            bookSortable();
 
+            window.memoSortable = function(){
             $('.dragUl').sortable({
                 connectWith:'.bookUl',
                 placeholder:'memoDiv',
@@ -83,10 +87,10 @@ if(empty($_SESSION['username']) ){
                         alert('fail');
                     });
                     }
-                    
                 }
-
             });
+            }
+            memoSortable();
 
             $('.bookUl').disableSelection();
         });

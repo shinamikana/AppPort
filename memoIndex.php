@@ -72,10 +72,12 @@
                 dataType:'json',
             }).done(function(data){
                 $('#text').val('');
-                $('#memoWrapper').prepend('<div class="memo"><p id="mainText"><span>'+val+'</span></p><button type="submit" value="'+data.insert+'" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload"></div>');
+                $('#memoWrapper').prepend('<div class="memo"><p id="mainText"><span>'+val+'</span></p><p id="date">'+data.date+'</p><button type="submit" value="'+data.insert+'" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload"><ul class="dragUl">ここにドロップ</ul></div>');
                 $('#load').hide();
                 $('#submit').show();
                 $memoDel();
+                bookSortable();
+                memoSortable();
             }).fail(function(XMLHttpRequest,status,e){
                 $('#memoWrapper').find('p').remove();
                 

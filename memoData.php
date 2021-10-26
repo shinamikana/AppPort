@@ -21,7 +21,7 @@ if(isset($_POST['text'])){
     $memoPost -> execute();
     $memoPost -> close();
     $insert = $mysqli -> insert_id;
-    $data = array('text' => $text,'insert' => $insert);
+    $data = array('text' => $text,'insert' => $insert,'date' => $date);
     header("Content-type: application/json; charset=UTF-8");
     echo json_encode($data);
     exit;

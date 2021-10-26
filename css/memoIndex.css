@@ -22,14 +22,14 @@ html,body{
 
 .column{
     margin-left:20px;
-    width:400px;
+    width:80%;
     height:auto;
 }
 
 #text{
     resize: none;
     font-size:13px;
-    width:340px;
+    width:100%;
     font-size:17px;
     margin-top:20px;
     margin-bottom:20px;
@@ -54,7 +54,7 @@ html,body{
     color:black;
     white-space: pre-wrap;
     float:left;
-    width:340px;
+    width:90%;
     height:auto;
     margin-bottom:60px;
     font-size:18px;
@@ -94,9 +94,7 @@ textarea{
 }
 
 #submit{
-    position: relative;
-    top:-40px;
-    left:5px;
+
     cursor: pointer;
 }
 

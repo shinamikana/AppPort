@@ -1,4 +1,3 @@
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -59,12 +58,13 @@
                 data:{'url':val1,'linkName':val2},
                 dataType:'json',
             }).done(function(data){
-                $('.bookmarkColumn').prepend('<div class="bookmarking"><a href="'+data.url+'" target="_blank" rel="noopener noreferrer">　'+data.linkName+'　　　　　<span class="sliceUrl">'+data.url+'</span></a><button id="deltn1" value="'+data.id+'">削除</button><img src="/img/load.gif" alt="" class="deload1"></div>');
+                $('.bookUl').prepend('<li class="bookLi" id="'+data.id+'"><div class="bookmarking"><i class="fas fa-check"></i><i class="far fa-edit"></i><a href="'+data.url+'" target="_blank" rel="noopener noreferrer" class="bookA">'+data.linkName+'</a><input type="text" value="'+data.linkName+'" class="bookNameInput"><input type="text" value="'+data.url+'" class="bookLinkInput"><button id="deltn1" value="'+data.id+'">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="'+data.id+'"></div></li>');
                 $('#submit1').show();
                 $('#load1').hide();
                 $('#url').val('');
                 $('#linkName').val('');
                 $delete();
+
             }).fail(function(XMLHttpRequest,status,e){
                 console.log('error number:'+ XMLHttpRequest +',status:'+ status +',thrown:'+ e);
                 alert('fail');
