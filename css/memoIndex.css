@@ -48,6 +48,7 @@ html,body{
     width:100%;
     margin-top:50px;
     z-index:1;
+    padding: 0;
 }
 
 #mainText{
@@ -61,6 +62,9 @@ html,body{
     margin-bottom:60px;
     font-size:18px;
     letter-spacing: 1.5px;
+    padding:0 20px;
+    margin-right:0;
+    margin-left:0;
 }
 
 #delbtn{
@@ -69,6 +73,10 @@ html,body{
     top:0;
     right:0;
     cursor: pointer;
+    background-color: white;
+    border-radius: 0;
+    border:1px solid black;
+    box-shadow: 1px 1px 1px gray;
 }
 
 button{
@@ -96,8 +104,9 @@ textarea{
 }
 
 #submit{
-
+    border:1px solid black;
     cursor: pointer;
+    box-shadow: 1px 1px 1px gray;
 }
 
 #load{
@@ -128,6 +137,7 @@ textarea{
 }
 
 .memo .dragUl{
+    margin:0 20px;
     display: inline-block;
     background-color: rgba(255,255,255,0.3);
     height:auto;
@@ -160,13 +170,17 @@ textarea{
 }
 
 #byte{
+    position: absolute;
+    right:10px;
+    top:50px;
     user-select: none;
-    position: relative;
-    bottom:60px;
-    left:270px;
     color:gray;
 }
 
 .dragUl .bookmarking{
     height: auto;
+}
+
+.delete{
+    position: relative;
 }

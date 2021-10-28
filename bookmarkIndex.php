@@ -15,7 +15,7 @@
             <!-- ブックマークフォーム　mark=URL linkName=リンク名 -->
                 <input type="text" id="linkName" name="linkName" placeholder="お好きなリンク名">
                 <input name="url" id="url" placeholder="URL(http~)">
-                <input type="submit" id="submit1"><img src="/img/load.gif" alt="" id="load1">
+                <input type="submit" id="submit1" value="登録"><img src="/img/load.gif" alt="" id="load1">
                 <div class="bookmarkColumn"></div>
                 <ul class="bookUl">
                     <li class="bookLi"></li>

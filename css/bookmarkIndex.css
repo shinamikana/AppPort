@@ -84,6 +84,8 @@
     right:0;
     height:40px;
     cursor: pointer;
+    border:1px solid black;
+    box-shadow: 1px 1px 1px;
 }
 
 .deload1{
@@ -109,6 +111,8 @@
     font-size:18px;
     background-color: white;
     cursor: pointer;
+    border:1px solid black;
+    box-shadow: 1px 1px 1px gray;
 }
 
 li{
