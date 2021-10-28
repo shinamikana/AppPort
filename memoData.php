@@ -1,8 +1,14 @@
 <?php
-$showMemo = $mysqli -> prepare('SELECT *, memo.id AS memo_id FROM memo LEFT JOIN book_memo ON memo.id = book_memo.memo_id LEFT JOIN bookmark ON book_memo.book_id = bookmark.id WHERE memo.user_id = ? ORDER BY memo.id DESC');
+$showMemo = $mysqli -> prepare('SELECT *, memo.id AS memo_id FROM memo WHERE memo.user_id = ? ORDER BY memo.id DESC');
 $showMemo -> bind_param('i',$_SESSION['id']);
 $showMemo -> execute();
 $memoResult = $showMemo -> get_result();
+
+$showMemoBook = $mysqli -> prepare('SELECT *,book_memo.id AS bookMemoId FROM book_memo LEFT JOIN bookmark ON book_memo.book_id = bookmark.id WHERE bookmark.user_id = ?');
+$showMemoBook -> bind_param('i',$_SESSION['id']);
+$showMemoBook -> execute();
+$memoBookResult = $showMemoBook -> get_result();
+
 //東京のタイムゾーンをセット
 date_default_timezone_set('Asia/Tokyo');
 
@@ -33,6 +39,10 @@ if(isset($_POST['del'])){
     $delete -> bind_param('i',$_POST['del']);
     $delete -> execute();
     $delete -> close();
+    $deleteMemoBook = $mysqli -> prepare('DELETE FROM book_memo WHERE memo_id = ?');
+    $deleteMemoBook -> bind_param('i',$_POST['del']);
+    $deleteMemoBook -> execute();
+    $deleteMemoBook -> close();
     exit;
 }
 

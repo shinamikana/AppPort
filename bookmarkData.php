@@ -24,6 +24,11 @@ $showResult = $show -> get_result();
         $delete -> bind_param('i',$_POST['delId']);
         $delete -> execute();
         $delete -> close();
+        ///手動で削除したブックマークの関連付けを削除
+        $removeDrag = $mysqli -> prepare('DELETE FROM book_memo WHERE book_id = ?');
+        $removeDrag -> bind_param('i',$_POST['delId']);
+        $removeDrag -> execute();
+        $removeDrag -> close();
         $delId = $_POST['delId'];
         $data = array('delId' => $delId);
         header("Content-type:application/json;charset=UTF-8");

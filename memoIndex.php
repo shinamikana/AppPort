@@ -13,13 +13,17 @@
                             <p id="date"><?php echo h($memo['date']) ?></p>
                             <button type="submit" value="<?php echo $memo['memo_id'] ?>" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload"><input type="hidden" value="<?php echo $memo['memo_id'] ?>" class="memoId">
                             <ul class="dragUl">ここにドロップ
-                                <?php if($memo['link_name'] != ''): ?>
+                                <?php foreach($memoBookResult as $memo_book): ?>
+                                    <?php if($memo_book['memo_id'] == $memo['id']): ?>
                                     <li class="bookLi drag" id="<?php echo $memo['id'] ?>">
                                         <div class="bookmarking">
-                                        <i class="fas fa-check"></i><i class="far fa-edit"></i><i class="fas fa-times"></i><a href="<?php echo $memo['link'] ?>" target="_blank" rel="noopener noreferrer" class="bookA"><?php echo $memo['link_name'] ?></a><input type="text" value="<?php echo h($memo['link_name']) ?>" class="bookNameInput"><input type="text" value="<?php echo $memo['link'] ?>" class="bookLinkInput"><button id="deltn1" value="<?php echo $memo['id'] ?>">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="<?php echo h($memo['id']) ?>">
+                                            
+                                        <i class="fas fa-check"></i><i class="far fa-edit"></i><i class="fas fa-times"></i><a href="<?php echo $memo_book['link'] ?>" target="_blank" rel="noopener noreferrer" class="bookA"><?php echo $memo_book['link_name'] ?></a><input type="text" value="<?php echo h($memo_book['link_name']) ?>" class="bookNameInput"><input type="text" value="<?php echo $memo_book['link'] ?>" class="bookLinkInput"><button id="deltn1" value="<?php echo $memo_book['id'] ?>">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="<?php echo h($memo_book['id']) ?>">
                                         </div>
                                     </li>
-                                <?php endif ?></ul>
+                                    <?php endif ?>
+                                <?php endforeach ?>
+                            </ul>
                         </div>
                     <?php endforeach ?>
                 <?php endif ?>

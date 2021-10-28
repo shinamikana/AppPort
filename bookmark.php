@@ -49,9 +49,10 @@ if(empty($_SESSION['username']) ){
                 connectWith:'.dragUl',
                 placeholder:'memoDiv',
                 update:function(ev,ui){
+                    console.log('bookUl');
                     let $this = $(this);
                     let bookId = $(this).parent().find('.drag').find('.bookId').val();
-                    console.log('bookId is'+ bookId);
+                    
                     if(bookId != undefined){
                     $.ajax({
                         type:'POST',
@@ -62,7 +63,7 @@ if(empty($_SESSION['username']) ){
                         alert('done');
                         //if($(this).parent().find('bookLi').hasClass('')
                         //クラスの付け外しで判定
-                        $this.find('.drag').addClass('noDrag').removeClass('drag');
+                        $this.find('.noDrag').addClass('drag').removeClass('noDrag');
                     }).fail(function(XMLHttpRequest,status,e){
                         alert('fail');
                     });
@@ -79,13 +80,17 @@ if(empty($_SESSION['username']) ){
                 placeholder:'memoDiv',
                 update:function(ev,ui){
                     let $this = $(this);
+                    console.log('dragUl');
+                    console.log('')
                     ///ドラッグされた要素と分るようにdragクラスを付与
                     //メモアプリ自体にもブックマークが紐付けしていればdragクラスを持ったまま表示するようにしてある
                     $(this).find('.bookmarking').addClass('drag');
                     //ドロップされるメモのid
-                    let memoId = $(this).find('.noDrag').find('.memoId').val();
+                    let memoId = $(this).parent().find('.memoId').val();
+                    console.log('memoId is'+memoId);
                     //ドロップされたブックマークのid
-                    let dragId = $(this).sortable('toArray').join(',');
+                    let dragId = $(this).parent().find('.noDrag').find('.bookId').val();
+                    console.log('dragId is'+dragId);
                     if(dragId != 0){
                         $.ajax({
                         type:'POST',
@@ -95,7 +100,7 @@ if(empty($_SESSION['username']) ){
                     }).done(function(data){
                         alert('done');
                         //$(this).find('.noDrag').addClass('drag');
-                        $this.find('.noDrag').addClass('drag').removeClass('noDrag');
+                        $this.find('.drag').addClass('noDrag').removeClass('drag');
                     }).fail(function(XMLHttpRequest,status,e){
                         alert('fail');
                     });
