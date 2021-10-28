@@ -97,4 +97,3 @@ $showResult = $show -> get_result();
         echo json_encode($data);
         exit();
     }
-?>

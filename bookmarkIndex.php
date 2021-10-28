@@ -56,15 +56,15 @@
             $('#submit1').hide();
             $('#load1').show();
             console.log(urlVal);
-            if(urlVal == "" && linkNameVal == ""){
+            if(!urlVal&& !linkNameVal){
                 $('.errors').find('.error').text('URLとリンク名が入力されていません！').show();
                 $('#submit1').show();
                 $('#load1').hide();
-            }else if(urlVal == ""){
+            }else if(!urlVal){
                 $('.errors').find('.error').text('URLが入力されていません！').show();
                 $('#submit1').show();
                 $('#load1').hide();
-            }else if(linkNameVal == ""){
+            }else if(!linkNameVal){
                 $('.errors').find('.error').text('リンク名が入力されていません！').show();
                 $('#submit1').show();
                 $('#load1').hide();

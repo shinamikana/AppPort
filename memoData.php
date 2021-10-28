@@ -45,5 +45,3 @@ if(isset($_POST['del'])){
     $deleteMemoBook -> close();
     exit;
 }
-
-?>
