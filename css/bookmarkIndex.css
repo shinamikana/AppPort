@@ -181,3 +181,10 @@ li{
 #confirmBigWrap{
     display: none;
 }
+
+.error{
+    text-align: center;
+    color: red;
+    border:1px solid red;
+    display: none;
+}

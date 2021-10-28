@@ -9,11 +9,12 @@
     <div class="bookWrapper">
         <h1 id="bookmarkTitle">ブックマーク</h1>
         <div class="errors">
+            <p class="error"></p>
         </div>
         <div class="bookmark">
             <!-- ブックマークフォーム　mark=URL linkName=リンク名 -->
-                <input name="url" id="url" placeholder="URL">
-                <input type="text" id="linkName" name="linkName" placeholder="リンク名">
+                <input type="text" id="linkName" name="linkName" placeholder="お好きなリンク名">
+                <input name="url" id="url" placeholder="URL(http~)">
                 <input type="submit" id="submit1"><img src="/img/load.gif" alt="" id="load1">
                 <div class="bookmarkColumn"></div>
                 <ul class="bookUl">
@@ -44,21 +45,40 @@
     </div>
 
     <script>$(function(){
-
                 $('#bookConfirmNo').click(function(){
                     $('#confirmBigWrap').hide();
                 });
 
         //ブックマークの送信処理
         $('#submit1').on('click',function(event){
-            let val1 = $('#url').val();
-            let val2 = $('#linkName').val();
+            let urlVal = $('#url').val();
+            let linkNameVal = $('#linkName').val();
             $('#submit1').hide();
             $('#load1').show();
+            console.log(urlVal);
+            if(urlVal == "" && linkNameVal == ""){
+                $('.errors').find('.error').text('URLとリンク名が入力されていません！').show();
+                $('#submit1').show();
+                $('#load1').hide();
+            }else if(urlVal == ""){
+                $('.errors').find('.error').text('URLが入力されていません！').show();
+                $('#submit1').show();
+                $('#load1').hide();
+            }else if(linkNameVal == ""){
+                $('.errors').find('.error').text('リンク名が入力されていません！').show();
+                $('#submit1').show();
+                $('#load1').hide();
+            }else if(!urlVal.match('http')){
+                console.log(urlVal);
+                $('.errors').find('.error').text('URLが正しくありません！').show();
+                $('#submit1').show();
+                $('#load1').hide();
+            }else{
+            $('.error').hide();
             $.ajax({
                 type:'POST',
                 url:'bookmark.php',
-                data:{'url':val1,'linkName':val2},
+                data:{'url':urlVal,'linkName':linkNameVal},
                 dataType:'json',
             }).done(function(data){
                 $('.bookUl').prepend('<li class="bookLi" id="'+data.id+'"><div class="bookmarking"><i class="fas fa-check"></i><i class="far fa-edit"></i><a href="'+data.url+'" target="_blank" rel="noopener noreferrer" class="bookA">'+data.linkName+'</a><input type="text" value="'+data.linkName+'" class="bookNameInput"><input type="text" value="'+data.url+'" class="bookLinkInput"><button id="deltn1" value="'+data.id+'">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="'+data.id+'"></div></li>');
@@ -71,8 +91,10 @@
             }).fail(function(XMLHttpRequest,status,e){
                 console.log('error number:'+ XMLHttpRequest +',status:'+ status +',thrown:'+ e);
                 alert('fail');
-                $('#load1').hide()
+                $('#submit1').show();
+                $('#load1').hide();
             });
+            }
         });
 
         //ブックマークの削除処理
