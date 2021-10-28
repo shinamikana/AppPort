@@ -8,6 +8,8 @@
 <body>
     <div class="bookWrapper">
         <h1 id="bookmarkTitle">ブックマーク</h1>
+        <div class="errors">
+        </div>
         <div class="bookmark">
             <!-- ブックマークフォーム　mark=URL linkName=リンク名 -->
                 <input name="url" id="url" placeholder="URL">
@@ -18,7 +20,7 @@
                     <li class="bookLi"></li>
                     <?php if(isset($showResult)): ?>
                         <?php foreach($showResult as $show): ?>
-                            <li class="bookLi" id="<?php echo $show['bookmark_id'] ?>">
+                            <li class="bookLi noDrag" id="<?php echo $show['bookmark_id'] ?>">
                             <div class="bookmarking">
                             <i class="fas fa-check"></i><i class="far fa-edit"></i><a href="<?php echo h($show['link']) ?>" target="_blank" rel="noopener noreferrer" class="bookA"><?php echo h($show['link_name']) ?></a><i class="fas fa-times"></i><input type="text" value="<?php echo h($show['link_name']) ?>" class="bookNameInput"><input type="text" value="<?php echo h($show['link']) ?>" class="bookLinkInput"><button id="deltn1" value="<?php echo h($show['bookmark_id']) ?>">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="<?php echo h($show['bookmark_id']) ?>">
                             </div>
@@ -47,6 +49,7 @@
                     $('#confirmBigWrap').hide();
                 });
 
+        //ブックマークの送信処理
         $('#submit1').on('click',function(event){
             let val1 = $('#url').val();
             let val2 = $('#linkName').val();
@@ -72,6 +75,7 @@
             });
         });
 
+        //ブックマークの削除処理
         let $delete = function(){
             $('.bookmarking').find('#deltn1').on('click',function(event){
             let $this = $(this).parent();
@@ -108,6 +112,7 @@
             $(this).parent().find('.fa-times').show();
         });
 
+        //編集ボタンを押した際の処理の関数
         const bookEditShow = function($this){
             $this.hide();
             $this.parent().find('.fa-edit').show();
@@ -121,6 +126,7 @@
             $this.parent().find('.fa-check').hide();
         }
 
+        //編集を中止した場合の処理
         $('.fa-times').click(function(){
             let $this = $(this);
             let bookName = $this.parent().find('.bookA').text();
@@ -130,6 +136,7 @@
             bookEditShow($this);
         });
 
+        //編集を送信する処理
         $('.fa-check').click(function(){
             let $this = $(this);
             let bookNameVal = $this.parent().find('.bookNameInput').val();
@@ -137,6 +144,14 @@
             let bookName = $this.parent().find('.bookA').text();
             let bookLink = $this.parent().find('.bookA').attr('href');
             let bookId = $this.parent().find('.bookId').val();
+            //入力欄が空白の場合の処理
+            if(bookNameVal == ''){
+                $('.error').prepend('ブックマーク名を入力してください！');
+            }
+            if(bookLinkVal == ''){
+                $('.error').prepend('URLを入力してください！');
+            }
+
             if(bookNameVal != bookName && bookLinkVal != bookLink){
                 $('#confirmBigWrap').show();
                 $('#bookConfirmYes').click(function(){

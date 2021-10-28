@@ -1,4 +1,8 @@
 <?php
+function h($str){
+    return htmlspecialchars($str,ENT_QUOTES,'UTF-8');
+}
+
 include('dateBase.php');
 include('memoData.php');
 include('bookmarkData.php');
@@ -39,13 +43,15 @@ if(empty($_SESSION['username']) ){
     <script>
         //ブックマークのドラッグ＆ドロップ処理
         $(()=>{
+            ///ブックマークアプリからメモアプリに移動したら
             window.bookSortable = function(){
             $('.bookUl').sortable({
                 connectWith:'.dragUl',
                 placeholder:'memoDiv',
                 update:function(ev,ui){
+                    let $this = $(this);
                     let bookId = $(this).parent().find('.drag').find('.bookId').val();
-                    console.log(bookId);
+                    console.log('bookId is'+ bookId);
                     if(bookId != undefined){
                     $.ajax({
                         type:'POST',
@@ -54,6 +60,9 @@ if(empty($_SESSION['username']) ){
                         dataType:'json',
                     }).done(function(data){
                         alert('done');
+                        //if($(this).parent().find('bookLi').hasClass('')
+                        //クラスの付け外しで判定
+                        $this.find('.drag').addClass('noDrag').removeClass('drag');
                     }).fail(function(XMLHttpRequest,status,e){
                         alert('fail');
                     });
@@ -63,16 +72,18 @@ if(empty($_SESSION['username']) ){
             }
             bookSortable();
 
+            //ブックマークからメモアプリに移動したら
             window.memoSortable = function(){
             $('.dragUl').sortable({
                 connectWith:'.bookUl',
                 placeholder:'memoDiv',
                 update:function(ev,ui){
+                    let $this = $(this);
                     ///ドラッグされた要素と分るようにdragクラスを付与
                     //メモアプリ自体にもブックマークが紐付けしていればdragクラスを持ったまま表示するようにしてある
                     $(this).find('.bookmarking').addClass('drag');
                     //ドロップされるメモのid
-                    let memoId = $(this).parent().find('.memoId').val();
+                    let memoId = $(this).find('.noDrag').find('.memoId').val();
                     //ドロップされたブックマークのid
                     let dragId = $(this).sortable('toArray').join(',');
                     if(dragId != 0){
@@ -83,6 +94,8 @@ if(empty($_SESSION['username']) ){
                         dataType:'json',
                     }).done(function(data){
                         alert('done');
+                        //$(this).find('.noDrag').addClass('drag');
+                        $this.find('.noDrag').addClass('drag').removeClass('noDrag');
                     }).fail(function(XMLHttpRequest,status,e){
                         alert('fail');
                     });
