@@ -7,12 +7,6 @@ html,body{
     box-sizing: border-box;
 }
 
-main{
-    
-    width:100%;
-    margin-top:50px;
-}
-
 textarea{
     resize:none;
     font-size:17px;

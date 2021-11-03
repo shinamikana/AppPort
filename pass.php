@@ -7,6 +7,10 @@ if(empty($_SESSION['username']) ){
     header('Location:login.php');
   }
 
+  function h($str){
+    return htmlspecialchars($str,ENT_QUOTES,'UTF-8');
+  }
+
 ?>
 
 <!DOCTYPE html>
@@ -42,7 +46,7 @@ if(empty($_SESSION['username']) ){
         <div class="pass">
             <?php foreach($passResult as $pass): ?>
                 <div class="passColumn">
-                <i class="fas fa-check"></i><i class="fas fa-edit"></i><img src="/img/load.gif" alt="" class="passCheckLoad"><span class="passName"><?php echo $pass['passName'] ?></span><input type="text" class="passNameInput" value="<?php echo $pass['passName'] ?>" autofocus><i class="far fa-copy wcopy"></i><i class="fas fa-copy bcopy"></i><input type="hidden" value="<?php echo $pass['pass'] ?>" class="password"><input type="hidden" value="<?php echo $pass['id'] ?>" class="passId"><i class="fas fa-bars"></i><ul class="passEdit"><li class="passDel">削除</li></ul>
+                <i class="fas fa-check"></i><i class="fas fa-edit"></i><img src="/img/load.gif" alt="" class="passCheckLoad"><span class="passName"><?php echo h($pass['passName']) ?></span><input type="text" class="passNameInput" value="<?php echo h($pass['passName']) ?>" autofocus><i class="far fa-copy wcopy"></i><i class="fas fa-copy bcopy"></i><input type="hidden" value="<?php echo $pass['pass'] ?>" class="password"><input type="hidden" value="<?php echo h($pass['id']) ?>" class="passId"><i class="fas fa-bars"></i><ul class="passEdit"><li class="passDel">削除</li></ul>
                 </div>
                 <?php endforeach ?>
         </div>
@@ -220,6 +224,7 @@ if(empty($_SESSION['username']) ){
                         $thisParent.find('.passName').show();
                         $(this).hide();
                         $thisParent.find('.fa-edit').show();
+                        $this.parent().find('.passCheckLoad').hide();
                     }else{
                         $.ajax({
                             type:'POST',

@@ -1,6 +1,6 @@
 <?php
 
-    $showMark = $mysqli -> prepare('SELECT * FROM map WHERE user_id = ?');
+    $showMark = $mysqli -> prepare('SELECT *,map.id AS mapId FROM map LEFT JOIN map_memo ON map.id = map_memo.map_id WHERE user_id = ? AND map_memo.id IS NULL ORDER BY mapId DESC');
     $showMark -> bind_param('i',$_SESSION['id']);
     $showMark -> execute();
     $resultMark = $showMark -> get_result();
@@ -38,7 +38,33 @@
         $mapEdit = $mysqli -> prepare('UPDATE map set field_name = ? WHERE id = ?');
         $mapEdit -> bind_param('si',$edit,$editId);
         $mapEdit -> execute();
+        $mapEdit -> close();
         $data = array('mapEdit' => $edit ,'mapEditId' => $editId);
+        header('Content-type:application/json;charset=UTF-8');
+        echo json_encode($data);
+        exit;
+    }
+
+    if(isset($_POST['mapVal']) && isset($_POST['memoVal'])){
+        $mapVal = $_POST['mapVal'];
+        $memoVal = $_POST['memoVal'];
+        $mapMemo = $mysqli -> prepare('INSERT INTO map_memo(map_id,memo_id) VALUES(?,?)');
+        $mapMemo -> bind_param('ii',$mapVal,$memoVal);
+        $mapMemo -> execute();
+        $mapMemo -> close();
+        $data = array('mapVal' => $mapVal ,'memoVal' => $memoVal);
+        header('Content-type:application/json;charset=UTF-8');
+        echo json_encode($data);
+        exit;
+    }
+
+    if(isset($_POST['mapId'])){
+        $mapId = $_POST['mapId'];
+        $mapMemoDel = $mysqli -> prepare('DELETE FROM map_memo WHERE map_id = ?');
+        $mapMemoDel -> bind_param('i',$mapId);
+        $mapMemoDel -> execute();
+        $mapMemoDel -> close();
+        $data = array('mapId' => $mapId);
         header('Content-type:application/json;charset=UTF-8');
         echo json_encode($data);
         exit;
