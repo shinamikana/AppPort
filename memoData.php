@@ -4,15 +4,9 @@ $showMemo -> bind_param('i',$_SESSION['id']);
 $showMemo -> execute();
 $memoResult = $showMemo -> get_result();
 
-$showMemoBook = $mysqli -> prepare('SELECT *,book_memo.id AS bookMemoId FROM book_memo LEFT JOIN bookmark ON book_memo.book_id = bookmark.id WHERE bookmark.user_id = ?');
-$showMemoBook -> bind_param('i',$_SESSION['id']);
-$showMemoBook -> execute();
-$memoBookResult = $showMemoBook -> get_result();
 
-$showMapMemo = $mysqli -> prepare('SELECT* ,map_memo.id AS mapMemoId FROM map_memo LEFT JOIN map ON map_memo.map_id = map.id WHERE map.user_id = ?');
-$showMapMemo -> bind_param('i',$_SESSION['id']);
-$showMapMemo -> execute();
-$mapMemoResult = $showMapMemo -> get_result();
+
+
 
 //東京のタイムゾーンをセット
 date_default_timezone_set('Asia/Tokyo');

@@ -35,7 +35,7 @@
         </div>
 
         <div class="memo">
-            <a href="memoApp.php">MEMO</a>
+            <a href="memo.php">MEMO</a>
         </div>
 
         <div class="bookmark">

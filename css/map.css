@@ -7,9 +7,15 @@ main{
     width:100%;
 }
 
+#select{
+    height:40px;
+    width:100%;
+}
+
 h1{
     text-align: center;
-    border-top:1px solid black;
+    margin:0;
+    padding:0;
     border-bottom:1px solid black;
     font-family: 'Kaisei Tokumin', serif;
 }
@@ -170,4 +176,15 @@ li{
     font-size:20px;
     font-family: 'Kaisei Tokumin', serif;
     display: none;
+}
+
+#emptySelect{
+    float:left;
+    width:50%;
+}
+
+#bookR{
+    float:right;
+    width:50%;
+    font-size:30px;
 }

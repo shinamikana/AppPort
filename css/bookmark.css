@@ -16,3 +16,20 @@ textarea{
 #url{
     width:250px;
 }
+
+#emptyDiv{
+    width:50%;
+    height:40px;
+    float:left;
+}
+
+#selectRightWrapper{
+    height:40px;
+    width:100%;
+}
+
+#selectR{
+    float:right;
+    width:50%;
+    font-size:30px;
+}

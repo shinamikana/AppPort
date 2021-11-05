@@ -7,10 +7,15 @@ function h($str)
 include('dateBase.php');
 include('memoData.php');
 include('bookmarkData.php');
+$showMemoBook = $mysqli -> prepare('SELECT *,book_memo.id AS bookMemoId FROM book_memo LEFT JOIN bookmark ON book_memo.book_id = bookmark.id WHERE bookmark.user_id = ?');
+$showMemoBook -> bind_param('i',$_SESSION['id']);
+$showMemoBook -> execute();
+$memoBookResult = $showMemoBook -> get_result();
 
 if (empty($_SESSION['username'])) {
     header('Location:login.php');
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -33,14 +38,21 @@ if (empty($_SESSION['username'])) {
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
     <link rel="stylesheet" href="/css/bookmark.css">
-    <link rel="stylesheet" href="/css/bookmarkIndex.css">
+    <link rel="stylesheet" href="/css/bookmarkIndexL.css">
 
 </head>
 
 <body>
     <?php include('miniLogo.php'); ?>
     <div id="bookMain">
-        <?php include('bookmarkIndex.php') ?>
+        <?php include('bookmarkIndexL.php') ?>
+        <div id="selectRightWrapper">
+            <div id="emptyDiv"></div>
+            <select id="selectR">
+                <option value="memo">メモ</option>
+                <option value="map">マップ</option>
+            </select>
+        </div>
         <?php include('memoIndex.php'); ?>
     </div>
 
@@ -132,6 +144,15 @@ if (empty($_SESSION['username'])) {
             memoSortable();
 
             $('.bookUl').disableSelection();
+
+            $('#selectR').on('change',function(){
+                let selectVal = $(this).val();
+                if(selectVal === 'map'){
+                    console.log('map');
+                }else if(selectVal === 'memo'){
+                    console.log('memo');
+                }
+            });
         });
     </script>
 </body>

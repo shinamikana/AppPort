@@ -2,6 +2,12 @@
 include('dateBase.php');
 include('mapData.php');
 include('memoData.php');
+include('bookmarkData.php');
+
+$showMapMemo = $mysqli -> prepare('SELECT* ,map_memo.id AS mapMemoId FROM map_memo LEFT JOIN map ON map_memo.map_id = map.id WHERE map.user_id = ?');
+$showMapMemo -> bind_param('i',$_SESSION['id']);
+$showMapMemo -> execute();
+$mapMemoResult = $showMapMemo -> get_result();
 
 if (empty($_SESSION['username'])) {
   header('Location:login.php');
@@ -29,6 +35,7 @@ function h($str)
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
   <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="/css/memoIndex.css">
+  <link rel="stylesheet" href="/css/bookmarkIndex.css">
 </head>
 
 <body>
@@ -36,6 +43,16 @@ function h($str)
   <?php include('miniLogo.php'); ?>
   <main>
     <?php include('mapIndex.php'); ?>
+    <div id="select">
+      <div id="emptySelect">
+
+      </div>
+      <select name="bookR" id="bookR">
+        <option value="memo">メモ</option>
+        <option value="bookmark">ブックマーク</option>
+      </select>
+    </div>
+    <?php include('bookmarkIndex.php'); ?>
     <?php include('memoIndex.php'); ?>
   </main>
 
@@ -143,7 +160,7 @@ function h($str)
       mapDelete();
 
       function slideToggle() {
-        $('.fa-bars').click(function() {
+        $('.showMark').find('.fa-bars').click(function() {
           $(this).parent().find('.mapEdit').slideToggle(200);
         });
       }
@@ -153,7 +170,7 @@ function h($str)
       $('.showMark').find('.mapEdit').slideUp(0);
 
       function mapEdit() {
-        $('.fa-edit').click(function() {
+        $('.showMark').find('.fa-edit').click(function() {
           let val = $(this).parent().find('.columnMark').text();
           $(this).parent().find('.columnMark').hide();
           $(this).parent().find('.markInput').show();
@@ -166,7 +183,7 @@ function h($str)
       mapEdit();
 
       function mapCheck() {
-        $('.fa-check').on('click', function() {
+        $('.showMark').find('.fa-check').on('click', function() {
           let $this = $(this);
           mapEditDone($this);
         });
@@ -264,18 +281,37 @@ function h($str)
           $('.mapWrapper').css('overflow-y', 'scroll');
         },
         scroll: false,
-        update:function(){
+        update: function() {
           let $this = $(this);
-          let mapId = $this.find('.drag').find('.mapId').val();
-          if(mapId != undefined){
+          let mapId = $this.find('.dragBMe').find('.mapId').val();
+          let mapBookId = $this.find('.dragBM').find('.mapId').val();
+          if (mapId != undefined) {
             $.ajax({
-              type:'POST',
-              url:'map.php',
-              data:{'mapId':mapId},
-              dataType:'json',
-            }).done(function(data){
+              type: 'POST',
+              url: 'map.php',
+              data: {
+                'mapId': mapId
+              },
+              dataType: 'json',
+            }).done(function(data) {
               alert('done');
-            }).fail(function(XMLHttpRequest,status,e){
+              $this.find('.dragBMe').addClass('noDrag').removeClass('dragBMe');
+            }).fail(function(XMLHttpRequest, status, e) {
+              alert('fail');
+            })
+          }
+          if(mapBookId != undefined){
+            $.ajax({
+              type: 'POST',
+              url: 'map.php',
+              data: {
+                'mapBookId': mapBookId
+              },
+              dataType: 'json',
+            }).done(function(data) {
+              alert('done');
+              $this.find('.dragBM').addClass('noDrag').removeClass('dragBM');
+            }).fail(function(XMLHttpRequest, status, e) {
               alert('fail');
             })
           }
@@ -292,22 +328,63 @@ function h($str)
           let $this = $(this);
           let mapVal = $this.find('.noDrag').find('.mapId').val();
           let memoVal = $this.parent().find('.memoId').val();
-          if(mapVal != undefined && memoVal != undefined){
+          let bookVal = $this.parent().find('.bookId').val();
+          console.log(mapVal);
+          console.log(bookVal);
+          if (mapVal != undefined && memoVal != undefined) {
             $.ajax({
-              type:'POST',
-              url:'map.php',
-              data:{'mapVal':mapVal,'memoVal':memoVal},
-              dataType:'json',
-            }).done(function(data){
+              type: 'POST',
+              url: 'map.php',
+              data: {
+                'mapVal': mapVal,
+                'memoVal': memoVal
+              },
+              dataType: 'json',
+            }).done(function(data) {
               alert('done');
-            }).fail(function(XMLHttpRequest,status,e){
+              $this.find('.noDrag').addClass('dragBMe').removeClass('noDrag');
+            }).fail(function(XMLHttpRequest, status, e) {
               alert('fail');
             });
           }
+
+          if (mapVal != undefined && bookVal != undefined) {
+            $.ajax({
+              type: 'POST',
+              url: 'map.php',
+              data: {
+                'mapVal': mapVal,
+                'bookVal': bookVal
+              },
+              dataType: 'json',
+            }).done(function(data) {
+              alert('done');
+              $this.find('.noDrag').addClass('dragBM').removeClass('noDrag');
+            }).fail(function(XMLHttpRequest, status, e) {
+              alert('fail');
+            });
+          }
+
+        }
+      });
+
+      $('#bookR').on('change',function(){
+        let selectVal = $(this).val();
+        console.log(selectVal);
+        if(selectVal === 'bookmark'){
+          $('.bookWrapper').show();
+          $('.wrapper').hide();
+        }
+
+        if(selectVal === 'memo'){
+          $('.bookWrapper').hide();
+          $('.wrapper').show();
         }
       });
 
     });
+
+    $('.bookWrapper').hide();
   </script>
 </body>
 

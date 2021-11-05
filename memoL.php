@@ -26,6 +26,6 @@
 </head>
 <body>
     <?php include('miniLogo.php'); ?>
-    <?php include('memoAppIndex.php'); ?>
+    <?php include('memoIndexL.php'); ?>
 </body>
 </html>

@@ -15,7 +15,7 @@
                             <?php if (isset($resultMark)) : ?>
                                 <?php foreach ($mapMemoResult as $map_memo) : ?>
                                     <?php if ($map_memo['memo_id'] == $memo['id']) : ?>
-                                        <div class="showMark drag">
+                                        <div class="showMark dragBMe">
                                             <i class="fas fa-check"></i><i class="fas fa-edit"></i><img src="/img/load.gif" alt="" class="loadGif1">
                                             <p class="columnMark"><?php echo h($map_memo['field_name']) ?></p><input type="hidden" value="<?php echo h($map_memo['lat']) ?>" class="mapLat"><input type="hidden" value="<?php echo h($map_memo['lng']) ?>" class="mapLng"><input type="text" class="markInput" value="<?php echo h($map_memo['field_name']) ?>"><img src="/img/load.gif" alt="" class="loadGif"><input type="hidden" value="<?php echo h($map_memo['id']) ?>" class="mapId"><i class="fas fa-bars"></i>
                                             <ul class="mapEdit">
@@ -25,7 +25,7 @@
                                     <?php endif ?>
                                 <?php endforeach ?>
                             <?php endif ?>
-                            <?php if(isset($showResult)):?>
+                            <?php if(isset($memoBookResult)):?>
                             <?php foreach ($memoBookResult as $memo_book):?>
                                 <?php if ($memo_book['memo_id'] == $memo['id']) : ?>
                                     <li class="bookLi drag" id="<?php echo $memo['id'] ?>">

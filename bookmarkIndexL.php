@@ -2,7 +2,7 @@
     <p id="bookmarkError"></p>
     <h1 id="bookmarkTitle">ブックマーク</h1>
     <div class="bookmark">
-        <!-- ブックマークフォーム mark=URL linkName=リンク名 -->
+        <!-- ブックマークフォーム　mark=URL linkName=リンク名 -->
         <input type="text" id="linkName" name="linkName" placeholder="お好きなリンク名">
         <input name="url" id="url" placeholder="URL(http~)">
         <input type="submit" id="submit1" value="登録"><img src="/img/load.gif" alt="" id="load1">
@@ -15,23 +15,6 @@
                         <div class="bookmarking">
                             <i class="fas fa-check"></i><i class="far fa-edit"></i><a href="<?php echo h($show['link']) ?>" target="_blank" rel="noopener noreferrer" class="bookA"><?php echo h($show['link_name']) ?></a><i class="fas fa-times"></i><input type="text" value="<?php echo h($show['link_name']) ?>" class="bookNameInput"><input type="text" value="<?php echo h($show['link']) ?>" class="bookLinkInput"><button id="deltn1" value="<?php echo h($show['bookmark_id']) ?>">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="<?php echo h($show['bookmark_id']) ?>">
                         </div>
-                        <ul class="dragUl">
-                            ここにドロップ
-                            <?php foreach ($resultMapBook as $map_book) : ?>
-                                <?php if ($map_book['book_id'] == $show['bookmark_id']) : ?>
-                                    <li>
-                                        <div class="showMark dragBM">
-                                            <i class="fas fa-check"></i><i class="fas fa-edit"></i><img src="/img/load.gif" alt="" class="loadGif1">
-                                            <p class="columnMark"><?php echo h($map_book['field_name']) ?></p><input type="hidden" value="<?php echo h($map_book['lat']) ?>" class="mapLat"><input type="hidden" value="<?php echo h($map_book['lng']) ?>" class="mapLng"><input type="text" class="markInput" value="<?php echo h($mark['field_name']) ?>"><img src="/img/load.gif" alt="" class="loadGif"><input type="hidden" value="<?php echo h($map_book['map_id']) ?>" class="mapId"><i class="fas fa-bars"></i>
-                                            <ul class="mapEdit">
-                                                <li class="mapDel">削除</li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                <?php endif ?>
-                            <?php endforeach ?>
-                        </ul>
-
                     </li>
                 <?php endforeach ?>
             <?php endif ?>
@@ -145,7 +128,7 @@
 
         $delete();
 
-        $('.bookmarking').find('.fa-edit').click(function() {
+        $('.fa-edit').click(function() {
             $(this).hide();
             $(this).parent().find('.bookA').hide();
             $(this).parent().find('.bookNameInput').show();
@@ -170,7 +153,7 @@
         }
 
         //編集を中止した場合の処理
-        $('.bookmarking').find('.fa-times').click(function() {
+        $('.fa-times').click(function() {
             let $this = $(this);
             let bookName = $this.parent().find('.bookA').text();
             let bookLink = $this.parent().find('.bookA').attr('href');
@@ -180,7 +163,7 @@
         });
 
         //編集を送信する処理
-        $('.bookmarking').find('.fa-check').click(function() {
+        $('.fa-check').click(function() {
             let $this = $(this);
             let bookNameVal = $this.parent().find('.bookNameInput').val();
             let bookLinkVal = $this.parent().find('.bookLinkInput').val();
@@ -254,8 +237,6 @@
                 bookEditShow($this);
             }
         });
-
-        $('.dragUlB').sortable();
 
     });
 </script>
