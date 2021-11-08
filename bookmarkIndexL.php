@@ -79,7 +79,7 @@
                     },
                     dataType: 'json',
                 }).done(function(data) {
-                    $('.bookUl').prepend('<li class="bookLi" id="' + data.id + '"><div class="bookmarking"><i class="fas fa-check"></i><i class="far fa-edit"></i><a href="' + data.url + '" target="_blank" rel="noopener noreferrer" class="bookA">' + data.linkName + '</a><input type="text" value="' + data.linkName + '" class="bookNameInput"><input type="text" value="' + data.url + '" class="bookLinkInput"><button id="deltn1" value="' + data.id + '">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="' + data.id + '"></div></li>');
+                    $('.bookUl').prepend('<li class="bookLi noDrag" id="' + data.id + '"><div class="bookmarking"><i class="fas fa-check"></i><i class="far fa-edit"></i><a href="' + data.url + '" target="_blank" rel="noopener noreferrer" class="bookA">' + data.linkName + '</a><input type="text" value="' + data.linkName + '" class="bookNameInput"><input type="text" value="' + data.url + '" class="bookLinkInput"><button id="deltn1" value="' + data.id + '">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="' + data.id + '"></div></li>');
                     $('#submit1').show();
                     $('#load1').hide();
                     $('#url').val('');

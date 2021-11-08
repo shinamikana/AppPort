@@ -1,13 +1,4 @@
 <?php
-$showMemo = $mysqli -> prepare('SELECT *, memo.id AS memo_id FROM memo WHERE memo.user_id = ? ORDER BY memo.id DESC');
-$showMemo -> bind_param('i',$_SESSION['id']);
-$showMemo -> execute();
-$memoResult = $showMemo -> get_result();
-
-
-
-
-
 //東京のタイムゾーンをセット
 date_default_timezone_set('Asia/Tokyo');
 
@@ -42,5 +33,28 @@ if(isset($_POST['del'])){
     $deleteMemoBook -> bind_param('i',$_POST['del']);
     $deleteMemoBook -> execute();
     $deleteMemoBook -> close();
+    exit;
+}
+
+if(isset($_POST['memoId']) && isset($_POST['bookId'])){
+    $memoId = $_POST['memoId'];
+    $bookId = $_POST['bookId'];
+    $memoBook = $mysqli -> prepare('INSERT INTO book_memo(memo_id,book_id) VALUES(?,?)');
+    $memoBook -> bind_param('ii',$memoId,$bookId);
+    $memoBook -> execute();
+    $data = array('memoId' => $memoId ,'bookId' => $bookId);
+    header('Countent-type:application/json;charset=UTF-8');
+    echo json_encode($data);
+    exit;
+}
+
+if(isset($_POST['rMemoId'])){
+    $rMemoId = $_POST['rMemoId'];
+    $rMemoBook = $mysqli -> prepare('DELETE FROM book_memo WHERE memo_id = ?');
+    $rMemoBook -> bind_param('i',$rMemoId);
+    $rMemoBook -> execute();
+    $data = array('rMemoId' => $rMemoId);
+    header('Countent-type:application/json;charset=UTF-8');
+    echo json_encode($data);
     exit;
 }

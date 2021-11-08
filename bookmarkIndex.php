@@ -17,21 +17,33 @@
                         </div>
                         <ul class="dragUl">
                             ここにドロップ
-                            <?php foreach ($resultMapBook as $map_book) : ?>
-                                <?php if ($map_book['book_id'] == $show['bookmark_id']) : ?>
-                                    <li>
-                                        <div class="showMark dragBM">
-                                            <i class="fas fa-check"></i><i class="fas fa-edit"></i><img src="/img/load.gif" alt="" class="loadGif1">
-                                            <p class="columnMark"><?php echo h($map_book['field_name']) ?></p><input type="hidden" value="<?php echo h($map_book['lat']) ?>" class="mapLat"><input type="hidden" value="<?php echo h($map_book['lng']) ?>" class="mapLng"><input type="text" class="markInput" value="<?php echo h($mark['field_name']) ?>"><img src="/img/load.gif" alt="" class="loadGif"><input type="hidden" value="<?php echo h($map_book['map_id']) ?>" class="mapId"><i class="fas fa-bars"></i>
-                                            <ul class="mapEdit">
-                                                <li class="mapDel">削除</li>
-                                            </ul>
+                            <?php if (isset($resultMapBook)) : ?>
+                                <?php foreach ($resultMapBook as $map_book) : ?>
+                                    <?php if ($map_book['book_id'] == $show['bookmark_id']) : ?>
+                                        <li>
+                                            <div class="showMark dragBM">
+                                                <i class="fas fa-check"></i><i class="fas fa-edit"></i><img src="/img/load.gif" alt="" class="loadGif1">
+                                                <p class="columnMark"><?php echo h($map_book['field_name']) ?></p><input type="hidden" value="<?php echo h($map_book['lat']) ?>" class="mapLat"><input type="hidden" value="<?php echo h($map_book['lng']) ?>" class="mapLng"><input type="text" class="markInput" value="<?php echo h($mark['field_name']) ?>"><img src="/img/load.gif" alt="" class="loadGif"><input type="hidden" value="<?php echo h($map_book['map_id']) ?>" class="mapId"><i class="fas fa-bars"></i>
+                                                <ul class="mapEdit">
+                                                    <li class="mapDel">削除</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    <?php endif ?>
+                                <?php endforeach ?>
+                            <?php endif ?>
+                            <?php if (isset($memoBookShow)) : ?>
+                                <?php foreach ($memoBookShow as $memoBook) : ?>
+                                    <?php if ($show['bookmark_id'] == $memoBook['book_id']) : ?>
+                                        <div class="memo dragMB">
+                                            <p id="mainText"><?php echo h($memoBook['text']) ?></p>
+                                            <p id="date"><?php echo h($memoBook['date']) ?></p>
+                                            <button type="submit" value="<?php echo $memoBook['memoId'] ?>" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload"><input type="hidden" value="<?php echo $memoBook['memoId'] ?>" class="memoId">
                                         </div>
-                                    </li>
-                                <?php endif ?>
-                            <?php endforeach ?>
+                                    <?php endif ?>
+                                <?php endforeach ?>
+                            <?php endif ?>
                         </ul>
-
                     </li>
                 <?php endforeach ?>
             <?php endif ?>
@@ -96,7 +108,7 @@
                     },
                     dataType: 'json',
                 }).done(function(data) {
-                    $('.bookUl').prepend('<li class="bookLi" id="' + data.id + '"><div class="bookmarking"><i class="fas fa-check"></i><i class="far fa-edit"></i><a href="' + data.url + '" target="_blank" rel="noopener noreferrer" class="bookA">' + data.linkName + '</a><input type="text" value="' + data.linkName + '" class="bookNameInput"><input type="text" value="' + data.url + '" class="bookLinkInput"><button id="deltn1" value="' + data.id + '">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="' + data.id + '"></div></li>');
+                    $('.bookUl').prepend('<li class="bookLi" id="' + data.id + '"><div class="bookmarking"><i class="fas fa-check"></i><i class="far fa-edit"></i><a href="' + data.url + '" target="_blank" rel="noopener noreferrer" class="bookA">' + data.linkName + '</a><input type="text" value="' + data.linkName + '" class="bookNameInput"><input type="text" value="' + data.url + '" class="bookLinkInput"><button id="deltn1" value="' + data.id + '">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="' + data.id + '"></div><ul class="dragUl"></ul></li>');
                     $('#submit1').show();
                     $('#load1').hide();
                     $('#url').val('');
@@ -122,6 +134,7 @@
                 $('.bookmarking').find('#deltn1').hide();
                 $('.deload1').show();
                 let delId = $(this).val();
+                console.log(delId);
                 $.ajax({
                     type: 'POST',
                     url: 'bookmark.php',
@@ -254,8 +267,6 @@
                 bookEditShow($this);
             }
         });
-
-        $('.dragUlB').sortable();
 
     });
 </script>

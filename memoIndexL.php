@@ -7,7 +7,7 @@
         <div id="memoWrapper">
             <?php if(isset($memoResult)): ?>
                 <?php foreach($memoResult as $memo): ?>
-                    <div class="memo">
+                    <div class="memo noDrag">
                         <p id="mainText"><?php echo h($memo['text']) ?></p>
                         <p id="date"><?php echo h($memo['date']) ?></p>
                         <button type="submit" value="<?php echo $memo['memo_id'] ?>" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload"><input type="hidden" value="<?php echo $memo['memo_id'] ?>" class="memoId">
@@ -63,7 +63,7 @@
                 dataType:'json',
             }).done(function(data){
                 $('#text').val('');
-                $('#memoWrapper').prepend('<div class="memo"><p id="mainText"><span>'+val+'</span></p><p id="date">'+data.date+'</p><button type="submit" value="'+data.insert+'" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload"><ul class="dragUl">ここにドロップ</ul></div>');
+                $('#memoWrapper').prepend('<div class="memo"><p id="mainText"><span>'+val+'</span></p><p id="date">'+data.date+'</p><button type="submit" value="'+data.insert+'" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload"></div>');
                 $('#load').hide();
                 $('#submit').show();
                 $memoDel();

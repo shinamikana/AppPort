@@ -22,12 +22,15 @@ h1{
 
 .mapWrapper{
     height:auto;
-    width:50%;
-    float:right;
+    width:49%;
+    position: fixed;
+    top:53px;
+    right:0;
+    bottom:0;
+    left:10px;
     overflow-y:scroll;
     border:1px solid black;
     padding-bottom:30px;
-    display:none;
 }
 
 #map{
@@ -184,12 +187,4 @@ li{
     float:right;
     width:50%;
     font-size:30px;
-}
-
-.showMark .dragUl{
-    margin:0;
-    padding:0;
-    border:1px solid black;
-    min-height:50px;
-    text-align: center;
 }
