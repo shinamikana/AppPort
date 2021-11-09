@@ -25,14 +25,10 @@ if(isset($_POST['del'])){
     $data2 = array('del' => $delId);
     header("Content-type: application/json; charset=UTF-8");
     echo json_encode($data2);
-    $delete = $mysqli -> prepare('DELETE FROM memo WHERE id = ?');
+    $delete = $mysqli -> prepare('DELETE memo,book_memo,map_memo FROM memo LEFT JOIN book_memo ON memo.id = book_memo.memo_id LEFT JOIN map_memo ON memo.id = map_memo.memo_id WHERE id = ?');
     $delete -> bind_param('i',$_POST['del']);
     $delete -> execute();
     $delete -> close();
-    $deleteMemoBook = $mysqli -> prepare('DELETE FROM book_memo WHERE memo_id = ?');
-    $deleteMemoBook -> bind_param('i',$_POST['del']);
-    $deleteMemoBook -> execute();
-    $deleteMemoBook -> close();
     exit;
 }
 

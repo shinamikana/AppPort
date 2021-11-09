@@ -11,7 +11,7 @@ $showMark->execute();
 $resultMark = $showMark->get_result();
 $mapCount = 0;
 while ($resultMark->fetch_assoc()) {
-    ++$mapCount;
+  ++$mapCount;
 }
 
 $showMapMemo = $mysqli->prepare('SELECT* ,map_memo.id AS mapMemoId FROM map_memo LEFT JOIN map ON map_memo.map_id = map.id WHERE map.user_id = ?');
@@ -25,23 +25,23 @@ $showMapBook->execute();
 $resultMapBook = $showMapBook->get_result();
 
 //ブックマーク表示SQL
-$show = $mysqli -> prepare('SELECT *,bookmark.id AS bookmark_id FROM bookmark LEFT JOIN book_memo ON bookmark.id = book_memo.book_id WHERE bookmark.user_id = ? AND book_memo.id IS NULL ORDER BY bookmark.id DESC');
-$show -> bind_param('i',$_SESSION['id']);
-$show -> execute();
-$showResult = $show -> get_result();
+$show = $mysqli->prepare('SELECT *,bookmark.id AS bookmark_id FROM bookmark LEFT JOIN book_memo ON bookmark.id = book_memo.book_id WHERE bookmark.user_id = ? AND book_memo.id IS NULL ORDER BY bookmark.id DESC');
+$show->bind_param('i', $_SESSION['id']);
+$show->execute();
+$showResult = $show->get_result();
 $bookCount = 0;
-while($showResult -> fetch_assoc()){
-    ++$bookCount;
+while ($showResult->fetch_assoc()) {
+  ++$bookCount;
 }
 
 //マップアプリでのメモカラム表示
-$showMemo = $mysqli -> prepare('SELECT *, memo.id AS memo_id FROM memo LEFT JOIN book_memo ON memo.id = book_memo.memo_id WHERE memo.user_id = ? AND book_memo.id IS NULL ORDER BY memo.id DESC');
-$showMemo -> bind_param('i',$_SESSION['id']);
-$showMemo -> execute();
-$memoResult = $showMemo -> get_result();
+$showMemo = $mysqli->prepare('SELECT *, memo.id AS memo_id FROM memo LEFT JOIN book_memo ON memo.id = book_memo.memo_id WHERE memo.user_id = ? AND book_memo.id IS NULL ORDER BY memo.id DESC');
+$showMemo->bind_param('i', $_SESSION['id']);
+$showMemo->execute();
+$memoResult = $showMemo->get_result();
 $memoCount = 0;
-while($memoResult -> fetch_assoc()){
-    ++$memoCount;
+while ($memoResult->fetch_assoc()) {
+  ++$memoCount;
 }
 
 if (empty($_SESSION['username'])) {
@@ -93,108 +93,91 @@ function h($str)
 
   <script>
     $(function() {
-
-
-
-      $('.mapColumn').sortable({
-        connectWith: '.dragUl',
-        placeholder: 'memoDiv',
-        out: function() {
-          $('.mapWrapper').css('overflow-y', 'visible');
-        },
-        over: function() {
-          $('.mapWrapper').css('overflow-y', 'scroll');
-        },
-        stop: function() {
-          $('.mapWrapper').css('overflow-y', 'scroll');
-        },
-        scroll: false,
-        update: function() {
-          let $this = $(this);
-          let mapId = $this.find('.dragBMe').find('.mapId').val();
-          let mapBookId = $this.find('.dragBM').find('.mapId').val();
-          if (mapId != undefined) {
-            $.ajax({
-              type: 'POST',
-              url: 'map.php',
-              data: {
-                'mapId': mapId
-              },
-              dataType: 'json',
-            }).done(function(data) {
-              alert('done');
-              $this.find('.dragBMe').addClass('noDrag').removeClass('dragBMe');
-            }).fail(function(XMLHttpRequest, status, e) {
-              alert('fail');
-            })
+      window.sortableLeft = function() {
+        $('.mapColumn').sortable({
+          connectWith: '.dragUl',
+          placeholder: 'memoDiv',
+          out: function() {
+            $('.mapWrapper').css('overflow-y', 'visible');
+          },
+          over: function() {
+            $('.mapWrapper').css('overflow-y', 'scroll');
+          },
+          stop: function() {
+            $('.mapWrapper').css('overflow-y', 'scroll');
+          },
+          scroll: false,
+          update: function() {
+            let $this = $(this);
+            let mapId = $this.find('.drag').find('.mapId').val();
+            if (mapId != undefined) {
+              $.ajax({
+                type: 'POST',
+                url: 'map.php',
+                data: {
+                  'mapId': mapId
+                },
+                dataType: 'json',
+              }).done(function(data) {
+                alert('done');
+                $this.find('.drag').addClass('noDrag').removeClass('drag');
+              }).fail(function(XMLHttpRequest, status, e) {
+                alert('fail');
+              });
+            }
           }
-          if (mapBookId != undefined) {
-            $.ajax({
-              type: 'POST',
-              url: 'map.php',
-              data: {
-                'mapBookId': mapBookId
-              },
-              dataType: 'json',
-            }).done(function(data) {
-              alert('done');
-              $this.find('.dragBM').addClass('noDrag').removeClass('dragBM');
-            }).fail(function(XMLHttpRequest, status, e) {
-              alert('fail');
-            })
-          }
-        }
-      });
+        });
+      }
 
-      $('.dragUl').sortable({
-        connectWith: '.mapColumn',
-        placeholder: 'memoDiv',
-        stop: function() {
-          $('.mapWrapper').css('overflow-y', 'scroll');
-        },
-        update: function() {
-          let $this = $(this);
-          let mapVal = $this.find('.noDrag').find('.mapId').val();
-          let memoVal = $this.parent().find('.memoId').val();
-          let bookVal = $this.parent().find('.bookId').val();
-          console.log(mapVal);
-          console.log(bookVal);
-          if (mapVal != undefined && memoVal != undefined) {
-            $.ajax({
-              type: 'POST',
-              url: 'map.php',
-              data: {
-                'mapVal': mapVal,
-                'memoVal': memoVal
-              },
-              dataType: 'json',
-            }).done(function(data) {
-              alert('done');
-              $this.find('.noDrag').addClass('dragBMe').removeClass('noDrag');
-            }).fail(function(XMLHttpRequest, status, e) {
-              alert('fail');
-            });
+      window.sortableRight = function() {
+        $('.dragUl').sortable({
+          connectWith: '.mapColumn',
+          placeholder: 'memoDiv',
+          stop: function() {
+            $('.mapWrapper').css('overflow-y', 'scroll');
+          },
+          update: function() {
+            let $this = $(this);
+            let mapVal = $this.find('.noDrag').find('.mapId').val();
+            let memoVal = $this.parent().find('.memoId').val();
+            let bookVal = $this.parent().find('.bookId').val();
+            console.log(mapVal);
+            console.log(bookVal);
+            if (mapVal != undefined && memoVal != undefined) {
+              $.ajax({
+                type: 'POST',
+                url: 'map.php',
+                data: {
+                  'mapVal': mapVal,
+                  'memoVal': memoVal
+                },
+                dataType: 'json',
+              }).done(function(data) {
+                alert('done');
+                $this.find('.noDrag').addClass('drag').removeClass('noDrag');
+              }).fail(function(XMLHttpRequest, status, e) {
+                alert('fail');
+              });
+            }
+            if (mapVal != undefined && bookVal != undefined) {
+              $.ajax({
+                type: 'POST',
+                url: 'map.php',
+                data: {
+                  'mapVal': mapVal,
+                  'bookVal': bookVal
+                },
+                dataType: 'json',
+              }).done(function(data) {
+                alert('done');
+                $this.find('.noDrag').addClass('drag').removeClass('noDrag');
+              }).fail(function(XMLHttpRequest, status, e) {
+                alert('fail');
+              });
+            }
           }
-
-          if (mapVal != undefined && bookVal != undefined) {
-            $.ajax({
-              type: 'POST',
-              url: 'map.php',
-              data: {
-                'mapVal': mapVal,
-                'bookVal': bookVal
-              },
-              dataType: 'json',
-            }).done(function(data) {
-              alert('done');
-              $this.find('.noDrag').addClass('dragBM').removeClass('noDrag');
-            }).fail(function(XMLHttpRequest, status, e) {
-              alert('fail');
-            });
-          }
-
-        }
-      });
+        });
+      }
 
       $('#bookR').on('change', function() {
         let selectVal = $(this).val();

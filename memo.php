@@ -95,86 +95,92 @@ function h($str)
 
     <script>
         $(() => {
-            $('#memoWrapper').sortable({
-                connectWith: '.dragUl',
-                placeholder: 'memoDiv',
-                scroll: false,
-                out: function() {
-                    $('.wrapper').css('overflow-y', 'visible');
-                },
-                over: function() {
-                    $('.wrapper').css('overflow-y', 'scroll');
-                },
-                stop: function() {
-                    $('.wrapper').css('overflow-y', 'scroll');
-                },
-                update: function() {
-                    let $this = $(this);
-                    let rMemoId = $this.find('.dragMB').find('.memoId').val();
+            window.sortableLeft = function() {
+                $('#memoWrapper').sortable({
+                    connectWith: '.dragUl',
+                    placeholder: 'memoDiv',
+                    scroll: false,
+                    out: function() {
+                        $('.wrapper').css('overflow-y', 'visible');
+                    },
+                    over: function() {
+                        $('.wrapper').css('overflow-y', 'scroll');
+                    },
+                    stop: function() {
+                        $('.wrapper').css('overflow-y', 'scroll');
+                    },
+                    update: function() {
+                        let $this = $(this);
+                        let rMemoId = $this.find('.dragMB').find('.memoId').val();
 
-                    if (rMemoId != undefined) {
-                        $.ajax({
-                            type: 'POST',
-                            url: 'memo.php',
-                            data: {
-                                'rMemoId': rMemoId,
-                            },
-                            dataType: 'json',
-                        }).done(function(data) {
-                            alert('done');
-                            $this.find('.dragMB').addClass('noDrag').removeClass('dragMB');
-                        }).fail(function(XMLHttpRequest, status, e) {
-                            alert('fail');
-                        });
+                        if (rMemoId != undefined) {
+                            $.ajax({
+                                type: 'POST',
+                                url: 'memo.php',
+                                data: {
+                                    'rMemoId': rMemoId,
+                                },
+                                dataType: 'json',
+                            }).done(function(data) {
+                                alert('done');
+                                $this.find('.dragMB').addClass('noDrag').removeClass('dragMB');
+                            }).fail(function(XMLHttpRequest, status, e) {
+                                alert('fail');
+                            });
+                        }
                     }
-                }
-            });
+                });
+            }
+            sortableLeft();
 
-            $('.dragUl').sortable({
-                connectWith: '#memoWrapper',
-                placeholder: 'memoDiv',
-                stop:function(){
-                    $('.wrapper').css('overflow-y', 'scroll');
-                },
-                update: function() {
-                    $this = $(this);
-                    let memoId = $this.find('.noDrag').find('.memoId').val();
-                    let bookId = $this.parent().find('.bookId').val();
-                    let mapId = $this.parent().find('.mapId').val();
-                    if (memoId != undefined && bookId != undefined) {
-                        $.ajax({
-                            type: 'POST',
-                            url: 'memo.php',
-                            data: {
-                                'memoId': memoId,
-                                'bookId': bookId
-                            },
-                            dataType: 'json',
-                        }).done(function(data) {
-                            alert('done');
-                            $this.find('.noDrag').addClass('dragMB').removeClass('noDrag');
-                        }).fail(function(XMLHttpRequest, status, e) {
-                            alert('fail');
-                        });
+            window.sortableRight = function() {
+                $('.dragUl').sortable({
+                    connectWith: '#memoWrapper',
+                    placeholder: 'memoDiv',
+                    stop: function() {
+                        $('.wrapper').css('overflow-y', 'scroll');
+                    },
+                    update: function() {
+                        $this = $(this);
+                        let memoId = $this.find('.noDrag').find('.memoId').val();
+                        let bookId = $this.parent().find('.bookId').val();
+                        let mapId = $this.parent().find('.mapId').val();
+                        if (memoId != undefined && bookId != undefined) {
+                            $.ajax({
+                                type: 'POST',
+                                url: 'memo.php',
+                                data: {
+                                    'memoId': memoId,
+                                    'bookId': bookId
+                                },
+                                dataType: 'json',
+                            }).done(function(data) {
+                                alert('done');
+                                $this.find('.noDrag').addClass('dragMB').removeClass('noDrag');
+                            }).fail(function(XMLHttpRequest, status, e) {
+                                alert('fail');
+                            });
+                        }
+                        if (mapId != undefined && memoId != undefined) {
+                            $.ajax({
+                                type: 'POST',
+                                url: 'memo.php',
+                                data: {
+                                    'memoId': memoId,
+                                    'mapId': mapId
+                                },
+                                dataType: 'json',
+                            }).done(function(data) {
+                                alert('done');
+                                $this.find('.noDrag').addClass('dragMM').removeClass('noDrag');
+                            }).fail(function(XMLHttpRequest, status, e) {
+                                alert('fail');
+                            });
+                        }
                     }
-                    if(mapId != undefined && memoId != undefined){
-                        $.ajax({
-                            type: 'POST',
-                            url: 'memo.php',
-                            data: {
-                                'memoId': memoId,
-                                'mapId': mapId
-                            },
-                            dataType: 'json',
-                        }).done(function(data) {
-                            alert('done');
-                            $this.find('.noDrag').addClass('dragMM').removeClass('noDrag');
-                        }).fail(function(XMLHttpRequest, status, e) {
-                            alert('fail');
-                        });
-                    }
-                }
-            });
+                });
+            }
+            sortableRight();
 
             $('.mapWrappper').hide();
 

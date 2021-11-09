@@ -25,12 +25,12 @@
           <?php endif ?>
           <?php if (isset($memoMapResult)) : ?>
             <?php foreach ($memoMapResult as $memoMap) : ?>
-              <?php if($mark['mapId'] == $memoMap['map_id']) :?>
-              <div class="memo">
-                <p id="mainText"><?php echo h($memoMap['memoId']) ?></p>
-                <p id="date"><?php echo h($memoMap['date']) ?></p>
-                <button type="submit" value="<?php echo $memoMap['memoId'] ?>" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload"><input type="hidden" value="<?php echo $memoMap['memoId'] ?>" class="memoId">
-              </div>
+              <?php if ($mark['mapId'] == $memoMap['map_id']) : ?>
+                <div class="memo">
+                  <p id="mainText"><?php echo h($memoMap['memoId']) ?></p>
+                  <p id="date"><?php echo h($memoMap['date']) ?></p>
+                  <button type="submit" value="<?php echo $memoMap['memoId'] ?>" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload"><input type="hidden" value="<?php echo $memoMap['memoId'] ?>" class="memoId">
+                </div>
               <?php endif ?>
             <?php endforeach ?>
           <?php endif ?>
@@ -125,7 +125,7 @@
         dataType: 'json',
       }).done(function(data) {
         $('.load').hide();
-        $('.mapColumn').prepend('<div class="showMark"><i class="fas fa-check"></i><i class="fas fa-edit"></i><p class="columnMark">登録した地点</p><input type="hidden" value="' + data.lat + '" class="mapLat"><input type="hidden" value="' + data.lng + '" class="mapLng"><input type="text" class="markInput" value="登録した地点"><img src="/img/load.gif" alt="" class="loadGif"><input type="hidden" value="' + data.insert_id + '" class="mapId"><i class="fas fa-bars"></i><ul class="mapEdit"><li class="mapDel">削除</li></ul></div>');
+        $('.mapColumn').prepend('<div class="showMark"><i class="fas fa-check"></i><i class="fas fa-edit"></i><p class="columnMark">登録した地点</p><input type="hidden" value="' + data.lat + '" class="mapLat"><input type="hidden" value="' + data.lng + '" class="mapLng"><input type="text" class="markInput" value="登録した地点"><img src="/img/load.gif" alt="" class="loadGif"><input type="hidden" value="' + data.insert_id + '" class="mapId"><i class="fas fa-bars"></i><ul class="mapEdit"><li class="mapDel">削除</li></ul><div class="dragUl">ここにドラッグ</ul></div>');
         $('.showMark').first().find('.mapEdit').slideUp(0);
         $('.fa-bars').first().click(function() {
           $(this).parent().find('.mapEdit').slideToggle(200);
@@ -133,6 +133,8 @@
         mapDelete();
         mapEdit();
         mapCheck();
+        sortableLeft();
+        sortableRight();
       }).fail(function(HMLHttpRequest, status, e) {
         console.log('error number:' + XMLHttpRequest + ',status:' + status + ',thrown:' + e);
         alert('fail');
@@ -235,7 +237,6 @@
         //latとlngを浮動小数点に変換  *これがなければエラー
         lat = parseFloat(lat);
         lng = parseFloat(lng);
-        console.log(map);
         const marker = new google.maps.Marker({
           position: {
             lat,

@@ -1,5 +1,14 @@
 <?php
 
+$showMark = $mysqli->prepare('SELECT *,map.id AS mapId FROM map LEFT JOIN map_memo ON map.id = map_memo.map_id LEFT JOIN map_bookmark ON map.id = map_bookmark.map_id WHERE user_id = ? AND map_memo.id IS NULL ORDER BY mapId DESC');
+$showMark->bind_param('i', $_SESSION['id']);
+$showMark->execute();
+$resultMark = $showMark->get_result();
+$mapCount = 0;
+while ($resultMark->fetch_assoc()) {
+    ++$mapCount;
+}
+
 
 
 if (isset($_POST['lat']) && isset($_POST['lng'])) {

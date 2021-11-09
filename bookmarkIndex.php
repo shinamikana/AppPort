@@ -114,7 +114,8 @@
                     $('#url').val('');
                     $('#linkName').val('');
                     $delete();
-
+                    sortableLeft();
+                    sortableRight();
                 }).fail(function(XMLHttpRequest, status, e) {
                     console.log('error number:' + XMLHttpRequest + ',status:' + status + ',thrown:' + e);
                     alert('fail');

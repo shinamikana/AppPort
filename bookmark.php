@@ -101,7 +101,7 @@ if (empty($_SESSION['username'])) {
         //ブックマークのドラッグ＆ドロップ処理
         $(() => {
             ///メモアプリからブックマークアプリに移動したら
-            window.bookSortable = function() {
+            window.sortableLeft= function() {
                 $('.bookUl').sortable({
                     connectWith: '.dragUl',
                     placeholder: 'memoDiv',
@@ -156,10 +156,10 @@ if (empty($_SESSION['username'])) {
                     }
                 });
             }
-            bookSortable();
+            sortableLeft();
 
             //ブックマークからメモアプリに移動したら
-            window.memoSortable = function() {
+            window.sortableRight = function() {
                 $('.dragUl').sortable({
                     connectWith: '.bookUl',
                     placeholder: 'memoDiv',
@@ -173,6 +173,7 @@ if (empty($_SESSION['username'])) {
                         let memoId = $(this).parent().find('.memoId').val();
                         let mapId = $(this).parent().find('.mapId').val();
                         console.log('memoId is'+memoId);
+                        console.log('mapId is'+mapId);
                         //ドロップされたブックマークのid
                         let dragId = $(this).parent().find('.noDrag').find('.bookId').val();
                         if (dragId != undefined && memoId != undefined) {
@@ -210,7 +211,7 @@ if (empty($_SESSION['username'])) {
                     }
                 });
             }
-            memoSortable();
+            sortableRight();
 
             $('.bookUl').disableSelection();
 
