@@ -40,19 +40,20 @@ h1{
 
 .showMark{
     display: inline-block;
-    border-top:1px solid black;
-    border-bottom:1px solid black;
+    border:1px solid black;
     font-size:18px;
     text-align: center;
-    width:100%;
+    width:90%;
     line-height: 18px;
     background-color: rgba(255,255,255,0.6);
     margin-top:5px;
+    box-shadow:5px 5px 3px gray;
 }
 
 .mapColumn{
     margin-top:10px;
     min-height: 50px;
+    text-align: center;
 }
 
 .columnMark{
