@@ -129,6 +129,7 @@ function h($str)
           }
         });
       }
+      sortableLeft();
 
       window.sortableRight = function() {
         $('.dragUl').sortable({
@@ -179,6 +180,7 @@ function h($str)
           }
         });
       }
+      sortableRight();
 
       $('#bookR').on('change', function() {
         let selectVal = $(this).val();
