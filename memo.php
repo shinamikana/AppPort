@@ -1,8 +1,8 @@
 <?php
-include('dateBase.php');
-include('memoData.php');
-include('bookmarkData.php');
-include('mapData.php');
+require_once('dateBase.php');
+require_once('memoData.php');
+require_once('bookmarkData.php');
+require_once('mapData.php');
 session_regenerate_id(TRUE);
 
 //メモアプリでメモのカラム表示
@@ -79,9 +79,9 @@ function h($str)
 </head>
 
 <body>
-    <?php include('miniLogo.php'); ?>
+    <?php require_once('miniLogo.php'); ?>
     <main>
-        <?php include('memoIndexL.php'); ?>
+        <?php require_once('memoIndexL.php'); ?>
         <div id="select">
             <div id="emptySelect">
             </div>
@@ -90,8 +90,8 @@ function h($str)
                 <option value="map">マップ(<?php echo $mapCount ?>)</option>
             </select>
         </div>
-        <?php include('bookmarkIndex.php') ?>
-        <?php include('mapIndex.php'); ?>
+        <?php require_once('bookmarkIndex.php') ?>
+        <?php require_once('mapIndex.php'); ?>
     </main>
 
     <script>

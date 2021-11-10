@@ -1,8 +1,8 @@
 <?php
-include('dateBase.php');
-include('memoData.php');
-include('bookmarkData.php');
-include('mapData.php');
+require_once('dateBase.php');
+require_once('memoData.php');
+require_once('bookmarkData.php');
+require_once('mapData.php');
 
 function h($str)
 {
@@ -84,9 +84,9 @@ if (empty($_SESSION['username'])) {
 </head>
 
 <body>
-    <?php include('miniLogo.php'); ?>
+    <?php require_once('miniLogo.php'); ?>
     <div id="bookMain">
-        <?php include('bookmarkIndexL.php') ?>
+        <?php require_once('bookmarkIndexL.php') ?>
         <div id="selectRightWrapper">
             <div id="emptyDiv"></div>
             <select id="selectR">
@@ -94,8 +94,8 @@ if (empty($_SESSION['username'])) {
                 <option value="map">マップ(<?php echo $mapCount ?>)</option>
             </select>
         </div>
-        <?php include('mapIndex.php'); ?>
-        <?php include('memoIndex.php'); ?>
+        <?php require_once('mapIndex.php'); ?>
+        <?php require_once('memoIndex.php'); ?>
     </div>
 
     <script>

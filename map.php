@@ -1,8 +1,8 @@
 <?php
-include('dateBase.php');
-include('mapData.php');
-include('memoData.php');
-include('bookmarkData.php');
+require_once('dateBase.php');
+require_once('mapData.php');
+require_once('memoData.php');
+require_once('bookmarkData.php');
 session_regenerate_id(TRUE);
 
 //マップアプリのカラム表示
@@ -76,9 +76,9 @@ function h($str)
 
 <body>
 
-  <?php include('miniLogo.php'); ?>
+  <?php require_once('miniLogo.php'); ?>
   <main>
-    <?php include('mapIndexL.php'); ?>
+    <?php require_once('mapIndexL.php'); ?>
     <div id="select">
       <div id="emptySelect">
 
@@ -88,8 +88,8 @@ function h($str)
         <option value="bookmark">ブックマーク(<?php echo $bookCount ?>)</option>
       </select>
     </div>
-    <?php include('bookmarkIndex.php'); ?>
-    <?php include('memoIndex.php'); ?>
+    <?php require_once('bookmarkIndex.php'); ?>
+    <?php require_once('memoIndex.php'); ?>
   </main>
 
   <script>
