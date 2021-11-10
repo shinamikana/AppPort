@@ -144,7 +144,7 @@
                     },
                     dataType: 'json',
                 }).done(function(data) {
-                    $this.hide();
+                    $this.parent().hide();
                     $('.deload1').hide();
                     $('.bookmarking').find('#deltn1').show();
                 }).fail(function(XMLHttpRequest, status, e) {
