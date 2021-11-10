@@ -3,6 +3,7 @@ include('dateBase.php');
 include('memoData.php');
 include('bookmarkData.php');
 include('mapData.php');
+session_regenerate_id(TRUE);
 
 //メモアプリでメモのカラム表示
 $showMemo = $mysqli->prepare('SELECT *, memo.id AS memo_id FROM memo LEFT JOIN book_memo ON memo.id = book_memo.memo_id LEFT JOIN map_memo ON memo.id = map_memo.memo_id WHERE memo.user_id = ? AND book_memo.id IS NULL AND map_memo.id IS NULL ORDER BY memo.id DESC');

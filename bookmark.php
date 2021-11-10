@@ -1,13 +1,14 @@
 <?php
-function h($str)
-{
-    return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
-}
-
 include('dateBase.php');
 include('memoData.php');
 include('bookmarkData.php');
 include('mapData.php');
+
+function h($str)
+{
+    return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
+}
+session_regenerate_id(TRUE);
 
 //ブックマークアプリによるカラム表示SQL
 $show = $mysqli -> prepare('SELECT *,bookmark.id AS bookmark_id FROM bookmark LEFT JOIN book_memo ON bookmark.id = book_memo.book_id LEFT JOIN map_bookmark ON bookmark.id = map_bookmark.book_id WHERE bookmark.user_id = ? AND book_memo.id IS NULL AND map_bookmark.id IS NULL ORDER BY bookmark.id DESC');

@@ -3,6 +3,7 @@ include('dateBase.php');
 include('mapData.php');
 include('memoData.php');
 include('bookmarkData.php');
+session_regenerate_id(TRUE);
 
 //マップアプリのカラム表示
 $showMark = $mysqli->prepare('SELECT *,map.id AS mapId FROM map LEFT JOIN map_memo ON map.id = map_memo.map_id LEFT JOIN map_bookmark ON map.id = map_bookmark.map_id WHERE user_id = ? AND map_memo.id IS NULL AND map_bookmark.id IS NULL ORDER BY mapId DESC');
