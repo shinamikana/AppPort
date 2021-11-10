@@ -26,8 +26,8 @@
           <?php if (isset($memoMapResult)) : ?>
             <?php foreach ($memoMapResult as $memoMap) : ?>
               <?php if ($mark['mapId'] == $memoMap['map_id']) : ?>
-                <div class="memo">
-                  <p id="mainText"><?php echo h($memoMap['memoId']) ?></p>
+                <div class="memo dragMM">
+                  <p id="mainText"><?php echo h($memoMap['text']) ?></p>
                   <p id="date"><?php echo h($memoMap['date']) ?></p>
                   <button type="submit" value="<?php echo $memoMap['memoId'] ?>" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload"><input type="hidden" value="<?php echo $memoMap['memoId'] ?>" class="memoId">
                 </div>

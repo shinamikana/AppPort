@@ -112,7 +112,7 @@ function h($str)
                     update: function() {
                         let $this = $(this);
                         let rMemoId = $this.find('.dragMB').find('.memoId').val();
-
+                        let rMemoMap = $this.find('.dragMM').find('.memoId').val();
                         if (rMemoId != undefined) {
                             $.ajax({
                                 type: 'POST',
@@ -124,6 +124,21 @@ function h($str)
                             }).done(function(data) {
                                 alert('done');
                                 $this.find('.dragMB').addClass('noDrag').removeClass('dragMB');
+                            }).fail(function(XMLHttpRequest, status, e) {
+                                alert('fail');
+                            });
+                        }
+                        if(rMemoMap != undefined){
+                            $.ajax({
+                                type: 'POST',
+                                url: 'memo.php',
+                                data: {
+                                    'rMemoMap': rMemoMap,
+                                },
+                                dataType: 'json',
+                            }).done(function(data) {
+                                alert('done');
+                                $this.find('.dragMM').addClass('noDrag').removeClass('dragMM');
                             }).fail(function(XMLHttpRequest, status, e) {
                                 alert('fail');
                             });
