@@ -22,13 +22,13 @@ if(isset($_POST['text'])){
 //メモ削除
 if(isset($_POST['del'])){
     $delId = $_POST['del'];
-    $data2 = array('del' => $delId);
-    header("Content-type: application/json; charset=UTF-8");
-    echo json_encode($data2);
-    $delete = $mysqli -> prepare('DELETE memo,book_memo,map_memo FROM memo LEFT JOIN book_memo ON memo.id = book_memo.memo_id LEFT JOIN map_memo ON memo.id = map_memo.memo_id WHERE id = ?');
+    $delete = $mysqli -> prepare('DELETE memo,book_memo,map_memo FROM memo LEFT JOIN book_memo ON memo.id = book_memo.memo_id LEFT JOIN map_memo ON memo.id = map_memo.memo_id WHERE memo.id = ?');
     $delete -> bind_param('i',$_POST['del']);
     $delete -> execute();
     $delete -> close();
+    $data = array('del' => $delId);
+    header("Content-type: application/json; charset=UTF-8");
+    echo json_encode($data);
     exit;
 }
 

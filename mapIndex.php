@@ -7,18 +7,20 @@
   <div class="mapColumn">
     <?php foreach ($resultMark as $mark) : ?>
       <div class="showMark noDrag">
+        <div class="columns">
         <i class="fas fa-check"></i><i class="fas fa-edit"></i><img src="/img/load.gif" alt="" class="loadGif1">
-        <p class="columnMark"><?php echo h($mark['field_name']) ?></p><input type="hidden" value="<?php echo h($mark['lat']) ?>" class="mapLat"><input type="hidden" value="<?php echo h($mark['lng']) ?>" class="mapLng"><input type="text" class="markInput" value="<?php echo h($mark['field_name']) ?>"><img src="/img/load.gif" alt="" class="loadGif"><input type="hidden" value="<?php echo h($mark['mapId']) ?>" class="mapId"><i class="fas fa-bars"></i>
+        <p class="columnMark"><?= h($mark['field_name']) ?></p><input type="hidden" value="<?= h($mark['lat']) ?>" class="mapLat"><input type="hidden" value="<?= h($mark['lng']) ?>" class="mapLng"><input type="text" class="markInput" value="<?= h($mark['field_name']) ?>"><img src="/img/load.gif" alt="" class="loadGif"><input type="hidden" value="<?= h($mark['mapId']) ?>" class="mapId"><i class="fas fa-bars"></i>
         <ul class="mapEdit">
           <li class="mapDel">削除</li>
         </ul>
+        </div>
         <div class="dragUl">
           ここにドラッグ
           <?php if (isset($bookMapResult)) : ?>
             <?php foreach ($bookMapResult as $bookMap) : ?>
               <?php if ($bookMap['map_id'] == $mark['mapId']) : ?>
                 <div class="bookmarking dragBM">
-                  <i class="fas fa-check"></i><i class="far fa-edit"></i><a href="<?php echo h($bookMap['link']) ?>" target="_blank" rel="noopener noreferrer" class="bookA"><?php echo h($bookMap['link_name']) ?></a><i class="fas fa-times"></i><input type="text" value="<?php echo h($bookMap['link_name']) ?>" class="bookNameInput"><input type="text" value="<?php echo h($bookMap['link']) ?>" class="bookLinkInput"><button id="deltn1" value="<?php echo h($bookMap['bookId']) ?>">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="<?php echo h($bookMap['bookId']) ?>">
+                  <i class="fas fa-check"></i><i class="far fa-edit"></i><a href="<?= h($bookMap['link']) ?>" target="_blank" rel="noopener noreferrer" class="bookA"><?= h($bookMap['link_name']) ?></a><i class="fas fa-times"></i><input type="text" value="<?= h($bookMap['link_name']) ?>" class="bookNameInput"><input type="text" value="<?= h($bookMap['link']) ?>" class="bookLinkInput"><button id="deltn1" value="<?= h($bookMap['bookId']) ?>">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="<?= h($bookMap['bookId']) ?>">
                 </div>
               <?php endif ?>
             <?php endforeach ?>
@@ -27,9 +29,9 @@
             <?php foreach ($memoMapResult as $memoMap) : ?>
               <?php if ($mark['mapId'] == $memoMap['map_id']) : ?>
                 <div class="memo dragMM">
-                  <p id="mainText"><?php echo h($memoMap['text']) ?></p>
-                  <p id="date"><?php echo h($memoMap['date']) ?></p>
-                  <button type="submit" value="<?php echo $memoMap['memoId'] ?>" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload"><input type="hidden" value="<?php echo $memoMap['memoId'] ?>" class="memoId">
+                  <p id="mainText"><?= h($memoMap['text']) ?></p>
+                  <p id="date"><?= h($memoMap['date']) ?></p>
+                  <i class="fas fa-bars"></i><button type="submit" value="<?= $memoMap['memoId'] ?>" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload"><input type="hidden" value="<?= $memoMap['memoId'] ?>" class="memoId">
                 </div>
               <?php endif ?>
             <?php endforeach ?>
@@ -40,7 +42,7 @@
   </div>
 </div>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=<?php echo getenv('API_KEY_MAP') ?>&callback=initMap&v=weekly" async></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<?= getenv('API_KEY_MAP') ?>&callback=initMap&v=weekly" async></script>
 <script>
   let map;
 
@@ -101,7 +103,7 @@
           },
           dataType: 'json',
         }).done(function(data) {
-          $this.parent().parent().remove();
+          $this.parent().parent().parent().remove();
           $('.loadGif').hide();
           $('.fa-bars').show();
           $('.fa-edit').show();
@@ -125,9 +127,9 @@
         dataType: 'json',
       }).done(function(data) {
         $('.load').hide();
-        $('.mapColumn').prepend('<div class="showMark"><i class="fas fa-check"></i><i class="fas fa-edit"></i><p class="columnMark">登録した地点</p><input type="hidden" value="' + data.lat + '" class="mapLat"><input type="hidden" value="' + data.lng + '" class="mapLng"><input type="text" class="markInput" value="登録した地点"><img src="/img/load.gif" alt="" class="loadGif"><input type="hidden" value="' + data.insert_id + '" class="mapId"><i class="fas fa-bars"></i><ul class="mapEdit"><li class="mapDel">削除</li></ul><div class="dragUl">ここにドラッグ</ul></div>');
+        $('.mapColumn').prepend('<div class="showMark noDrag"><div class="columns"><i class="fas fa-check"></i><i class="fas fa-edit"></i><p class="columnMark">登録した地点</p><input type="hidden" value="' + data.lat + '" class="mapLat"><input type="hidden" value="' + data.lng + '" class="mapLng"><input type="text" class="markInput" value="登録した地点"><img src="/img/load.gif" alt="" class="loadGif"><input type="hidden" value="' + data.insert_id + '" class="mapId"><i class="fas fa-bars"></i><ul class="mapEdit"><li class="mapDel">削除</li></ul></div><div class="dragUl">ここにドラッグ</ul></div>');
         $('.showMark').first().find('.mapEdit').slideUp(0);
-        $('.fa-bars').first().click(function() {
+        $('.columns').first().find('.fa-bars').click(function() {
           $(this).parent().find('.mapEdit').slideToggle(200);
         });
         mapDelete();
@@ -144,17 +146,17 @@
     mapDelete();
 
     function slideToggle() {
-      $('.showMark').find('.fa-bars').click(function() {
+      $('.columns').find('.fa-bars').click(function() {
         $(this).parent().find('.mapEdit').slideToggle(200);
       });
     }
 
     slideToggle();
 
-    $('.showMark').find('.mapEdit').slideUp(0);
+    $('.columns').find('.mapEdit').slideUp(0);
 
     function mapEdit() {
-      $('.showMark').find('.fa-edit').click(function() {
+      $('.columns').find('.fa-edit').click(function() {
         let val = $(this).parent().find('.columnMark').text();
         $(this).parent().find('.columnMark').hide();
         $(this).parent().find('.markInput').show();
@@ -167,7 +169,7 @@
     mapEdit();
 
     function mapCheck() {
-      $('.showMark').find('.fa-check').on('click', function() {
+      $('.columns').find('.fa-check').on('click', function() {
         let $this = $(this);
         mapEditDone($this);
       });

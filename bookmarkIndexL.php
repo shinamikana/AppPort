@@ -11,9 +11,9 @@
             <li class="bookLi"></li>
             <?php if (isset($showResult)) : ?>
                 <?php foreach ($showResult as $show) : ?>
-                    <li class="bookLi noDrag" id="<?php echo $show['bookmark_id'] ?>">
+                    <li class="bookLi noDrag" id="<?= $show['bookmark_id'] ?>">
                         <div class="bookmarking">
-                            <i class="fas fa-check"></i><i class="far fa-edit"></i><a href="<?php echo h($show['link']) ?>" target="_blank" rel="noopener noreferrer" class="bookA"><?php echo h($show['link_name']) ?></a><i class="fas fa-times"></i><input type="text" value="<?php echo h($show['link_name']) ?>" class="bookNameInput"><input type="text" value="<?php echo h($show['link']) ?>" class="bookLinkInput"><button id="deltn1" value="<?php echo h($show['bookmark_id']) ?>">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="<?php echo h($show['bookmark_id']) ?>">
+                            <i class="fas fa-check"></i><i class="far fa-edit"></i><a href="<?= h($show['link']) ?>" target="_blank" rel="noopener noreferrer" class="bookA"><?= h($show['link_name']) ?></a><i class="fas fa-times"></i><input type="text" value="<?= h($show['link_name']) ?>" class="bookNameInput"><input type="text" value="<?= h($show['link']) ?>" class="bookLinkInput"><button id="deltn1" value="<?= h($show['bookmark_id']) ?>">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="<?= h($show['bookmark_id']) ?>">
                         </div>
                     </li>
                 <?php endforeach ?>

@@ -83,12 +83,24 @@ html,body{
     float:right;
     position: absolute;
     top:0;
-    right:0;
+    right:-50px;
     cursor: pointer;
     background-color: white;
     border-radius: 0;
     border:1px solid black;
     box-shadow: 1px 1px 1px gray;
+    display: none;
+    font-size:15px;
+}
+
+.memo .fa-bars{
+    float:right;
+    position: absolute;
+    top:4px;
+    right:10px;
+    cursor: pointer;
+    border-radius: 0;
+    font-size: 25px;
 }
 
 button{
