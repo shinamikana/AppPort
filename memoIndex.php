@@ -8,10 +8,12 @@
             <?php if (isset($memoResult)) : ?>
                 <?php foreach ($memoResult as $memo) : ?>
                     <div class="memo">
-                        <p id="mainText"><?= h($memo['text']) ?></p>
-                        <p id="date"><?= h($memo['date']) ?></p>
-                        <i class="fas fa-bars"></i>
-                        <button type="submit" value="<?= $memo['memo_id'] ?>" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload"><input type="hidden" value="<?= $memo['memo_id'] ?>" class="memoId">
+                        <div class="memos">
+                            <p id="mainText"><?= h($memo['text']) ?></p>
+                            <p id="date"><?= h($memo['date']) ?></p>
+                            <i class="fas fa-bars"></i>
+                            <button type="submit" value="<?= $memo['memo_id'] ?>" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload"><input type="hidden" value="<?= $memo['memo_id'] ?>" class="memoId">
+                        </div>
                         <ul class="dragUl">ここにドロップ
                             <?php if (isset($mapMemoResult)) : ?>
                                 <?php foreach ($mapMemoResult as $map_memo) : ?>
@@ -26,16 +28,16 @@
                                     <?php endif ?>
                                 <?php endforeach ?>
                             <?php endif ?>
-                            <?php if(isset($memoBookResult)):?>
-                            <?php foreach ($memoBookResult as $memo_book):?>
-                                <?php if($memo_book['memo_id'] == $memo['memo_id']): ?>
-                                    <li class="bookLi drag" id="<?= $memo['id'] ?>">
-                                        <div class="bookmarking">
-                                            <i class="fas fa-check"></i><i class="far fa-edit"></i><i class="fas fa-times"></i><a href="<?= $memo_book['link'] ?>" target="_blank" rel="noopener noreferrer" class="bookA"><?= $memo_book['link_name'] ?></a><input type="text" value="<?= h($memo_book['link_name']) ?>" class="bookNameInput"><input type="text" value="<?= $memo_book['link'] ?>" class="bookLinkInput"><button id="deltn1" value="<?= $memo_book['id'] ?>">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="<?= h($memo_book['id']) ?>">
-                                        </div>
-                                    </li>
-                                <?php endif ?>
-                            <?php endforeach ?>
+                            <?php if (isset($memoBookResult)) : ?>
+                                <?php foreach ($memoBookResult as $memo_book) : ?>
+                                    <?php if ($memo_book['memo_id'] == $memo['memo_id']) : ?>
+                                        <li class="bookLi drag" id="<?= $memo['id'] ?>">
+                                            <div class="bookmarking">
+                                                <i class="fas fa-check"></i><i class="far fa-edit"></i><i class="fas fa-times"></i><a href="<?= $memo_book['link'] ?>" target="_blank" rel="noopener noreferrer" class="bookA"><?= $memo_book['link_name'] ?></a><input type="text" value="<?= h($memo_book['link_name']) ?>" class="bookNameInput"><input type="text" value="<?= $memo_book['link'] ?>" class="bookLinkInput"><button id="deltn1" value="<?= $memo_book['id'] ?>">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="<?= h($memo_book['id']) ?>">
+                                            </div>
+                                        </li>
+                                    <?php endif ?>
+                                <?php endforeach ?>
                             <?php endif ?>
                         </ul>
                     </div>
@@ -58,9 +60,9 @@
 <script>
     $(function() {
         let $memoDel = function() {
-            $('.memo').find('#delbtn').on('click', function() {
+            $('.memos').find('#delbtn').on('click', function() {
                 let delId = $(this).val();
-                $('.memo').find('#delbtn').hide();
+                $('.memos').find('#delbtn').hide();
                 $('#deload').show();
                 let $this = $(this).parent()
                 $this.css({
@@ -111,7 +113,7 @@
             });
         });
 
-        $('.memo').find('.fa-bars').click(function() {
+        $('.memos').find('.fa-bars').click(function() {
             $(this).parent().find('#delbtn').slideToggle();
         });
 

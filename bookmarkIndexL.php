@@ -14,6 +14,7 @@
                     <li class="bookLi noDrag" id="<?= $show['bookmark_id'] ?>">
                         <div class="bookmarking">
                             <i class="fas fa-check"></i><i class="far fa-edit"></i><a href="<?= h($show['link']) ?>" target="_blank" rel="noopener noreferrer" class="bookA"><?= h($show['link_name']) ?></a><i class="fas fa-times"></i><input type="text" value="<?= h($show['link_name']) ?>" class="bookNameInput"><input type="text" value="<?= h($show['link']) ?>" class="bookLinkInput"><button id="deltn1" value="<?= h($show['bookmark_id']) ?>">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="<?= h($show['bookmark_id']) ?>">
+                            <i class="fas fa-bars"></i>
                         </div>
                     </li>
                 <?php endforeach ?>
@@ -79,13 +80,18 @@
                     },
                     dataType: 'json',
                 }).done(function(data) {
-                    $('.bookUl').prepend('<li class="bookLi noDrag" id="' + data.id + '"><div class="bookmarking"><i class="fas fa-check"></i><i class="far fa-edit"></i><a href="' + data.url + '" target="_blank" rel="noopener noreferrer" class="bookA">' + data.linkName + '</a><input type="text" value="' + data.linkName + '" class="bookNameInput"><input type="text" value="' + data.url + '" class="bookLinkInput"><button id="deltn1" value="' + data.id + '">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="' + data.id + '"></div></li>');
+                    $('.bookUl').prepend('<li class="bookLi noDrag" id="' + data.id + '"><div class="bookmarking"><i class="fas fa-check"></i><i class="far fa-edit"></i><a href="' + data.url + '" target="_blank" rel="noopener noreferrer" class="bookA">' + data.linkName + '</a><i class="fas fa-times"></i><input type="text" value="' + data.linkName + '" class="bookNameInput"><input type="text" value="' + data.url + '" class="bookLinkInput"><button id="deltn1" value="' + data.id + '">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="' + data.id + '"><i class="fas fa-bars"></i></div></li>');
                     $('#submit1').show();
                     $('#load1').hide();
                     $('#url').val('');
                     $('#linkName').val('');
                     $delete();
-
+                    $('.bookmarking').find('.fa-bars').first().click(function() {
+                        $(this).parent().find('#deltn1').slideToggle();
+                    });
+                    bookEdit();
+                    bookCancel();
+                    bookSubmit();
                 }).fail(function(XMLHttpRequest, status, e) {
                     console.log('error number:' + XMLHttpRequest + ',status:' + status + ',thrown:' + e);
                     alert('fail');
@@ -102,7 +108,7 @@
                 $this.css({
                     opacity: '0.5'
                 });
-                $('.bookmarking').find('#deltn1').hide();
+                $('.bookmarking').find('.fa-bars').hide();
                 $('.deload1').show();
                 let delId = $(this).val();
                 $.ajax({
@@ -115,7 +121,7 @@
                 }).done(function(data) {
                     $this.hide();
                     $('.deload1').hide();
-                    $('.bookmarking').find('#deltn1').show();
+                    $('.bookmarking').find('.fa-bars').show();
                 }).fail(function(XMLHttpRequest, status, e) {
                     console.log('error number:' + XMLHttpRequest + ',status:' + status + ',thrown:' + e);
                     $this.css({
@@ -128,17 +134,20 @@
 
         $delete();
 
-        $('.fa-edit').click(function() {
-            $(this).hide();
-            $(this).parent().find('.bookA').hide();
-            $(this).parent().find('.bookNameInput').show();
-            $(this).parent().find('.bookLinkInput').show();
-            $(this).parent().find('.fa-check').show();
-            $(this).parent().find('#deltn1').hide();
-            $(this).parent().find('.fa-times').show();
-        });
+        const bookEdit = function() {
+            $('.fa-edit').click(function() {
+                $(this).hide();
+                $(this).parent().find('.bookA').hide();
+                $(this).parent().find('.bookNameInput').show();
+                $(this).parent().find('.bookLinkInput').show();
+                $(this).parent().find('.fa-check').show();
+                $(this).parent().find('.fa-bars').hide();
+                $(this).parent().find('.fa-times').show();
+            });
+        }
+        bookEdit();
 
-        //編集ボタンを押した際の処理の関数
+        //編集完了プロセス
         const bookEditShow = function($this) {
             $this.hide();
             $this.parent().find('.fa-edit').show();
@@ -146,96 +155,105 @@
             $this.parent().find('.bookA').show();
             $this.parent().find('.bookLinkInput').hide();
             $this.parent().css('opacity', '1');
-            $this.parent().find('.deltn1').show();
+            $this.parent().find('.fa-bars').show();
             $this.parent().find('.fa-times').hide();
-            $this.parent().find('#deltn1').show();
             $this.parent().find('.fa-check').hide();
         }
 
         //編集を中止した場合の処理
-        $('.fa-times').click(function() {
-            let $this = $(this);
-            let bookName = $this.parent().find('.bookA').text();
-            let bookLink = $this.parent().find('.bookA').attr('href');
-            $this.parent().find('.bookNameInput').val(bookName);
-            $this.parent().find('.bookLinkInput').val(bookLink);
-            bookEditShow($this);
-        });
+        const bookCancel = function() {
+            $('.fa-times').click(function() {
+                let $this = $(this);
+                let bookName = $this.parent().find('.bookA').text();
+                let bookLink = $this.parent().find('.bookA').attr('href');
+                $this.parent().find('.bookNameInput').val(bookName);
+                $this.parent().find('.bookLinkInput').val(bookLink);
+                bookEditShow($this);
+            });
+        }
+        bookCancel();
 
         //編集を送信する処理
-        $('.fa-check').click(function() {
-            let $this = $(this);
-            let bookNameVal = $this.parent().find('.bookNameInput').val();
-            let bookLinkVal = $this.parent().find('.bookLinkInput').val();
-            let bookName = $this.parent().find('.bookA').text();
-            let bookLink = $this.parent().find('.bookA').attr('href');
-            let bookId = $this.parent().find('.bookId').val();
-            //入力欄が空白の場合の処理
-            if (bookNameVal == '') {
-                errorProcess('ブックマーク名を入力してください！');
-            }
-            if (bookLinkVal == '') {
-                errorProcess('URLを入力してください！');
-            }
+        const bookSubmit = function() {
+            $('.fa-check').click(function() {
+                let $this = $(this);
+                let bookNameVal = $this.parent().find('.bookNameInput').val();
+                let bookLinkVal = $this.parent().find('.bookLinkInput').val();
+                let bookName = $this.parent().find('.bookA').text();
+                let bookLink = $this.parent().find('.bookA').attr('href');
+                let bookId = $this.parent().find('.bookId').val();
+                //入力欄が空白の場合の処理
+                if (bookNameVal == '') {
+                    errorProcess('ブックマーク名を入力してください！');
+                }
+                if (bookLinkVal == '') {
+                    errorProcess('URLを入力してください！');
+                }
 
-            if (bookNameVal != bookName && bookLinkVal != bookLink) {
-                $('#confirmBigWrap').show();
-                $('#bookConfirmYes').click(function() {
+                if (bookNameVal != bookName && bookLinkVal != bookLink) {
+                    $('#confirmBigWrap').show();
+                    $('#bookConfirmYes').click(function() {
+                        $this.parent().css('opacity', '0.5');
+                        $('#confirmBigWrap').hide();
+                        $.ajax({
+                            type: 'POST',
+                            url: 'bookmark.php',
+                            data: {
+                                'bookName': bookNameVal,
+                                'bookLink': bookLinkVal,
+                                'bookId': bookId
+                            },
+                            dataType: 'json',
+                        }).done(function(data) {
+                            $this.parent().find('.bookA').text(bookNameVal);
+                            $this.parent().find('.bookA').attr('href', bookLinkVal);
+                            bookEditShow($this);
+                        }).fail(function(XMLHttpRequest, status, e) {});
+                    });
+
+                } else if (bookNameVal != bookName) {
                     $this.parent().css('opacity', '0.5');
-                    $('#confirmBigWrap').hide();
                     $.ajax({
                         type: 'POST',
                         url: 'bookmark.php',
                         data: {
                             'bookName': bookNameVal,
-                            'bookLink': bookLinkVal,
                             'bookId': bookId
                         },
                         dataType: 'json',
                     }).done(function(data) {
                         $this.parent().find('.bookA').text(bookNameVal);
-                        $this.parent().find('.bookA').attr('href', bookLinkVal);
                         bookEditShow($this);
+                        $this.parent().css('opacity', '1');
                     }).fail(function(XMLHttpRequest, status, e) {});
-                });
 
-            } else if (bookNameVal != bookName) {
-                $this.parent().css('opacity', '0.5');
-                $.ajax({
-                    type: 'POST',
-                    url: 'bookmark.php',
-                    data: {
-                        'bookName': bookNameVal,
-                        'bookId': bookId
-                    },
-                    dataType: 'json',
-                }).done(function(data) {
-                    $this.parent().find('.bookA').text(bookNameVal);
+                } else if (bookLinkVal != bookLink) {
+                    $('#confirmBigWrap').show();
+                    $('#bookConfirmYes').click(function() {
+                        $this.parent().css('opacity', '0.5');
+                        $('#confirmBigWrap').hide();
+                        $.ajax({
+                            type: 'POST',
+                            url: 'bookmark.php',
+                            data: {
+                                'bookLink': bookLinkVal,
+                                'bookId': bookId
+                            },
+                            dataType: 'json',
+                        }).done(function(data) {
+                            $this.parent().find('.bookA').attr('href', bookLinkVal);
+                            bookEditShow($this);
+                        }).fail(function(XMLHttpRequest, status, e) {});
+                    });
+                } else {
                     bookEditShow($this);
-                    $this.parent().css('opacity', '1');
-                }).fail(function(XMLHttpRequest, status, e) {});
+                }
+            });
+        }
+        bookSubmit();
 
-            } else if (bookLinkVal != bookLink) {
-                $('#confirmBigWrap').show();
-                $('#bookConfirmYes').click(function() {
-                    $this.parent().css('opacity', '0.5');
-                    $('#confirmBigWrap').hide();
-                    $.ajax({
-                        type: 'POST',
-                        url: 'bookmark.php',
-                        data: {
-                            'bookLink': bookLinkVal,
-                            'bookId': bookId
-                        },
-                        dataType: 'json',
-                    }).done(function(data) {
-                        $this.parent().find('.bookA').attr('href', bookLinkVal);
-                        bookEditShow($this);
-                    }).fail(function(XMLHttpRequest, status, e) {});
-                });
-            } else {
-                bookEditShow($this);
-            }
+        $('.bookmarking').find('.fa-bars').click(function() {
+            $(this).parent().find('#deltn1').slideToggle();
         });
 
     });

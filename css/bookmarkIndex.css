@@ -92,12 +92,21 @@
 
 #deltn1{
     position: absolute;
-    top:0;
-    right:0;
-    height:30px;
+    bottom:0;
+    right:-50px;
     cursor: pointer;
     border:1px solid black;
     box-shadow: 1px 1px 1px;
+    display: none;
+}
+
+.bookmarking .fa-bars{
+    position: absolute;
+    top:5px;
+    right:10px;
+    float:right;
+    font-size:25px;
+    cursor: pointer;
 }
 
 .deload1{

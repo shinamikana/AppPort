@@ -5,12 +5,15 @@ html, body {
   /*https://www.beiz.jp/*/
   background-size: cover;
 }
+
 * {
   box-sizing: border-box;
 }
+
 li {
   list-style: none;
 }
+
 #logo {
   position: relative;
   z-index:1;
@@ -28,11 +31,13 @@ li {
   margin-top: 0;
   border: 3px solid black;
 }
+
 #logo a {
   display: block;
   text-decoration: none;
   color: black;
 }
+
 #logo span {
   height: 9%;
   position: absolute;
@@ -40,15 +45,18 @@ li {
   font-size: 15px;
   letter-spacing: 0.1em;
 }
+
 #title {
   text-align: center;
   margin-top: 50px;
 }
+
 .app {
   margin-left: 200px;
   margin-top: 100px;
   display: flex;
 }
+
 .app div {
   height: 150px;
   width: 150px;
@@ -57,7 +65,9 @@ li {
   text-align: center;
   margin: 0 50px;
   border: 1px solid black;
+  overflow: hidden;
 }
+
 .app div a {
   display: block;
   font-size: 18px;
@@ -68,9 +78,11 @@ li {
   font-weight: bold;
   letter-spacing: 1px;
 }
+
 .app div a:hover {
   animation: zoom 1s ease 0s 1 forwards;
 }
+
 @keyframes zoom {
   from {
     font-size: 18px;
@@ -79,10 +91,50 @@ li {
     font-size: 22px;
   }
 }
+
 .bookmark a, .pass a {
   padding: 40px 0;
   line-height: 30px !important;
   display: block;
+}
+
+#mapImgA{
+  display: none;
+}
+
+.map{
+  position: relative;
+}
+
+#mapImgA img{
+  position: relative;
+  top:-20px;
+}
+
+@keyframes mapZoom {
+  from{
+    top:-20px;
+    left:0;
+    transform: scale(0);
+  }
+  to{
+    top:-200px;
+    left:110px;
+    transform: scale(7);
+  }
+}
+
+.mapAnime{
+  animation:3s linear 0s mapZoom;
+  animation-fill-mode: forwards;
+}
+
+.fa-map-pin{
+  position: absolute;
+  top:50%;
+  right:50%;
+  z-index:1;
+  font-size:20px;
 }
 
 #info{

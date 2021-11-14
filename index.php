@@ -17,6 +17,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
 </head>
 <body>
     <?php include('sidebar.php'); ?>
@@ -44,9 +46,25 @@
         </div>
 
         <div class="map">
-            <a href="map.php">MAP</a>
+            <a href="map.php" id="mapA">MAP</a>
+            <a href="map.php" id="mapImgA"><i class="fas fa-map-pin"></i><img src="/img/map.png" alt="" height="150px" width="150px" id="mapImg"></a>
         </div>
 
     </div>
+    <script>
+        $(()=>{
+
+            $('#mapA').hover(function(){
+                $(this).hide();
+                $('#mapImgA').show();
+                $('#mapImg').addClass('mapAnime');
+            });
+
+            $('#mapImg').on('animationend',function(){
+                $('.fa-map-pin').show();
+            });
+
+        });
+    </script>
 </body>
 </html>
