@@ -85,15 +85,17 @@ session_start();
                             }, 200);
                         }
                     }, 200);
-                },
-                function() {
+            },
+            function() {
                     clearInterval(passInterval);
                     if (wordInterval) {
                         clearInterval(wordInterval);
                     }
                     $(this).find('#pass').text('PASS');
                     $(this).find('#word').text('WORD');
-                });
+            });
+
+            $('.fa-map-pin').hide();
 
             $('#mapA').hover(function() {
                     $(this).find('p').hide();

@@ -138,7 +138,6 @@ li {
 }
 
 #mapA .fas{
-  display: none;
   animation:0.2s linear 0s mapMark;
   animation-fill-mode: forwards;
   position: absolute;
