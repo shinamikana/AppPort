@@ -92,6 +92,10 @@ li {
   }
 }
 
+.pass p{
+  margin:0;
+}
+
 .bookmark a, .pass a {
   padding: 40px 0;
   line-height: 30px !important;
@@ -106,19 +110,23 @@ li {
   position: relative;
 }
 
-#mapImgA img{
+.map p{
+  margin: 0;
+}
+
+#mapA img{
   position: relative;
-  top:-20px;
+  top:10px;
 }
 
 @keyframes mapZoom {
   from{
-    top:-20px;
+    top:10px;
     left:0;
     transform: scale(0);
   }
   to{
-    top:-200px;
+    top:-230px;
     left:110px;
     transform: scale(7);
   }
@@ -129,12 +137,25 @@ li {
   animation-fill-mode: forwards;
 }
 
-.fa-map-pin{
+#mapA .fas{
+  display: none;
+  animation:0.2s linear 0s mapMark;
+  animation-fill-mode: forwards;
   position: absolute;
+  left:50%;
   top:50%;
-  right:50%;
+  transform: translate(-100%,-100%);
   z-index:1;
-  font-size:20px;
+  font-size:24px;
+}
+
+@keyframes mapMark {
+  from{
+    transform: translate(-50%,-100%);
+  }
+  to{
+    transform: translate(-50%,-50%);
+  }
 }
 
 #info{

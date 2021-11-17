@@ -1,6 +1,6 @@
 <?php
-    session_start();
-    //$memo = $mysqli -> prepare('INSERT INTO(memo,date,user_id) VALUE(?,?,?)');
+session_start();
+//$memo = $mysqli -> prepare('INSERT INTO(memo,date,user_id) VALUE(?,?,?)');
 
 
 
@@ -8,6 +8,7 @@
 
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,20 +21,23 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
 </head>
+
 <body>
     <?php include('sidebar.php'); ?>
 
-    <h1 id="logo"><?php if(isset($_SESSION['username'])): ?><span>こんにちは、<?php echo $_SESSION['username'] ?>!</span><?php endif ?><a href="index.php">AppPort</a><a href="info.php" id="info">お問い合わせ</a></h1>
-    
-        <ul>
-        </ul>
+    <h1 id="logo"><?php if (isset($_SESSION['username'])) : ?><span>こんにちは、<?php echo $_SESSION['username'] ?>さん!</span><?php endif ?><a href="index.php">AppPort</a><a href="info.php" id="info">お問い合わせ</a></h1>
+
+    <ul>
+    </ul>
     </div>
-    
+
     <div class="app">
 
         <div class="pass">
-            <a href="pass.php">PASS
-                WORD</a>
+            <a href="pass.php">
+                <p id="pass">PASS</p>
+                <p id="word">WORD</p>
+            </a>
         </div>
 
         <div class="memo">
@@ -46,25 +50,69 @@
         </div>
 
         <div class="map">
-            <a href="map.php" id="mapA">MAP</a>
-            <a href="map.php" id="mapImgA"><i class="fas fa-map-pin"></i><img src="/img/map.png" alt="" height="150px" width="150px" id="mapImg"></a>
+            <a href="map.php" id="mapA">
+                <p>MAP</p><i class="fas fa-map-pin"></i><img src="/img/map.png" alt="" height="150px" width="150px" id="mapImg">
+            </a>
         </div>
 
     </div>
     <script>
-        $(()=>{
+        $(() => {
 
-            $('#mapA').hover(function(){
-                $(this).hide();
-                $('#mapImgA').show();
-                $('#mapImg').addClass('mapAnime');
-            });
+            $('.pass').hover(function() {
+                    let passText = '';
+                    let wordText = '';
+                    let passInt = 0;
+                    let wordInt = 0;
+                    let passP = $(this).find('#pass').text().split('');
+                    let wordP = $(this).find('#word').text().split('');
+                    window.wordInterval = false;
+                    window.passInterval = setInterval(() => {
+                        passP[passInt] = '*';
+                        passJoin = passP.join('');
+                        $(this).find('#pass').text(passJoin);
+                        passInt++;
+                        if (passInt >= 4) {
+                            clearInterval(passInterval);
+                            window.wordInterval = setInterval(() => {
+                                wordP[wordInt] = '*';
+                                wordJoin = wordP.join('');
+                                $(this).find('#word').text(wordJoin);
+                                wordInt++;
+                                if (wordInt >= 4) {
+                                    clearInterval(wordInterval);
+                                }
+                            }, 200);
+                        }
+                    }, 200);
+                },
+                function() {
+                    clearInterval(passInterval);
+                    if (wordInterval) {
+                        clearInterval(wordInterval);
+                    }
+                    $(this).find('#pass').text('PASS');
+                    $(this).find('#word').text('WORD');
+                });
 
-            $('#mapImg').on('animationend',function(){
+            $('#mapA').hover(function() {
+                    $(this).find('p').hide();
+                    $(this).find('img').show();
+                    $('#mapImg').addClass('mapAnime');
+                },
+                function() {
+                    $(this).find('p').show();
+                    $(this).find('img').hide();
+                    $('#mapImg').removeClass('mapAnime');
+                    $('.fa-map-pin').hide();
+                });
+
+            $('#mapImg').on('animationend', function() {
                 $('.fa-map-pin').show();
             });
 
         });
     </script>
 </body>
+
 </html>

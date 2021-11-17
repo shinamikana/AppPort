@@ -129,7 +129,6 @@ if (empty($_SESSION['username'])) {
                                 },
                                 dataType: 'json',
                             }).done(function(data) {
-                                alert('bookId done');
                                 //if($(this).parent().find('bookLi').hasClass('')
                                 //クラスの付け外しで判定
                                 $this.find('.drag').addClass('noDrag').removeClass('drag');
@@ -146,7 +145,6 @@ if (empty($_SESSION['username'])) {
                                 },
                                 dataType: 'json',
                             }).done(function(data) {
-                                alert('mapId done');
                                 $this.find('.dragBM').addClass('noDrag').removeClass('dragBM');
                             }).fail(function(XMLHttpRequest, status, e) {
                                 alert('fail');
@@ -185,7 +183,6 @@ if (empty($_SESSION['username'])) {
                                 },
                                 dataType: 'json',
                             }).done(function(data) {
-                                alert('dragUl done');
                                 $this.find('.noDrag').addClass('drag').removeClass('noDrag');
                             }).fail(function(XMLHttpRequest, status, e) {
                                 alert('dragUl fail');
@@ -201,7 +198,6 @@ if (empty($_SESSION['username'])) {
                                 },
                                 dataType: 'json',
                             }).done(function(data) {
-                                alert('done');
                                 $this.find('.noDrag').addClass('dragBM').removeClass('noDrag');
                             }).fail(function(XMLHttpRequest, status, e) {
                                 alert('fail');

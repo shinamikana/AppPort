@@ -72,7 +72,7 @@
                 dataType: 'json',
             }).done(function(data) {
                 $('#text').val('');
-                $('#memoWrapper').prepend('<div class="memo noDrag"><i class="fas fa-bars"></i><p id="mainText"><span>' + val + '</span></p><p id="date">' + data.date + '</p><button type="submit" value="' + data.insert + '" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload"><input type="hidden" value="<?= $memo['memo_id'] ?>" class="memoId"></div>');
+                $('#memoWrapper').prepend('<div class="memo noDrag"><i class="fas fa-bars"></i><p id="mainText"><span>' + val + '</span></p><p id="date">' + data.date + '</p><button type="submit" value="' + data.insert + '" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload"><input type="hidden" value="'+data.insert+'" class="memoId"></div>');
                 $('#load').hide();
                 $('#submit').show();
                 $memoDel();

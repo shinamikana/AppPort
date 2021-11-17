@@ -124,6 +124,7 @@ textarea{
 }
 
 #memoWrapper{
+    min-height:100px;
     height:auto;
 }
 

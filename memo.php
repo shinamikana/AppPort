@@ -123,7 +123,6 @@ function h($str)
                                 },
                                 dataType: 'json',
                             }).done(function(data) {
-                                alert('done');
                                 $this.find('.dragMB').addClass('noDrag').removeClass('dragMB');
                             }).fail(function(XMLHttpRequest, status, e) {
                                 alert('fail');
@@ -138,7 +137,6 @@ function h($str)
                                 },
                                 dataType: 'json',
                             }).done(function(data) {
-                                alert('done');
                                 $this.find('.dragMM').addClass('noDrag').removeClass('dragMM');
                             }).fail(function(XMLHttpRequest, status, e) {
                                 alert('fail');
@@ -171,7 +169,6 @@ function h($str)
                                 },
                                 dataType: 'json',
                             }).done(function(data) {
-                                alert('done');
                                 $this.find('.noDrag').addClass('dragMB').removeClass('noDrag');
                             }).fail(function(XMLHttpRequest, status, e) {
                                 alert('fail');
@@ -187,7 +184,6 @@ function h($str)
                                 },
                                 dataType: 'json',
                             }).done(function(data) {
-                                alert('done');
                                 $this.find('.noDrag').addClass('dragMM').removeClass('noDrag');
                             }).fail(function(XMLHttpRequest, status, e) {
                                 alert('fail');
