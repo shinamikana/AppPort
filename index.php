@@ -1,7 +1,9 @@
 <?php
 session_start();
-//$memo = $mysqli -> prepare('INSERT INTO(memo,date,user_id) VALUE(?,?,?)');
-
+function h($str)
+{
+    return htmlspecialchars($str, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+}
 
 
 ?>
@@ -25,7 +27,7 @@ session_start();
 <body>
     <?php include('sidebar.php'); ?>
 
-    <h1 id="logo"><?php if (isset($_SESSION['username'])) : ?><span>こんにちは、<?php echo $_SESSION['username'] ?>さん!</span><?php endif ?><a href="index.php">AppPort</a><a href="info.php" id="info">お問い合わせ</a></h1>
+    <h1 id="logo"><?php if (isset($_SESSION['username'])) : ?><span>こんにちは、<?= h($_SESSION['username']) ?>さん!</span><?php endif ?><a href="index.php">AppPort</a><a href="info.php" id="info">お問い合わせ</a></h1>
 
     <ul>
     </ul>
@@ -58,7 +60,6 @@ session_start();
     </div>
     <script>
         $(() => {
-
             $('.pass').hover(function() {
                     let passText = '';
                     let wordText = '';
@@ -85,15 +86,15 @@ session_start();
                             }, 200);
                         }
                     }, 200);
-            },
-            function() {
+                },
+                function() {
                     clearInterval(passInterval);
                     if (wordInterval) {
                         clearInterval(wordInterval);
                     }
                     $(this).find('#pass').text('PASS');
                     $(this).find('#word').text('WORD');
-            });
+                });
 
             $('.fa-map-pin').hide();
 
@@ -112,7 +113,6 @@ session_start();
             $('#mapImg').on('animationend', function() {
                 $('.fa-map-pin').show();
             });
-
         });
     </script>
 </body>

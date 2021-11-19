@@ -52,7 +52,7 @@ if (empty($_SESSION['username'])) {
 }
 function h($str)
 {
-    return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
+    return htmlspecialchars($str, ENT_QUOTES|ENT_HTML5, 'UTF-8');
 }
 ?>
 
@@ -94,6 +94,90 @@ function h($str)
         <?php require_once('mapIndex.php'); ?>
     </main>
 
+    <script src="https://maps.googleapis.com/maps/api/js?key=<?= getenv('API_KEY_MAP') ?>&callback=initMap&v=weekly" async></script>
+    <script src="book.js"></script>
+    <script src="map.js"></script>
+    <script>
+    document.getElementById('byte').innerText = '0/500';
+    const byteCount = function() {
+        const memoByte = document.getElementById('text').value;
+        let byte = (new Blob([memoByte])).size;
+        document.getElementById('byte').innerText = `${byte}/500`;
+        if (byte > 500) {
+            document.getElementById('byte').innerText = '文字数オーバーです';
+        }
+    }
+</script>
+<script>
+    $(function() {
+        let $memoDel = function() {
+            $('.memo').find('#delbtn').on('click', function() {
+                let delId = $(this).val();
+                $('.memo').find('#delbtn').hide();
+                $('#deload').show();
+                let $this = $(this).parent()
+                $this.css({
+                    opacity: '0.5'
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: 'memo.php',
+                    data: {
+                        'del': delId
+                    },
+                    dataType: 'json',
+                }).done(function(data) {
+                    $this.hide();
+                    $('#deload').hide();
+                }).fail(function(XMLHttpRequest, status, e) {
+                    $this.css({
+                        opacity: '1'
+                    });
+                    $('#deload').hide();
+                });
+            });
+        }
+        $memoDel();
+
+        $('#submit').on('click', function(event) {
+            let val = $('#text').val();
+            if (val == '') {
+
+            } else {
+                $('#submit').hide();
+                $('#load').show();
+                $.ajax({
+                    type: 'POST',
+                    url: 'memo.php',
+                    data: {
+                        'text': val
+                    },
+                    dataType: 'json',
+                }).done(function(data) {
+                    $('#text').val('');
+                    $('#memoWrapper').prepend('<div class="memo noDrag"><i class="fas fa-bars"></i><p id="mainText"><span>' + val + '</span></p><p id="date">' + data.date + '</p><button type="submit" value="' + data.insert + '" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload"><input type="hidden" value="' + data.insert + '" class="memoId"></div>');
+                    $('#load').hide();
+                    $('#submit').show();
+                    $memoDel();
+                    sortableLeft();
+                    sortableRight();
+                    $('#byte').text('0/500');
+                    $('.memo').first().find('.fa-bars').click(function() {
+                        $(this).parent().find('#delbtn').slideToggle();
+                    });
+                }).fail(function(XMLHttpRequest, status, e) {
+                    $('#memoWrapper').find('p').remove();
+
+                });
+            }
+        });
+
+        $('.memo').find('.fa-bars').click(function() {
+            $(this).parent().find('#delbtn').slideToggle();
+        });
+
+    });
+</script>
     <script>
         $(() => {
             window.sortableLeft = function() {

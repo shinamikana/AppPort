@@ -8,7 +8,7 @@ if(empty($_SESSION['username']) ){
   }
 
   function h($str){
-    return htmlspecialchars($str,ENT_QUOTES,'UTF-8');
+    return htmlspecialchars($str,ENT_QUOTES|ENT_HTML5,'UTF-8');
   }
 
 ?>
@@ -76,7 +76,7 @@ if(empty($_SESSION['username']) ){
         passBtn.addEventListener('click',function(){
             len = passLen.value;
             console.log(len);
-            if(isNaN(len) || len == ''){
+            if(isNaN(len) || len == '' || len == 0){
                 passErrorText.innerText = '半角数字で入力してください！';
             }else{
                 passErrorText.innerText = '';
