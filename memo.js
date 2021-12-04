@@ -57,4 +57,12 @@ $(function() {
         $(this).parent().find('#delbtn').slideToggle();
     });
 
+    $('.wrapper').find('.noDragUl').find('.showMark').on('click', function () {
+        let ostTop = $('#mapH1').offset().top + 50;
+        $('html,body').animate({scrollTop:ostTop},0);
+        $('.mapWrapper').show();
+        $('.wrapper').hide();
+        $('#selectR').val('map');
+    });
+
 });

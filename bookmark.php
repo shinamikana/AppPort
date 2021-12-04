@@ -33,7 +33,7 @@ $showBookMap->execute();
 $bookMapResult = $showBookMap->get_result();
 
 //ブックマークアプリでの地図あぷりのカラム表示SQL
-$showMark = $mysqli->prepare('SELECT *,map.id AS mapId FROM map LEFT JOIN map_memo ON map.id = map_memo.map_id WHERE user_id = ? AND map_memo.id IS NULL ORDER BY map.id DESC');
+$showMark = $mysqli->prepare('SELECT *,map.id AS mapId FROM map LEFT JOIN map_memo ON map.id = map_memo.map_id WHERE user_id = ? ORDER BY map.id DESC');
 $showMark->bind_param('i', $_SESSION['id']);
 $showMark->execute();
 $resultMark = $showMark->get_result();
@@ -43,7 +43,7 @@ while ($resultMark->fetch_assoc()) {
 }
 
 ///ブックマークアプリでのメモカラムの表示SQL
-$showMemo = $mysqli->prepare('SELECT *, memo.id AS memo_id FROM memo LEFT JOIN book_memo ON memo.id = book_memo.memo_id LEFT JOIN map_memo ON memo.id = map_memo.memo_id WHERE memo.user_id = ? AND map_memo.id IS NULL ORDER BY memo.id DESC');
+$showMemo = $mysqli->prepare('SELECT *, memo.id AS memo_id FROM memo LEFT JOIN book_memo ON memo.id = book_memo.memo_id LEFT JOIN map_memo ON memo.id = map_memo.memo_id WHERE memo.user_id = ? ORDER BY memo.id DESC');
 $showMemo->bind_param('i', $_SESSION['id']);
 $showMemo->execute();
 $memoResult = $showMemo->get_result();
@@ -51,6 +51,16 @@ $memoCount = 0;
 while ($memoResult->fetch_assoc()) {
     ++$memoCount;
 }
+
+$showColumnMemoMap = $mysqli -> prepare('SELECT *,memo.id AS memoId FROM map_memo LEFT JOIN memo ON map_memo.memo_id = memo.id WHERE memo.user_id = ?');
+$showColumnMemoMap -> bind_param('i',$_SESSION['id']);
+$showColumnMemoMap -> execute();
+$showCMeM = $showColumnMemoMap -> get_result();
+
+$showColumnMapMemo = $mysqli -> prepare('SELECT *, map.id AS mapId FROM map_memo LEFT JOIN map ON map_memo.map_id = map.id WHERE map.user_id = ?');
+$showColumnMapMemo -> bind_param('i',$_SESSION['id']);
+$showColumnMapMemo -> execute();
+$showCMMe = $showColumnMapMemo -> get_result();
 
 if (empty($_SESSION['username'])) {
     header('Location:login.php');

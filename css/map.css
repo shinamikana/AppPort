@@ -188,12 +188,47 @@ li{
 
 .showMark .dragUl{
     margin:0;
-    padding:0;
+    padding-bottom:30px;
     border:1px solid black;
     min-height:50px;
     text-align: center;
 }
 
-.dragUl .memo{
+.showMark .dragUl .memo{
     width:90%;
+}
+
+.showMark .dragUl .bookmarking{
+    display: block;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.showMark .dragUl .bookmarking a{
+    line-height: 30px;
+}
+
+.mapWrapper #noDragUl{
+    border:1px dashed gray;
+    width:100%;
+    padding:0;
+    margin:0;
+}
+
+.mapWrapper #noDragUl .bookmarking{
+    width:100%;
+    border:1px solid gray;
+    margin:0;
+    padding:0;
+}
+
+.mapWrapper #noDragUl .bookmarking a{
+    line-height: 30px;
+}
+
+.mapWrapper #noDragUl .memo{
+    width:100%;
+    border:1px solid gray;
+    margin:0;
+    padding:0;
 }

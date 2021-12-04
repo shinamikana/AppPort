@@ -18,5 +18,3 @@
     <?php endforeach ?>
   </div>
 </div>
-
-<script src="https://maps.googleapis.com/maps/api/js?key=<?= getenv('API_KEY_MAP') ?>&callback=initMap&v=weekly" async></script>

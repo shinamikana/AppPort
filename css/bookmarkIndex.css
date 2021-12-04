@@ -229,12 +229,27 @@ li{
 .bookLi .dragUl{
     border:1px solid black;
     text-align: center;
-    padding: 0;
+    padding: 0 0 30px 0;
     min-height:50px;
     width:500px;
 }
 
-.bookLi .dragUl li{
-    border:1px solid black;
-    background-color: rgba(255,255,255,0.5);
+.bookWrapper #noDragUl{
+    height:auto;
+    border:1px dashed gray;
+    width:500px;
+    padding:0;
+    margin:0;
+}
+
+.bookWrapper #noDragUl .showMark{
+    margin:0;
+    width:100%;
+}
+
+.bookWrapper #noDragUl .memo{
+    position: relative;
+    margin:0;
+    width:100%;
+    padding:0;
 }

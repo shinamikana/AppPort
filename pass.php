@@ -76,7 +76,7 @@ if(empty($_SESSION['username']) ){
         passBtn.addEventListener('click',function(){
             len = passLen.value;
             console.log(len);
-            if(isNaN(len) || len == '' || len == 0){
+            if(isNaN(len) || len == '' || len <= 0){
                 passErrorText.innerText = '半角数字で入力してください！';
             }else{
                 passErrorText.innerText = '';

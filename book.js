@@ -1,21 +1,20 @@
-$(function() {
-    $('#bookConfirmNo').click(function() {
+$(function () {
+    $('#bookConfirmNo').click(function () {
         $('#confirmBigWrap').hide();
     });
 
-    const errorProcess = function(error) {
-        $('#bookmarkError').text(error).show().delay(2000).queue(function() {
+    const errorProcess = function (error) {
+        $('#bookmarkError').text(error).show().delay(2000).queue(function () {
             $(this).hide().dequeue();
         });
     }
 
     //ブックマークの送信処理
-    $('#submit1').on('click', function(event) {
+    $('#submit1').on('click', function (event) {
         let urlVal = $('#url').val();
         let linkNameVal = $('#linkName').val();
         $('#submit1').hide();
         $('#load1').show();
-        console.log(urlVal);
         if (!urlVal && !linkNameVal) {
             errorProcess('URLとリンク名が入力されていません！');
             $('#submit1').show();
@@ -42,7 +41,7 @@ $(function() {
                     'linkName': linkNameVal
                 },
                 dataType: 'json',
-            }).done(function(data) {
+            }).done(function (data) {
                 $('.bookUl').prepend('<li class="bookLi" id="' + data.id + '"><div class="bookmarking"><i class="fas fa-check"></i><i class="far fa-edit"></i><a href="' + data.url + '" target="_blank" rel="noopener noreferrer" class="bookA">' + data.linkName + '</a><input type="text" value="' + data.linkName + '" class="bookNameInput"><i class="fas fa-times"></i><input type="text" value="' + data.url + '" class="bookLinkInput"><button id="deltn1" value="' + data.id + '">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="' + data.id + '"><i class="fas fa-bars"></i></div><ul class="dragUl">ここにドロップ</ul></li>');
                 $('#submit1').show();
                 $('#load1').hide();
@@ -51,13 +50,13 @@ $(function() {
                 $delete();
                 sortableLeft();
                 sortableRight();
-                $('.bookmarking').find('.fa-bars').first().click(function() {
+                $('.bookmarking').find('.fa-bars').first().click(function () {
                     $(this).parent().find('#deltn1').slideToggle();
                 });
                 bookEdit();
                 bookCancel();
                 bookSubmit();
-            }).fail(function(XMLHttpRequest, status, e) {
+            }).fail(function (XMLHttpRequest, status, e) {
                 console.log('error number:' + XMLHttpRequest + ',status:' + status + ',thrown:' + e);
                 alert('fail');
                 $('#submit1').show();
@@ -67,8 +66,8 @@ $(function() {
     });
 
     //ブックマークの削除処理
-    let $delete = function() {
-        $('.bookmarking').find('#deltn1').on('click', function(event) {
+    let $delete = function () {
+        $('.bookmarking').find('#deltn1').on('click', function (event) {
             let $this = $(this).parent();
             $this.css({
                 opacity: '0.5'
@@ -76,7 +75,6 @@ $(function() {
             $('.bookmarking').find('.fa-bars').hide();
             $('.deload1').show();
             let delId = $(this).val();
-            console.log(delId);
             $.ajax({
                 type: 'POST',
                 url: 'bookmark.php',
@@ -84,11 +82,11 @@ $(function() {
                     'delId': delId
                 },
                 dataType: 'json',
-            }).done(function(data) {
+            }).done(function (data) {
                 $this.parent().hide();
                 $('.deload1').hide();
                 $('.bookmarking').find('.fa-bars').show();
-            }).fail(function(XMLHttpRequest, status, e) {
+            }).fail(function (XMLHttpRequest, status, e) {
                 console.log('error number:' + XMLHttpRequest + ',status:' + status + ',thrown:' + e);
                 $this.css({
                     opacity: '1'
@@ -100,8 +98,8 @@ $(function() {
 
     $delete();
 
-    const bookEdit = function() {
-        $('.fa-edit').click(function() {
+    const bookEdit = function () {
+        $('.fa-edit').click(function () {
             $(this).hide();
             $(this).parent().find('.bookA').hide();
             $(this).parent().find('.bookNameInput').show();
@@ -114,7 +112,7 @@ $(function() {
     bookEdit();
 
     //編集ボタンを押した際の処理の関数
-    const bookEditShow = function($this) {
+    const bookEditShow = function ($this) {
         $this.hide();
         $this.parent().find('.fa-edit').show();
         $this.parent().find('.bookNameInput').hide();
@@ -127,8 +125,8 @@ $(function() {
     }
 
     //編集を中止した場合の処理
-    const bookCancel = function() {
-        $('.fa-times').click(function() {
+    const bookCancel = function () {
+        $('.fa-times').click(function () {
             let $this = $(this);
             let bookName = $this.parent().find('.bookA').text();
             let bookLink = $this.parent().find('.bookA').attr('href');
@@ -140,8 +138,8 @@ $(function() {
     bookCancel();
 
     //編集を送信する処理
-    const bookSubmit = function() {
-        $('.fa-check').click(function() {
+    const bookSubmit = function () {
+        $('.fa-check').click(function () {
             let $this = $(this);
             let bookNameVal = $this.parent().find('.bookNameInput').val();
             let bookLinkVal = $this.parent().find('.bookLinkInput').val();
@@ -158,7 +156,7 @@ $(function() {
 
             if (bookNameVal != bookName && bookLinkVal != bookLink) {
                 $('#confirmBigWrap').show();
-                $('#bookConfirmYes').click(function() {
+                $('#bookConfirmYes').click(function () {
                     $this.parent().css('opacity', '0.5');
                     $('#confirmBigWrap').hide();
                     $.ajax({
@@ -170,11 +168,11 @@ $(function() {
                             'bookId': bookId
                         },
                         dataType: 'json',
-                    }).done(function(data) {
+                    }).done(function (data) {
                         $this.parent().find('.bookA').text(bookNameVal);
                         $this.parent().find('.bookA').attr('href', bookLinkVal);
                         bookEditShow($this);
-                    }).fail(function(XMLHttpRequest, status, e) {});
+                    }).fail(function (XMLHttpRequest, status, e) { });
                 });
 
             } else if (bookNameVal != bookName) {
@@ -187,15 +185,15 @@ $(function() {
                         'bookId': bookId
                     },
                     dataType: 'json',
-                }).done(function(data) {
+                }).done(function (data) {
                     $this.parent().find('.bookA').text(bookNameVal);
                     bookEditShow($this);
                     $this.parent().css('opacity', '1');
-                }).fail(function(XMLHttpRequest, status, e) {});
+                }).fail(function (XMLHttpRequest, status, e) { });
 
             } else if (bookLinkVal != bookLink) {
                 $('#confirmBigWrap').show();
-                $('#bookConfirmYes').click(function() {
+                $('#bookConfirmYes').click(function () {
                     $this.parent().css('opacity', '0.5');
                     $('#confirmBigWrap').hide();
                     $.ajax({
@@ -206,10 +204,10 @@ $(function() {
                             'bookId': bookId
                         },
                         dataType: 'json',
-                    }).done(function(data) {
+                    }).done(function (data) {
                         $this.parent().find('.bookA').attr('href', bookLinkVal);
                         bookEditShow($this);
-                    }).fail(function(XMLHttpRequest, status, e) {});
+                    }).fail(function (XMLHttpRequest, status, e) { });
                 });
             } else {
                 bookEditShow($this);
@@ -218,8 +216,16 @@ $(function() {
     }
     bookSubmit();
 
-    $('.bookmarking').find('.fa-bars').click(function() {
+    $('.bookmarking').find('.fa-bars').click(function () {
         $(this).parent().find('#deltn1').slideToggle();
+    });
+
+    $('.wrapper').find('.noDragUl').find('.showMark').on('click', function () {
+        let ostTop = $('#mapH1').offset().top + 50;
+        $('html,body').animate({scrollTop:ostTop},0);
+        $('.mapWrapper').show();
+        $('.wrapper').hide();
+        $('#memoR').val('map');
     });
 
 });

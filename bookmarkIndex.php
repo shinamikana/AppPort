@@ -45,6 +45,28 @@
                                 <?php endforeach ?>
                             <?php endif ?>
                         </ul>
+                        <ul id="noDragUl">
+                            <?php if (isset($resultShowMapBook)) : ?>
+                                <?php foreach ($resultShowMapBook as $memoMap) : ?>
+                                    <?php if ($show['map_id'] == $memoMap['map_id']) : ?>
+                                        <div class="showMark">
+                                            <p class="columnMark"><?= h($memoMap['field_name']) ?></p><input type="hidden" value="<?= h($memoMap['lat']) ?>" class="mapLat"><input type="hidden" value="<?= h($memoMap['lng']) ?>" class="mapLng"><input type="text" class="markInput" value="<?= h($memoMap['field_name']) ?>"><img src="/img/load.gif" alt="" class="loadGif"><input type="hidden" value="<?= h($memoMap['map_id']) ?>" class="mapId">
+                                        </div>
+                                    <?php endif ?>
+                                <?php endforeach ?>
+                            <?php endif ?>
+                            <?php if (isset($showMeB)) : ?>
+                                <?php foreach ($showMeB as $memoMap) : ?>
+                                    <?php if ($show['memo_id'] == $memoMap['memoId']) : ?>
+                                        <div class="memo">
+                                            <p id="mainText"><?= h($memoMap['text']) ?></p>
+                                            <p id="date"><?= h($memoMap['date']) ?></p>
+                                            <input type="hidden" value="<?= $memoMap['memoId'] ?>" class="memoId">
+                                        </div>
+                                    <?php endif ?>
+                                <?php endforeach ?>
+                            <?php endif ?>
+                        </ul>
                     </li>
                 <?php endforeach ?>
             <?php endif ?>
@@ -64,5 +86,5 @@
 </div>
 
 <script>
-    
+
 </script>

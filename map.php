@@ -26,7 +26,7 @@ $showMapBook->execute();
 $resultMapBook = $showMapBook->get_result();
 
 //ブックマーク表示SQL
-$show = $mysqli->prepare('SELECT *,bookmark.id AS bookmark_id FROM bookmark LEFT JOIN book_memo ON bookmark.id = book_memo.book_id WHERE bookmark.user_id = ? AND book_memo.id IS NULL ORDER BY bookmark.id DESC');
+$show = $mysqli->prepare('SELECT *,bookmark.id AS bookmark_id FROM bookmark LEFT JOIN book_memo ON bookmark.id = book_memo.book_id WHERE bookmark.user_id = ? ORDER BY bookmark.id DESC');
 $show->bind_param('i', $_SESSION['id']);
 $show->execute();
 $showResult = $show->get_result();
@@ -36,7 +36,7 @@ while ($showResult->fetch_assoc()) {
 }
 
 //マップアプリでのメモカラム表示
-$showMemo = $mysqli->prepare('SELECT *, memo.id AS memo_id FROM memo LEFT JOIN book_memo ON memo.id = book_memo.memo_id WHERE memo.user_id = ? AND book_memo.id IS NULL ORDER BY memo.id DESC');
+$showMemo = $mysqli->prepare('SELECT *, memo.id AS memo_id FROM memo LEFT JOIN book_memo ON memo.id = book_memo.memo_id WHERE memo.user_id = ? ORDER BY memo.id DESC');
 $showMemo->bind_param('i', $_SESSION['id']);
 $showMemo->execute();
 $memoResult = $showMemo->get_result();
@@ -44,6 +44,16 @@ $memoCount = 0;
 while ($memoResult->fetch_assoc()) {
   ++$memoCount;
 }
+
+$showColumnBookMemo = $mysqli -> prepare('SELECT *,bookmark.id AS bookId FROM book_memo LEFT JOIN bookmark ON book_memo.book_id = bookmark.id WHERE bookmark.user_id = ?');
+$showColumnBookMemo -> bind_param('i',$_SESSION['id']);
+$showColumnBookMemo -> execute();
+$showBMe = $showColumnBookMemo -> get_result();
+
+$showColumnMemoBook = $mysqli -> prepare('SELECT *,memo.id AS memoId FROM book_memo LEFT JOIN memo ON book_memo.memo_id = memo.id WHERE memo.user_id = ?');
+$showColumnMemoBook -> bind_param('i',$_SESSION['id']);
+$showColumnMemoBook -> execute();
+$showMeB = $showColumnMemoBook -> get_result();
 
 if (empty($_SESSION['username'])) {
   header('Location:login.php');
@@ -94,11 +104,13 @@ function h($str)
 
   <script src="memo.js"></script>
   <script src="book.js"></script>
-  <script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=<?= getenv('API_KEY_MAP') ?>&callback=initMap&v=weekly" async></script>
+  <script async>
   let map;
 
   //地図の読み込み関数
   function initMap() {
+    alert('ok!');
     let lat = 34.73373029238828;
     let lng = 135.50025469752734;
     map = new google.maps.Map(document.getElementById("map"), {
@@ -108,12 +120,8 @@ function h($str)
       },
       zoom: 8,
     });
-
     window.mapInfo = map;
-
     google.maps.event.addListener(map, 'click', event => clickListener(event, map));
-
-
   }
 
   //マーカーをクリックで削除処理

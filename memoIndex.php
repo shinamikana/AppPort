@@ -40,6 +40,26 @@
                                 <?php endforeach ?>
                             <?php endif ?>
                         </ul>
+                        <ul class="noDragUl">
+                            <?php if (isset($showBMe)) : ?>
+                                <?php foreach ($showBMe as $memo_book) : ?>
+                                    <?php if ($memo_book['memo_id'] == $memo['memo_id']) : ?>
+                                        <div class="bookmarking">
+                                            <a href="<?= $memo_book['link'] ?>" target="_blank" rel="noopener noreferrer" class="bookA"><?= $memo_book['link_name'] ?></a><input type="text" value="<?= h($memo_book['link_name']) ?>" class="bookNameInput"><input type="text" value="<?= $memo_book['link'] ?>" class="bookLinkInput"><input type="hidden" class="bookId" value="<?= h($memo_book['bookId']) ?>">
+                                        </div>
+                                    <?php endif ?>
+                                <?php endforeach ?>
+                            <?php endif ?>
+                            <?php if (isset($showCMMe)) : ?>
+                                <?php foreach ($showCMMe as $map_memo) : ?>
+                                    <?php if ($map_memo['memo_id'] == $memo['memo_id']) : ?>
+                                        <div class="showMark drag">
+                                            <p class="columnMark"><?= h($map_memo['field_name']) ?></p><input type="hidden" value="<?= h($map_memo['lat']) ?>" class="mapLat"><input type="hidden" value="<?= h($map_memo['lng']) ?>" class="mapLng"><input type="text" class="markInput" value="<?= h($map_memo['field_name']) ?>"><img src="/img/load.gif" alt="" class="loadGif"><input type="hidden" value="<?= h($map_memo['mapId']) ?>" class="mapId">
+                                        </div>
+                                    <?php endif ?>
+                                <?php endforeach ?>
+                            <?php endif ?>
+                        </ul>
                     </div>
                 <?php endforeach ?>
             <?php endif ?>
@@ -58,5 +78,5 @@
     }
 </script>
 <script>
-    
+
 </script>
