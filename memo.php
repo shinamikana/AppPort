@@ -104,9 +104,9 @@ function h($str)
         <?php require_once('mapIndex.php'); ?>
     </main>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=<?= getenv('API_KEY_MAP') ?>&callback=initMap&v=weekly" async></script>
-    <script src="book.js"></script>
     <script src="map.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=<?= getenv('API_KEY_MAP') ?>&callback=initMap&v=weekly"></script>
+    <script src="book.js"></script>
     <script>
     document.getElementById('byte').innerText = '0/500';
     const byteCount = function() {

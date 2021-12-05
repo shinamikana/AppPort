@@ -52,15 +52,15 @@ while ($memoResult->fetch_assoc()) {
     ++$memoCount;
 }
 
-$showColumnMemoMap = $mysqli -> prepare('SELECT *,memo.id AS memoId FROM map_memo LEFT JOIN memo ON map_memo.memo_id = memo.id WHERE memo.user_id = ?');
-$showColumnMemoMap -> bind_param('i',$_SESSION['id']);
-$showColumnMemoMap -> execute();
-$showCMeM = $showColumnMemoMap -> get_result();
+$showColumnMemoMap = $mysqli->prepare('SELECT *,memo.id AS memoId FROM map_memo LEFT JOIN memo ON map_memo.memo_id = memo.id WHERE memo.user_id = ?');
+$showColumnMemoMap->bind_param('i', $_SESSION['id']);
+$showColumnMemoMap->execute();
+$showCMeM = $showColumnMemoMap->get_result();
 
-$showColumnMapMemo = $mysqli -> prepare('SELECT *, map.id AS mapId FROM map_memo LEFT JOIN map ON map_memo.map_id = map.id WHERE map.user_id = ?');
-$showColumnMapMemo -> bind_param('i',$_SESSION['id']);
-$showColumnMapMemo -> execute();
-$showCMMe = $showColumnMapMemo -> get_result();
+$showColumnMapMemo = $mysqli->prepare('SELECT *, map.id AS mapId FROM map_memo LEFT JOIN map ON map_memo.map_id = map.id WHERE map.user_id = ?');
+$showColumnMapMemo->bind_param('i', $_SESSION['id']);
+$showColumnMapMemo->execute();
+$showCMMe = $showColumnMapMemo->get_result();
 
 if (empty($_SESSION['username'])) {
     header('Location:login.php');
@@ -107,8 +107,8 @@ if (empty($_SESSION['username'])) {
     </div>
 
     <script src="memo.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=<?= getenv('API_KEY_MAP') ?>&callback=initMap&v=weekly" async></script>
     <script src="map.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=<?= getenv('API_KEY_MAP') ?>&callback=initMap&v=weekly"></script>
     <script>
         $(function() {
             $('#bookConfirmNo').click(function() {

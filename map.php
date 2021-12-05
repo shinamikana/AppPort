@@ -104,8 +104,7 @@ function h($str)
 
   <script src="memo.js"></script>
   <script src="book.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=<?= getenv('API_KEY_MAP') ?>&callback=initMap&v=weekly" async></script>
-  <script async>
+  <script>
   let map;
 
   //地図の読み込み関数
@@ -417,6 +416,7 @@ function h($str)
 
     $('.bookWrapper').hide();
   </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=<?= getenv('API_KEY_MAP') ?>&callback=initMap&v=weekly"></script>
 </body>
 
 </html>
