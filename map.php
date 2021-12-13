@@ -109,7 +109,6 @@ function h($str)
 
   //地図の読み込み関数
   function initMap() {
-    alert('ok!');
     let lat = 34.73373029238828;
     let lng = 135.50025469752734;
     map = new google.maps.Map(document.getElementById("map"), {

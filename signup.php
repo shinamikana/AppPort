@@ -9,6 +9,11 @@ if(isset($_SESSION['id'])){
 if(count($_POST) === 0){
     $message = '';
 }else{
+    if (isset($_POST['guest'])) {
+        $_SESSION['id'] = 25;
+        $_SESSION['username'] = 'ゲスト';
+        header('Location:index.php');
+    }
     if(empty($_POST['username']) && empty($_POST['email']) && empty($_POST['password'])){
         $message = '入力されていない箇所があります';
     }else{
@@ -77,6 +82,10 @@ htmlspecialchars($message);
                 <br>
                 <button id="loginSubmit" class="g-recaptcha" data-sitekey="<?php echo getenv('API_KEY_RE')?>" data-callback='onSubmit' data-action='submit'>新規登録</button>
             </form>
+            <form action="login.php" method="POST" id="guestForm">
+                <input type="hidden" value="guest" name="guest">
+                <button id="guestLogin" class="g-recaptcha" data-sitekey="<?php echo getenv('API_KEY_RE') ?>" data-callback='onSubmitGuest' data-action='submit'>ゲストはこちら</button>
+            </form>
         </div>
 
     </main>
@@ -84,6 +93,9 @@ htmlspecialchars($message);
     <script>
         function onSubmit(token){
             document.getElementById("signupForm").submit();
+        }
+        function onSubmitGuest(token) {
+            document.getElementById("guestForm").submit();
         }
     </script>
 </body>
