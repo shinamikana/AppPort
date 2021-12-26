@@ -34,27 +34,8 @@ function h($str)
     </div>
 
     <div class="app">
-
-        <div class="pass">
-            <a href="pass.php">
-                <p id="pass">PASS</p>
-                <p id="word">WORD</p>
-            </a>
-        </div>
-
         <div class="memo">
-            <a href="memo.php">MEMO</a>
-        </div>
-
-        <div class="bookmark">
-            <a href="bookmark.php">BOOK
-                MARK</a>
-        </div>
-
-        <div class="map">
-            <a href="map.php" id="mapA">
-                <p>MAP</p><i class="fas fa-map-pin"></i><img src="/img/map.png" alt="" height="150px" width="150px" id="mapImg">
-            </a>
+            <a href="memo.php">ToDo</a>
         </div>
 
     </div>

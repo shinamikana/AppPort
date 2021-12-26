@@ -15,7 +15,7 @@
     }
 
     if(isset($_POST['delId'])){
-        $delete = $mysqli -> prepare('DELETE bookmark,book_memo,map_bookmark FROM bookmark LEFT JOIN book_memo ON bookmark.id = book_memo.book_id LEFT JOIN map_bookmark ON bookmark.id = map_bookmark.book_id WHERE bookmark.id = ?');
+        $delete = $mysqli -> prepare('DELETE bookmark,book_memo FROM bookmark LEFT JOIN book_memo ON bookmark.id = book_memo.book_id WHERE bookmark.id = ?');
         $delete -> bind_param('i',$_POST['delId']);
         $delete -> execute();
         $delete -> close();
@@ -83,31 +83,6 @@
         $removeDrag -> execute();
         $removeDrag -> close();
         $data = array('removeDrag' => $removeDragId);
-        header('Content-type:application/json;charset=UTF-8');
-        echo json_encode($data);
-        exit();
-    }
-
-    if(isset($_POST['dragId']) && isset($_POST['mapId'])){
-        $dragId = $_POST['dragId'];
-        $mapId = $_POST['mapId'];
-        $bookMap = $mysqli -> prepare('INSERT INTO map_bookmark(book_id,map_id) VALUES(?,?)');
-        $bookMap -> bind_param('ii',$dragId,$mapId);
-        $bookMap -> execute();
-        $bookMap -> close();
-        $data = array('dragId' => $dragId ,'mapId' => $mapId);
-        header('Content-type:application/json;charset=UTF-8');
-        echo json_encode($data);
-        exit();
-    }
-
-    if(isset($_POST['removeBook'])){
-        $removeBookId = $_POST['removeBook'];
-        $removeBook = $mysqli -> prepare('DELETE FROM map_bookmark WHERE book_id = ?');
-        $removeBook -> bind_param('i',$removeBookId);
-        $removeBook -> execute();
-        $removeBook -> close();
-        $data = array('removeBook' => $removeBookId);
         header('Content-type:application/json;charset=UTF-8');
         echo json_encode($data);
         exit();

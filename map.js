@@ -1,25 +1,26 @@
 let map;
-function initMap() { }
 
 //地図の読み込み関数
+function initMap() {
+  let lat = 34.73373029238828;
+  let lng = 135.50025469752734;
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: {
+      lat: lat,
+      lng: lng
+    },
+    zoom: 8,
+  });
+
+  window.mapInfo = map;
+
+  google.maps.event.addListener(map, 'click', event => clickListener(event, map));
+
+
+}
+
 window.onload = function () {
-  function initMap() {
-    let lat = 34.73373029238828;
-    let lng = 135.50025469752734;
-    map = new google.maps.Map(document.getElementById("map"), {
-      center: {
-        lat: lat,
-        lng: lng
-      },
-      zoom: 8,
-    });
-
-    window.mapInfo = map;
-
-    google.maps.event.addListener(map, 'click', event => clickListener(event, map));
-
-
-  }
+  initMap();
 }
 
 //マーカーをクリックで削除処理

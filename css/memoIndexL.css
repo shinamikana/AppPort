@@ -93,7 +93,7 @@ html,body{
     font-size:15px;
 }
 
-.memo .fa-bars{
+.memos .fa-bars{
     float:right;
     position: absolute;
     top:4px;

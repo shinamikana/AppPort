@@ -1,81 +1,84 @@
 <div class="wrapper">
-    <h1 id="memoTitle">メモ</h1>
-    <div class="column">
-        <div class="delete">
-            <textarea type="text" name="memo" id="text" placeholder="本文" onkeyup="byteCount()"></textarea><button id="submit">書き留める</button><img src="/img/load.gif" alt="" id="load"><span id="byte"></span>
-        </div>
-        <div id="memoWrapper">
-            <?php if (isset($memoResult)) : ?>
-                <?php foreach ($memoResult as $memo) : ?>
-                    <div class="memo">
-                        <div class="memos">
-                            <p id="mainText"><?= h($memo['text']) ?></p>
-                            <p id="date"><?= h($memo['date']) ?></p>
-                            <i class="fas fa-bars"></i>
-                            <button type="submit" value="<?= $memo['memo_id'] ?>" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload"><input type="hidden" value="<?= $memo['memo_id'] ?>" class="memoId">
-                        </div>
-                        <ul class="dragUl">ここにドロップ
-                            <?php if (isset($mapMemoResult)) : ?>
-                                <?php foreach ($mapMemoResult as $map_memo) : ?>
-                                    <?php if ($map_memo['memo_id'] == $memo['memo_id']) : ?>
-                                        <div class="showMark drag">
-                                            <i class="fas fa-check"></i><i class="fas fa-edit"></i><img src="/img/load.gif" alt="" class="loadGif1">
-                                            <p class="columnMark"><?= h($map_memo['field_name']) ?></p><input type="hidden" value="<?= h($map_memo['lat']) ?>" class="mapLat"><input type="hidden" value="<?= h($map_memo['lng']) ?>" class="mapLng"><input type="text" class="markInput" value="<?= h($map_memo['field_name']) ?>"><img src="/img/load.gif" alt="" class="loadGif"><input type="hidden" value="<?= h($map_memo['id']) ?>" class="mapId"><i class="fas fa-bars"></i>
-                                            <ul class="mapEdit">
-                                                <li class="mapDel">削除</li>
-                                            </ul>
-                                        </div>
-                                    <?php endif ?>
-                                <?php endforeach ?>
-                            <?php endif ?>
-                            <?php if (isset($memoBookResult)) : ?>
-                                <?php foreach ($memoBookResult as $memo_book) : ?>
-                                    <?php if ($memo_book['memo_id'] == $memo['memo_id']) : ?>
-                                        <li class="bookLi drag" id="<?= $memo['id'] ?>">
-                                            <div class="bookmarking">
-                                                <i class="fas fa-check"></i><i class="far fa-edit"></i><i class="fas fa-times"></i><a href="<?= $memo_book['link'] ?>" target="_blank" rel="noopener noreferrer" class="bookA"><?= $memo_book['link_name'] ?></a><input type="text" value="<?= h($memo_book['link_name']) ?>" class="bookNameInput"><input type="text" value="<?= $memo_book['link'] ?>" class="bookLinkInput"><button id="deltn1" value="<?= $memo_book['id'] ?>">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="<?= h($memo_book['id']) ?>">
-                                            </div>
-                                        </li>
-                                    <?php endif ?>
-                                <?php endforeach ?>
-                            <?php endif ?>
-                        </ul>
-                        <ul class="noDragUl">
-                            <?php if (isset($showBMe)) : ?>
-                                <?php foreach ($showBMe as $memo_book) : ?>
-                                    <?php if ($memo_book['memo_id'] == $memo['memo_id']) : ?>
-                                        <div class="bookmarking">
-                                            <a href="<?= $memo_book['link'] ?>" target="_blank" rel="noopener noreferrer" class="bookA"><?= $memo_book['link_name'] ?></a><input type="text" value="<?= h($memo_book['link_name']) ?>" class="bookNameInput"><input type="text" value="<?= $memo_book['link'] ?>" class="bookLinkInput"><input type="hidden" class="bookId" value="<?= h($memo_book['bookId']) ?>">
-                                        </div>
-                                    <?php endif ?>
-                                <?php endforeach ?>
-                            <?php endif ?>
-                            <?php if (isset($showCMMe)) : ?>
-                                <?php foreach ($showCMMe as $map_memo) : ?>
-                                    <?php if ($map_memo['memo_id'] == $memo['memo_id']) : ?>
-                                        <div class="showMark drag">
-                                            <p class="columnMark"><?= h($map_memo['field_name']) ?></p><input type="hidden" value="<?= h($map_memo['lat']) ?>" class="mapLat"><input type="hidden" value="<?= h($map_memo['lng']) ?>" class="mapLng"><input type="text" class="markInput" value="<?= h($map_memo['field_name']) ?>"><img src="/img/load.gif" alt="" class="loadGif"><input type="hidden" value="<?= h($map_memo['mapId']) ?>" class="mapId">
-                                        </div>
-                                    <?php endif ?>
-                                <?php endforeach ?>
-                            <?php endif ?>
-                        </ul>
-                    </div>
-                <?php endforeach ?>
-            <?php endif ?>
-        </div>
+  <h1 id="memoTitle">メモ</h1>
+  <div class="column">
+    <div class="delete">
+      <textarea type="text" name="memo" id="text" placeholder="本文" onkeyup="byteCount()"></textarea><button id="submit">書き留める</button><img src="/img/load.gif" alt="" id="load"><span id="byte"></span>
     </div>
+    <div id="memoWrapper">
+      <?php if (isset($memoResult)) : ?>
+        <?php foreach ($memoResult as $memo) : ?>
+          <div class="memo">
+            <div class="memos">
+              <p id="mainText"><?= h($memo['text']) ?></p>
+              <p id="date"><?= h($memo['date']) ?></p>
+              <i class="fas fa-bars"></i>
+              <button type="submit" value="<?= $memo['memo_id'] ?>" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload"><input type="hidden" value="<?= $memo['memo_id'] ?>" class="memoId">
+            </div>
+            <ul class="dragUl">ここにドロップ
+              <?php if (isset($mapMemoResult)) : ?>
+                <?php foreach ($mapMemoResult as $map_memo) : ?>
+                  <?php if ($map_memo['memo_id'] == $memo['memo_id']) : ?>
+                    <div class="showMark drag">
+                      <i class="fas fa-check"></i><i class="fas fa-edit"></i><img src="/img/load.gif" alt="" class="loadGif1">
+                      <p class="columnMark"><?= h($map_memo['field_name']) ?></p><input type="hidden" value="<?= h($map_memo['lat']) ?>" class="mapLat"><input type="hidden" value="<?= h($map_memo['lng']) ?>" class="mapLng"><input type="text" class="markInput" value="<?= h($map_memo['field_name']) ?>"><img src="/img/load.gif" alt="" class="loadGif"><input type="hidden" value="<?= h($map_memo['id']) ?>" class="mapId"><i class="fas fa-bars"></i>
+                      <ul class="mapEdit">
+                        <li class="mapDel">削除</li>
+                      </ul>
+                    </div>
+                  <?php endif ?>
+                <?php endforeach ?>
+              <?php endif ?>
+              <?php if (isset($memoBookResult)) : ?>
+                <?php foreach ($memoBookResult as $memo_book) : ?>
+                  <?php if ($memo_book['memo_id'] == $memo['memo_id']) : ?>
+                    <li class="bookLi drag" id="<?= $memo['id'] ?>">
+                      <div class="bookmarking">
+                        <i class="fas fa-check"></i><i class="far fa-edit"></i><i class="fas fa-times"></i><a href="<?= $memo_book['link'] ?>" target="_blank" rel="noopener noreferrer" class="bookA"><?= $memo_book['link_name'] ?></a><input type="text" value="<?= h($memo_book['link_name']) ?>" class="bookNameInput"><input type="text" value="<?= $memo_book['link'] ?>" class="bookLinkInput"><button id="deltn1" value="<?= $memo_book['id'] ?>">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="<?= h($memo_book['id']) ?>">
+                      </div>
+                    </li>
+                  <?php endif ?>
+                <?php endforeach ?>
+              <?php endif ?>
+            </ul>
+            <ul class="noDragUl">
+              <?php if (isset($memoBookShow)) : ?>
+                <?php foreach ($memoBookShow as $memo_book) : ?>
+                  <?= $memo_book['memo_id'] ?>
+                  <?php if ($memo_book['memo_id'] == $memo['memo_id']) : ?>
+                    <div class="bookmarking">
+                      <a href="<?= $memo_book['link'] ?>" target="_blank" rel="noopener noreferrer" class="bookA"><?= $memo_book['link_name'] ?></a><input type="text" value="<?= h($memo_book['link_name']) ?>" class="bookNameInput"><input type="text" value="<?= $memo_book['link'] ?>" class="bookLinkInput"><input type="hidden" class="bookId" value="<?= h($memo_book['bookId']) ?>">
+                    </div>
+                  <?php endif ?>
+                <?php endforeach ?>
+              <?php endif ?>
+              <?php if (isset($showCMMe)) : ?>
+                <?php foreach ($showCMMe as $map_memo) : ?>
+                  <?php if ($map_memo['memo_id'] == $memo['memo_id']) : ?>
+                    <div class="showMark drag">
+                      <div class="columns">
+                        <p class="columnMark"><?= h($map_memo['field_name']) ?></p><input type="hidden" value="<?= h($map_memo['lat']) ?>" class="mapLat"><input type="hidden" value="<?= h($map_memo['lng']) ?>" class="mapLng"><input type="text" class="markInput" value="<?= h($map_memo['field_name']) ?>"><img src="/img/load.gif" alt="" class="loadGif"><input type="hidden" value="<?= h($map_memo['mapId']) ?>" class="mapId">
+                      </div>
+                    </div>
+                  <?php endif ?>
+                <?php endforeach ?>
+              <?php endif ?>
+            </ul>
+          </div>
+        <?php endforeach ?>
+      <?php endif ?>
+    </div>
+  </div>
 </div>
 <script>
-    document.getElementById('byte').innerText = '0/500';
-    const byteCount = function() {
-        const memoByte = document.getElementById('text').value;
-        let byte = (new Blob([memoByte])).size;
-        document.getElementById('byte').innerText = `${byte}/500`;
-        if (byte > 500) {
-            document.getElementById('byte').innerText = '文字数オーバーです';
-        }
+  document.getElementById('byte').innerText = '0/500';
+  const byteCount = function() {
+    const memoByte = document.getElementById('text').value;
+    let byte = (new Blob([memoByte])).size;
+    document.getElementById('byte').innerText = `${byte}/500`;
+    if (byte > 500) {
+      document.getElementById('byte').innerText = '文字数オーバーです';
     }
+  }
 </script>
 <script>
 

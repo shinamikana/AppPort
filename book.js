@@ -75,6 +75,7 @@ $(function () {
             $('.bookmarking').find('.fa-bars').hide();
             $('.deload1').show();
             let delId = $(this).val();
+            console.log(delId);
             $.ajax({
                 type: 'POST',
                 url: 'bookmark.php',
