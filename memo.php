@@ -168,7 +168,7 @@ function h($str)
           $('#load').show();
           $.ajax({
             type: 'POST',
-            url: 'memoData.php',
+            url: 'memo.php',
             data: {
               'text': val
             },

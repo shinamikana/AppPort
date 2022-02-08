@@ -35,7 +35,7 @@ $(function () {
         } else {
             $.ajax({
                 type: 'POST',
-                url: 'bookmark.php',
+                url: 'memo.php',
                 data: {
                     'url': urlVal,
                     'linkName': linkNameVal
@@ -78,7 +78,7 @@ $(function () {
             console.log(delId);
             $.ajax({
                 type: 'POST',
-                url: 'bookmark.php',
+                url: 'memo.php',
                 data: {
                     'delId': delId
                 },
@@ -162,7 +162,7 @@ $(function () {
                     $('#confirmBigWrap').hide();
                     $.ajax({
                         type: 'POST',
-                        url: 'bookmark.php',
+                        url: 'memo.php',
                         data: {
                             'bookName': bookNameVal,
                             'bookLink': bookLinkVal,
@@ -180,7 +180,7 @@ $(function () {
                 $this.parent().css('opacity', '0.5');
                 $.ajax({
                     type: 'POST',
-                    url: 'bookmark.php',
+                    url: 'memo.php',
                     data: {
                         'bookName': bookNameVal,
                         'bookId': bookId
@@ -199,7 +199,7 @@ $(function () {
                     $('#confirmBigWrap').hide();
                     $.ajax({
                         type: 'POST',
-                        url: 'bookmark.php',
+                        url: 'memo.php',
                         data: {
                             'bookLink': bookLinkVal,
                             'bookId': bookId
