@@ -42,7 +42,7 @@ $(function () {
                 },
                 dataType: 'json',
             }).done(function (data) {
-                $('.bookUl').prepend('<li class="bookLi" id="' + data.id + '"><div class="bookmarking"><i class="fas fa-check"></i><i class="far fa-edit"></i><a href="' + data.url + '" target="_blank" rel="noopener noreferrer" class="bookA">' + data.linkName + '</a><input type="text" value="' + data.linkName + '" class="bookNameInput"><i class="fas fa-times"></i><input type="text" value="' + data.url + '" class="bookLinkInput"><button id="deltn1" value="' + data.id + '">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="' + data.id + '"><i class="fas fa-bars"></i></div><ul class="dragUl">ここにドロップ</ul></li>');
+                $('.bookWrapper').find('.sortUl').prepend('<li class="bookLi noDragB" id="' + data.id + '"><div class="bookmarking"><i class="fas fa-check"></i><i class="far fa-edit"></i><a href="' + data.url + '" target="_blank" rel="noopener noreferrer" class="bookA">' + data.linkName + '</a><i class="fas fa-times"></i><input type="text" value="' + data.linkName + '" class="bookNameInput"><input type="text" value="' + data.url + '" class="bookLinkInput"><button id="deltn1" value="' + data.id + '">削除</button><img src="/img/load.gif" alt="" class="deload1"><input type="hidden" class="bookId" value="' + data.id + '"><i class="fas fa-bars"></i></div></li>')
                 $('#submit1').show();
                 $('#load1').hide();
                 $('#url').val('');
@@ -127,7 +127,7 @@ $(function () {
 
     //編集を中止した場合の処理
     const bookCancel = function () {
-        $('.fa-times').click(function () {
+        $('.bookmarking').find('.fa-times').click(function () {
             let $this = $(this);
             let bookName = $this.parent().find('.bookA').text();
             let bookLink = $this.parent().find('.bookA').attr('href');

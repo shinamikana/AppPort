@@ -3,10 +3,6 @@ html,body{
     background-size: cover;
 }
 
-main{
-    width:100%;
-}
-
 #select{
     height:40px;
     width:100%;
@@ -21,10 +17,8 @@ h1{
 }
 
 .mapWrapper{
-    height:auto;
-    width:50%;
-    float:right;
-    overflow-y:scroll;
+    height:100%;
+    width:auto;
     border:1px solid black;
     padding-bottom:30px;
     display:none;
@@ -44,6 +38,7 @@ h1{
     line-height: 18px;
     background-color: rgba(255,255,255,0.6);
     margin-top:50px;
+    box-shadow:4px 4px 4px gray;
 }
 
 .mapColumn{
@@ -106,7 +101,6 @@ h1{
     font-size: 20px;
     line-height: 25px;
     border-radius: 50%;
-    width:30px;
     cursor: pointer;
 }
 
@@ -186,28 +180,6 @@ li{
     font-size:30px;
 }
 
-.showMark .dragUl{
-    margin:0;
-    padding-bottom:30px;
-    border:1px solid black;
-    min-height:50px;
-    text-align: center;
-}
-
-.showMark .dragUl .memo{
-    width:90%;
-}
-
-.showMark .dragUl .bookmarking{
-    display: block;
-    margin-left:auto;
-    margin-right:auto;
-}
-
-.showMark .dragUl .bookmarking a{
-    line-height: 30px;
-}
-
 .mapWrapper #noDragUl{
     border:1px dashed gray;
     width:100%;
@@ -231,4 +203,8 @@ li{
     border:1px solid gray;
     margin:0;
     padding:0;
+}
+
+.mapWrapper .sortUl{
+  text-align: center;
 }

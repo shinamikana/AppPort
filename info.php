@@ -6,7 +6,7 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 
-if (!count($_POST) == 0) {
+if (count($_POST) != 0) {
 
     if (isset($_POST['csrfToken']) && $_POST['csrfToken'] === $_SESSION['csrfToken']) {
         if (isset($_POST['username']) && isset($_POST['subject']) && isset($_POST['text']) && $_POST['username'] != '' && $_POST['subject'] != '' && $_POST['text'] != '') {
@@ -60,6 +60,10 @@ if (!count($_POST) == 0) {
 $csrfByte = openssl_random_pseudo_bytes(16);
 $csrfToken = bin2hex($csrfByte);
 $_SESSION['csrfToken'] = $csrfToken;
+
+function h($str){
+  return htmlspecialchars($str,ENT_QUOTES,'UTF-8');
+}
 ?>
 
 <!DOCTYPE html>
@@ -90,15 +94,15 @@ $_SESSION['csrfToken'] = $csrfToken;
         <form action="info.php" method="POST" id="infoForm">
             <p>ユーザーネーム</p>
             <input type="text" id="username" name="username" value="<?php if (isset($_POST['username'])) {
-                                                                        echo $_POST['username'];
+                                                                        echo h($_POST['username']);
                                                                     } ?>">
             <p>件名</p>
             <input type="text" id="subject" name="subject" value="<?php if (isset($_POST['subject'])) {
-                                                                        echo $_POST['subject'];
+                                                                        echo h($_POST['subject']);
                                                                     } ?>">
             <p>お問い合わせ内容</p>
             <textarea name="text" cols="30" rows="10" id="text"><?php if (isset($_POST['text'])) {
-                                                                    echo $_POST['text'];
+                                                                    echo h($_POST['text']);
                                                                 } ?></textarea>
             <input type="hidden" name="csrfToken" value="<?= $csrfToken ?>">
             <br>

@@ -6,7 +6,7 @@ require_once('mapData.php');
 session_regenerate_id(TRUE);
 
 //メモアプリでメモのカラム表示
-$showMemo = $mysqli->prepare('SELECT *, memo.id AS memo_id FROM memo WHERE user_id = ? ORDER BY memo.id DESC');
+$showMemo = $mysqli->prepare('SELECT *, memo.id AS memo_id FROM memo WHERE user_id = ? AND showFlag = 1 ORDER BY memo.id DESC');
 $showMemo->bind_param('i', $_SESSION['id']);
 $showMemo->execute();
 $memoResult = $showMemo->get_result();
@@ -80,7 +80,7 @@ function h($str)
   <link href="https://fonts.googleapis.com/css2?family=Kaisei+Tokumin:wght@500&display=swap" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
-  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
   <link rel="stylesheet" href="/css/memoIndexL.css">
   <link rel="stylesheet" href="/css/bookmarkIndex.css">
@@ -89,19 +89,31 @@ function h($str)
 </head>
 
 <body>
+  <div id="settingWrapper">
+    <i class="fas fa-times"></i>
+    <p>メモの大きさ</p>
+    <input type="range" id="memoSize" min="0.8" max="1.5" step="0.01" val="1">
+    <p>フォントの大きさ</p>
+    <input type="range" id="fontSize" min="0.8" max="1.5" step="0.01" val="1">
+  </div>
+
+  <i class="far fa-arrow-alt-circle-left" id="rightOpen"></i>
+  <i class="far fa-arrow-alt-circle-right" id="rightClose"></i>
   <?php require_once('miniLogo.php'); ?>
   <main>
     <?php require_once('memoIndexL.php'); ?>
-    <div id="select">
-      <div id="emptySelect">
+    <div id="rightContent">
+      <div id="select">
+        <div id="emptySelect">
+        </div>
+        <select name="memoR" id="memoR">
+          <option value="bookmark">ブックマーク(<?php echo $bookCount ?>)</option>
+          <option value="map">マップ(<?php echo $mapCount ?>)</option>
+        </select>
       </div>
-      <select name="memoR" id="memoR">
-        <option value="bookmark">ブックマーク(<?php echo $bookCount ?>)</option>
-        <option value="map">マップ(<?php echo $mapCount ?>)</option>
-      </select>
+      <?php require_once('bookmarkIndex.php') ?>
+      <?php require_once('mapIndex.php'); ?>
     </div>
-    <?php require_once('bookmarkIndex.php') ?>
-    <?php require_once('mapIndex.php'); ?>
   </main>
 
   <script src="book.js"></script>
@@ -135,7 +147,7 @@ function h($str)
             },
             dataType: 'json',
           }).done(function(data) {
-            $this.hide();
+            $this.parent().hide();
             $('#deload').hide();
           }).fail(function(XMLHttpRequest, status, e) {
             $this.css({
@@ -163,7 +175,7 @@ function h($str)
             dataType: 'json',
           }).done(function(data) {
             $('#text').val('');
-            $('#memoWrapper').prepend('<div class="memo noDrag"><i class="fas fa-bars"></i><p id="mainText"><span>' + val + '</span></p><p id="date">' + data.date + '</p><button type="submit" value="' + data.insert + '" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload"><input type="hidden" value="' + data.insert + '" class="memoId"></div>');
+            $('#memoWrapper').prepend('<div class="memo memoShadow" data-toggle="buttons"><div class="memos"><i class="fas fa-map-pin"></i><p id="mainText">' + val + '</p><p id="date">' + data.date + '</p><i class="fas fa-bars"></i><input type="checkbox" id="check' + data.insert + '"><label for="check' + data.insert + '" class="label"></label><button type="submit" value="' + data.insert + '" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload"><input type="hidden" value="' + data.insert + '" class="memoId"></div><ul class="dragUl">ここにドロップ</ul></div>')
             $('#load').hide();
             $('#submit').show();
             $memoDel();
@@ -181,7 +193,7 @@ function h($str)
       });
 
       $('.memo').find('.fa-bars').click(function() {
-        $(this).parent().find('#delbtn').slideToggle();
+        $(this).parent().find('#delbtn').slideToggle(120);
       });
 
     });
@@ -194,7 +206,30 @@ function h($str)
           connectWith: '.sortUl',
           placeholder: 'memoDiv',
           scroll: false,
-          out: function() {
+          start: function(event, ui) {
+            let item = ui.item;
+            if (item.hasClass('showMark')) {
+              $('.bookWrapper').hide();
+              $('.mapWrapper').show();
+              $('#rightOpen').hide();
+              $('.wrapper').removeClass('leftOpenA').addClass('leftHalf');
+              $('#rightContent').removeClass('rightCloseA').addClass('rightHalf');
+              $('#memoR').val('map');
+              $('#rightClose').show();
+              let mapTop = $('#mapMark').offset().top;
+              $('body').scrollTop(mapTop);
+            } else {
+              $('.bookWrapper').show();
+              $('.mapWrapper').hide();
+              $('#rightOpen').hide();
+              $('.wrapper').removeClass('leftOpenA').addClass('leftHalf');
+              $('#rightContent').removeClass('rightCloseA').addClass('rightHalf');
+              $('#memoR').val('bookmark');
+              $('#rightClose').show();
+            }
+          },
+          out: function(item) {
+            console.log(item);
             $('.wrapper').css('overflow-y', 'visible');
           },
           over: function() {
@@ -205,10 +240,10 @@ function h($str)
           },
           update: function() {
             $this = $(this);
-            let memoId = $this.parent().find('.memoId').val(); 
-            let bookId = $this.parent().find('.bookId').val();
-            let mapId = $this.parent().find('.mapId').val();
-            console.log(mapId);
+            let memoId = $this.parent().find('.memoId').val();
+            let bookId = $this.find('.noDragB').find('.bookId').val();
+            let mapId = $this.find('.noDragM').find('.mapId').val();
+            //ブックマークのカラムをToDoに紐付けたら
             if (memoId != undefined && bookId != undefined) {
               $.ajax({
                 type: 'POST',
@@ -219,11 +254,12 @@ function h($str)
                 },
                 dataType: 'json',
               }).done(function(data) {
-                $this.find('.noDrag').addClass('dragMB').removeClass('noDrag');
+                $this.find('.noDragB').addClass('dragB').removeClass('noDragB');
               }).fail(function(XMLHttpRequest, status, e) {
                 alert('fail');
               });
             }
+            //マップのカラムをToDoに紐づけたら
             if (mapId != undefined && memoId != undefined) {
               $.ajax({
                 type: 'POST',
@@ -234,7 +270,7 @@ function h($str)
                 },
                 dataType: 'json',
               }).done(function(data) {
-                $this.find('.noDrag').addClass('dragMM').removeClass('noDrag');
+                $this.find('.noDragM').addClass('dragM').removeClass('noDragM');
               }).fail(function(XMLHttpRequest, status, e) {
                 alert('fail');
               });
@@ -244,41 +280,47 @@ function h($str)
       }
       sortableLeft();
 
+      //右側
       window.sortableRight = function() {
         $('.sortUl').sortable({
+          opacity: 1,
           connectWith: '.dragUl',
           placeholder: 'memoDiv',
           stop: function() {
             $('.wrapper').css('overflow-y', 'scroll');
           },
+          out: function() {
+          },
           update: function() {
             let $this = $(this);
-            let rMemoId = $this.parent().find('.dragMB').find('.memoId').val();
-            let rMemoMap = $this.find('.dragMM').find('.memoId').val();
-            if (rMemoId != undefined) {
+            let rBookId = $this.find('.dragB').find('.bookId').val();
+            let rMapId = $this.find('.dragM').find('.mapId').val();
+            //ブックマークのカラムを右側に戻したら
+            if (rBookId != undefined) {
               $.ajax({
                 type: 'POST',
                 url: 'memo.php',
                 data: {
-                  'rMemoId': rMemoId,
+                  'rBookId': rBookId,
                 },
                 dataType: 'json',
               }).done(function(data) {
-                $this.find('.dragMB').addClass('noDrag').removeClass('dragMB');
+                $this.find('.dragB').addClass('noDrag').removeClass('dragB');
               }).fail(function(XMLHttpRequest, status, e) {
                 alert('fail');
               });
             }
-            if (rMemoMap != undefined) {
+            ///マップのカラムを右側に戻したら
+            if (rMapId != undefined) {
               $.ajax({
                 type: 'POST',
                 url: 'memo.php',
                 data: {
-                  'rMemoMap': rMemoMap,
+                  'rMapId': rMapId,
                 },
                 dataType: 'json',
               }).done(function(data) {
-                $this.find('.dragMM').addClass('noDrag').removeClass('dragMM');
+                $this.find('.dragM').addClass('noDrag').removeClass('dragM');
               }).fail(function(XMLHttpRequest, status, e) {
                 alert('fail');
               });
@@ -290,6 +332,7 @@ function h($str)
 
       $('.mapWrappper').hide();
 
+      //これは右アイコンを追加した後の処理
       $('#memoR').on('change', function() {
         let memoRVal = $(this).val();
         if (memoRVal === 'bookmark') {
@@ -299,6 +342,94 @@ function h($str)
           $('.mapWrapper').show();
           $('.bookWrapper').hide();
         }
+      });
+
+      //右矢印をクリックしたときの右ラッパーの表示処理
+      $('#rightOpen').on('click', function() {
+        $(this).hide();
+        $('.wrapper').removeClass('leftOpenA').addClass('leftHalf');
+        $('#rightContent').removeClass('rightCloseA').addClass('rightHalf');
+        $('#rightClose').show();
+      });
+
+      //左矢印をクリックしたときの右ラッパーの非表示処理
+      $('#rightClose').on('click', function() {
+        $(this).hide();
+        $('.wrapper').addClass('leftOpenA').removeClass('leftHalf');
+        $('#rightContent').addClass('rightCloseA').removeClass('rightHalf');
+        $('#rightOpen').show();
+      });
+
+      $('.leftOpenA').on('animationend', function() {
+      });
+
+      //ToDoのチェックをクリックしたら
+      $('.wrapper').on('click', '.label', function() {
+        let $this = $(this);
+        let flagId = $this.parent().find('.memoId').val();
+        $this.parent().parent().removeClass('memoShadow');  //ToDoカラムの影を非表示に
+        $this.parent().parent().fadeOut();  //ToDoカラムを非表示に
+        $.ajax({
+          type: 'POST',
+          url: 'memo.php',
+          data: {
+            'flagId': flagId
+          },
+          dataType: 'json'
+        }).done(function(data) {
+
+        }).fail(function(XMLHttpRequest, status, e) {
+
+        });
+      });
+
+      //ToDoにある各カラムをクリックした時の右ラッパー表示処理
+      $('.memo').find('.columnMark').on('click', function() {
+        if (!($('#rightContent').hasClass('rightHalf'))) {
+          $('.bookWrapper').hide();
+          $('.mapWrapper').show();
+          $('#rightOpen').hide();
+          $('.wrapper').removeClass('leftOpenA').addClass('leftHalf');
+          $('#rightContent').removeClass('rightCloseA').addClass('rightHalf');
+          $('#memoR').val('map');
+          $('#rightClose').show();
+        } else {
+          $('.bookWrapper').hide();
+          $('.mapWrapper').show();
+          $('#memoR').val('map');
+        }
+      });
+
+      let memoSize = document.getElementById('memoSize');
+      let fontSizeEle = document.getElementById('fontSize');
+      let memosHeight = $('.memos').height();
+      let memoWidth = $('.memo').width();
+      let fontSize = $('.memos').css('font-size');
+      fontSize = parseInt(fontSize);
+      //ToDoカラムのスライダーを動かしたときにToDoのカラムサイズを変更s
+      memoSize.addEventListener('input', function() {
+        let memoVal = memoSize.value;
+        $('.memo').width(function() {
+          return memoWidth * memoVal;
+        });
+        let changeFont = fontSize * memoVal;
+
+        $('.memos').css('font-size', changeFont + 'px');
+      });
+
+      //ToDoカラムのスライダーを動かしたときにフォントサイズを変更
+      fontSizeEle.addEventListener('input', function() {
+        let fontSizeValue = fontSizeEle.value;
+        $('.memos').css('font-size', fontSize * fontSizeValue);
+      });
+
+      $('#setting').on('click', function() {
+        $('#settingWrapper').show();
+      });
+
+      //設定ラッパーの「×」をクリックしたときの非表示処理
+      $('#settingWrapper').find('.fa-times').on('click',function(){
+        $('#settingWrapper').hide();
       });
     });
   </script>

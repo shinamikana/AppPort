@@ -2,7 +2,11 @@ html,body{
     background-image: url(../img/background.jpg);
     /*https://www.beiz.jp/*/
     background-size: cover;
-    height:96%;
+    height:100%;
+    margin:0;
+    padding:0;
+    overflow-x: hidden;
+    position: relative;
 }
 
 *{
@@ -22,6 +26,39 @@ html,body{
 
 #memoR{
     float:right;
-    width:50%;
+    width:100%;
     font-size:30px;
+}
+
+main{
+  width:100%;
+  height:100%;
+  overflow-x:hidden;
+}
+
+#settingWrapper{
+  display:none;
+  position: fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  height:50%;
+  width:60%;
+  text-align: center;
+  background-color: rgba(255,255,255,0.8);
+  z-index:1000;
+  border-radius: 10px;
+  border:1px solid black;
+  padding-top:1rem;
+}
+
+#settingWrapper .fa-times{
+  position: absolute;
+  top:0;
+  right:0;
+  padding:5px;
+  border-bottom:1px solid black;
+  border-left:1px solid black;
+  cursor: pointer;
+  font-size:1rem;
 }

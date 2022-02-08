@@ -7,6 +7,9 @@ $date = date("Y/m/d H:i:s");
 //memoがポストされたなら
 
 if(isset($_POST['text'])){
+  $text = mb_strlen(trim($_POST['text']));
+}
+if(isset($text) && !empty($text)){
     $text = $_POST['text'];
     $memoPost = $mysqli -> prepare('INSERT INTO memo(text,date,user_id) VALUES(?,?,?)');
     $memoPost -> bind_param('ssi',$text,$date,$_SESSION['id']);
@@ -39,7 +42,7 @@ if(isset($_POST['memoId']) && isset($_POST['bookId'])){
     $memoBook -> bind_param('ii',$memoId,$bookId);
     $memoBook -> execute();
     $data = array('memoId' => $memoId ,'bookId' => $bookId);
-    header('Countent-type:application/json;charset=UTF-8');
+    header('Content-type:application/json;charset=UTF-8');
     echo json_encode($data);
     exit;
 }
@@ -51,29 +54,40 @@ if(isset($_POST['memoId']) && isset($_POST['mapId'])){
     $memoMap -> bind_param('ii',$memoId,$mapId);
     $memoMap -> execute();
     $data = array('memoId' => $memoId,'mapId' => $mapId);
-    header('Countent-type:application/json;charset=UTF-8');
+    header('Content-type:application/json;charset=UTF-8');
     echo json_encode($data);
     exit;
 }
 
-if(isset($_POST['rMemoId'])){
-    $rMemoId = $_POST['rMemoId'];
-    $rMemoBook = $mysqli -> prepare('DELETE FROM book_memo WHERE memo_id = ?');
-    $rMemoBook -> bind_param('i',$rMemoId);
+if(isset($_POST['rBookId'])){
+    $rBookId = $_POST['rBookId'];
+    $rMemoBook = $mysqli -> prepare('DELETE FROM book_memo WHERE book_id = ?');
+    $rMemoBook -> bind_param('i',$rBookId);
     $rMemoBook -> execute();
-    $data = array('rMemoId' => $rMemoId);
-    header('Countent-type:application/json;charset=UTF-8');
+    $data = array('rBookId' => $rBookId);
+    header('Content-type:application/json;charset=UTF-8');
     echo json_encode($data);
     exit;
 }
 
-if(isset($_POST['rMemoMap'])){
-    $rMemoMap = $_POST['rMemoMap'];
-    $removeMemoMap = $mysqli -> prepare('DELETE FROM map_memo WHERE memo_id = ?');
-    $removeMemoMap -> bind_param('i',$rMemoMap);
+if(isset($_POST['rMapId'])){
+    $rMapId = $_POST['rMapId'];
+    $removeMemoMap = $mysqli -> prepare('DELETE FROM map_memo WHERE map_id = ?');
+    $removeMemoMap -> bind_param('i',$rMapId);
     $removeMemoMap -> execute();
-    $data = array('rMemoMap' => $rMemoMap);
-    header('Countent-type:application/json;charset=UTF-8');
+    $data = array('rMapId' => $rMapId);
+    header('Content-type:application/json;charset=UTF-8');
     echo json_encode($data);
     exit;
+}
+
+if(isset($_POST['flagId'])){
+  $flagId = $_POST['flagId'];
+  $changeFlag = $mysqli -> prepare('UPDATE memo SET showFlag = 0 WHERE id = ?');
+  $changeFlag -> bind_param('i',$flagId);
+  $changeFlag -> execute();
+  $data = array('flagId' => $flagId);
+  header('Content-type:application/json;charset=UTF-8');
+  echo json_encode($data);
+  exit;
 }

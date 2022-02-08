@@ -4,9 +4,9 @@
   <div id="map"></div>
   <div class="load"><img src="/img/load2.gif" alt=""></div>
   <p id="mapMark">登録地点一覧</p>
-  <div class="sortUl">
+  <div class="sortUl" id="mapUl">
     <?php foreach ($resultMark as $mark) : ?>
-      <div class="showMark noDrag">
+      <div class="showMark noDragM">
         <div class="columns">
           <i class="fas fa-check"></i><i class="fas fa-edit"></i><img src="/img/load.gif" alt="" class="loadGif1">
           <p class="columnMark"><?= h($mark['field_name']) ?></p><input type="hidden" value="<?= h($mark['lat']) ?>" class="mapLat"><input type="hidden" value="<?= h($mark['lng']) ?>" class="mapLng"><input type="text" class="markInput" value="<?= h($mark['field_name']) ?>"><img src="/img/load.gif" alt="" class="loadGif"><input type="hidden" value="<?= h($mark['mapId']) ?>" class="mapId"><i class="fas fa-bars"></i>

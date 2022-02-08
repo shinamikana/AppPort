@@ -81,6 +81,7 @@ htmlspecialchars($message);
                 <input type="hidden" value="guest" name="guest">
                 <button id="guestLogin" class="g-recaptcha" data-sitekey="<?php echo getenv('API_KEY_RE') ?>" data-callback='onSubmitGuest' data-action='submit'>ゲストはこちら</button>
             </form>
+            <a href="signup.php" id="formNaviA">新規登録はこちら</a>
         </div>
 
     </main>

@@ -1,6 +1,7 @@
 html,body{
     background-image: url(/img/background.jpg);
     background-size: cover;
+    padding-bottom:2rem;
 }
 
 main{

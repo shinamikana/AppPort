@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
 html,body{
     background-image: url(../img/background.jpg);
     /*https://www.beiz.jp/*/
@@ -9,6 +11,72 @@ html,body{
     font-family: 'Kaisei Tokumin', serif;
 }
 
+.leftHalf{
+  animation:0.5s leftHalf;
+  animation-fill-mode: forwards;
+}
+
+@keyframes leftHalf{
+  from{
+    width:98.8%;
+  }
+  to{
+    width:49%;
+  }
+}
+
+.leftOpenA{
+  animation:0.5s leftOpenA;
+  animation-fill-mode: forwards;
+}
+
+@keyframes leftOpenA{
+  from{
+    width:49%;
+  }
+  to{
+    width:98.8%;
+  }
+}
+
+#rightContent{
+  position:absolute;
+  top:53px;
+  left:100%;
+  width:49%;
+  display: none;
+}
+
+.rightHalf{
+  display: block !important;
+  animation: 0.5s rightHalf;
+  animation-fill-mode: forwards;
+}
+
+@keyframes rightHalf{
+    from{
+      left:100%;
+    }
+    to{
+      left:50%;
+    }
+}
+
+.rightCloseA{
+  display: none;
+  animation:0.5s rightCloseA;
+  animation-fill-mode: forwards;
+}
+
+@keyframes rightCloseA{
+  from{
+    left:50%;
+  }
+  to{
+    left:100%;
+  }
+}
+
 .wrapper{
     position: fixed;
     top:53px;
@@ -16,19 +84,19 @@ html,body{
     bottom:0;
     left:10px;
     overflow-y:scroll;
-    width:49%;
+    width:98.8%;
     float:left;
-    display:inline-block;
     border:1px solid black;
     height:100%;
     margin-bottom:100px;
     z-index:1;
     padding-bottom:100px;
+    margin-left:0;
 }
 
 .column{
     margin-left:20px;
-    width:80%;
+    width:95%;
     height:auto;
 }
 
@@ -50,17 +118,32 @@ html,body{
 
 .memo{
     position: relative;
-    background-color: rgba(255,255,255,0.6);
-    border:1px solid black;
+    background-color: #f8fbf8;
+    border:1px solid white;
     height:auto;
-    min-height: 100px;
     display: inline-block;
-    padding-left:20px;
-    width:100%;
+    padding-left:1rem;
+    padding-right:1rem;
+    width:25rem;
     margin-top:50px;
-    z-index:1;
+    margin-left:1rem;
+    margin-right:1rem;
     padding: 0;
-    box-shadow:5px 5px 3px gray;
+}
+
+.memoShadow::before{
+  z-index:-1;
+  content:'';
+  position: absolute;
+  bottom:0.3rem;
+  right:0.17rem;
+  left:auto;
+  width:50%;
+  height:2rem;
+  box-shadow:0 10px 10px gray;
+  transform: rotate(3deg);
+  background-color:transparent;
+  border:transparent;
 }
 
 #mainText{
@@ -71,8 +154,7 @@ html,body{
     float:left;
     width:100%;
     height:auto;
-    margin-bottom:60px;
-    font-size:18px;
+    margin-bottom:3rem;
     letter-spacing: 1.5px;
     padding:0 20px;
     margin-right:0;
@@ -82,8 +164,8 @@ html,body{
 #delbtn{
     float:right;
     position: absolute;
-    top:0;
-    right:-50px;
+    top:2.5rem;
+    right:0.5rem;
     cursor: pointer;
     background-color: white;
     border-radius: 0;
@@ -91,6 +173,15 @@ html,body{
     box-shadow: 1px 1px 1px gray;
     display: none;
     font-size:15px;
+    z-index:2;
+}
+
+.memos{
+  position:relative;
+  display: inline-block;
+  width:100%;
+  height:auto;
+  font-size:1rem;
 }
 
 .memos .fa-bars{
@@ -100,7 +191,7 @@ html,body{
     right:10px;
     cursor: pointer;
     border-radius: 0;
-    font-size: 25px;
+    font-size: 1.5rem;
 }
 
 button{
@@ -124,8 +215,14 @@ textarea{
 }
 
 #memoWrapper{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    width:100%;
     min-height:100px;
     height:auto;
+    margin:0;
+    padding:0;
 }
 
 #submit{
@@ -156,23 +253,27 @@ textarea{
 }
 
 #memoTitle{
+    display: inline-block;
     font-family: 'Kaisei Opti', serif;
     text-align: center;
-    margin-top:0;
+    width:100%;
+    margin:0;
+    padding:0;
     border-bottom:1px solid black;
 }
 
 .memo .dragUl{
-    margin:0 20px;
     display: inline-block;
-    background-color: rgba(255,255,255,0.3);
     height:auto;
-    min-height:50px;
-    width:500px;
-    margin-bottom:30px;
-    padding: 0 0 10px 0;
-    border:1px solid gray;
+    min-height:4rem;
+    width:100%;
+    margin-bottom:0;
+    margin-left:auto;
+    margin-right:auto;
+    padding: 0 0 3rem 0;
+    border-top:1px solid black;
     text-align: center;
+    font-size:1rem;
 }
 
 .bookHover{
@@ -190,9 +291,12 @@ textarea{
 }
 
 .memoDiv{
-    height:50px;
-    width:500px;
-    border:5px solid red;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:1rem;
+    width:90%;
+    height:2rem;
+    border:1px solid gray;
 }
 
 #byte{
@@ -203,10 +307,147 @@ textarea{
     color:gray;
 }
 
-.memo .dragUl .bookmarking{
-    height: auto;
+.dragUl .bookLi{
+  width:90%;
+}
+
+.dragUl .bookmarking{
+  margin-bottom:0;
+  height:2rem;
+  display: inline-block;
+  margin-top:1rem;
+  width:100%;
+}
+
+.dragUl .bookmarking .fas,.dragUl .bookmarking .fa{
+  font-size:20px;
+}
+
+.memo .dragUl .showMark{
+  margin-top:1rem;
+  width:90%;
+  height:2rem;
 }
 
 .delete{
     position: relative;
+}
+
+label{
+  cursor: pointer;
+}
+
+input[type="checkbox"]{
+  display:none;
+}
+
+.lDiv{
+  overflow: hidden;
+}
+
+.memos input[type="checkbox"] + label:before{
+  position:absolute;
+  top:0rem;
+  left:1rem;
+  content:'';
+  display: block;
+  height:1rem;
+  width:0.5rem;
+  transform: translate(-0.5rem) translateX(1rem) rotateZ(50deg);
+  border:2px solid gray;
+  border-top-color:transparent;
+  border-left-color:transparent;
+  border-right-color:green;
+  border-bottom-color:green;
+  opacity:0.5;
+}
+
+.memos input[type="checkbox"]:checked + label:before{
+  opacity:0;
+}
+
+.memos input[type="checkbox"] + label:after{
+  position: absolute;
+  top:0.3rem;
+  left:1rem;
+  display: block;
+  content:'';
+  height:1rem;
+  width:1rem;
+  border:2px solid black;
+  transition: all .12s, border-color .08s;
+}
+.memos input[type="checkbox"]:checked + label:after{
+  position:absolute;
+  top:0rem;
+  left:1rem;
+  display: block;
+  height:1rem;
+  width:0.5rem;
+  transform: translate(-0.5rem) translateX(1rem) rotateZ(50deg);
+  border-top-color:transparent;
+  border-left-color:transparent;
+  border-right-color:green;
+  border-bottom-color:green;
+} 
+
+.memos .fa-map-pin{
+  position: absolute;
+  top:-1.4rem;
+  left:50%;
+  transform: translateY(-50%);
+  display:inline-block;
+  margin:auto;
+  font-size:2rem;
+  transform: rotate(10deg);
+}
+
+#rightOpen{
+  position:absolute;
+  top:50%;
+  right:0%;
+  transform:translateX(-50%);
+  font-size:3rem;
+  cursor: pointer;
+  animation: 2s movearrow;
+  animation-iteration-count: infinite;
+  z-index:2;
+}
+
+#rightClose{
+  position:absolute;
+  top:50%;
+  right:0%;
+  transform:translateX(-50%);
+  font-size:3rem;
+  cursor: pointer;
+  z-index:10000;
+  display: none;
+  animation: 2s movearrow;
+  animation-iteration-count: infinite;
+}
+
+@keyframes movearrow{
+  0%{
+    transform: translateX(0);
+  }
+  50%{
+    transform: translateX(-0.5rem);
+  }
+  100%{
+    transform: translateX(0);
+  }
+}
+
+.hide{
+  animation: 2s hiding;
+}
+
+@keyframes hiding{
+  from{
+    opacity:1;
+  }
+  to{
+    opacity:0;
+  }
 }
