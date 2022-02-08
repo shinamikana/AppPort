@@ -10,7 +10,6 @@ if(isset($_POST['text'])){
   $text = mb_strlen(trim($_POST['text']));
 }
 if(isset($text) && !empty($text)){
-    $text = $_POST['text'];
     $memoPost = $mysqli -> prepare('INSERT INTO memo(text,date,user_id) VALUES(?,?,?)');
     $memoPost -> bind_param('ssi',$text,$date,$_SESSION['id']);
     $memoPost -> execute();

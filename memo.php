@@ -186,8 +186,8 @@ function h($str)
               $(this).parent().find('#delbtn').slideToggle();
             });
           }).fail(function(XMLHttpRequest, status, e) {
-            $('#memoWrapper').find('p').remove();
-
+            console.log('error number:' + XMLHttpRequest + ',status:' + status + ',thrown:' + e);
+     
           });
         }
       });
