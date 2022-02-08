@@ -36,10 +36,11 @@ if (isset($_POST['mapDel'])) {
 }
 
 if (isset($_POST['mapEdit'])) {
-  $edit = mb_strlen(trim($_POST['mapEdit']));
+  $edit = trim($_POST['mapEdit']);
+  $editLen = mb_strlen($edit);
 }
 
-if (isset($edit) && !is_null($edit) && isset($_POST['mapEditId'])) {
+if (isset($edit) && !is_null($edit) && isset($_POST['mapEditId']) && $editLen != 0) {
   $edit = $_POST['mapEdit'];
   $editId = $_POST['mapEditId'];
   $mapEdit = $mysqli->prepare('UPDATE map set field_name = ? WHERE id = ?');

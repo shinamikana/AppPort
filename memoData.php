@@ -7,9 +7,10 @@ $date = date("Y/m/d H:i:s");
 //memoがポストされたなら
 
 if(isset($_POST['text'])){
-  $text = mb_strlen(trim($_POST['text']));
+  $text = trim($_POST['text']);
+  $textLen = mb_strlen($text);
 }
-if(isset($text) && !empty($text)){
+if(isset($text) && !empty($text) && $textLen != 0){
     $memoPost = $mysqli -> prepare('INSERT INTO memo(text,date,user_id) VALUES(?,?,?)');
     $memoPost -> bind_param('ssi',$text,$date,$_SESSION['id']);
     $memoPost -> execute();

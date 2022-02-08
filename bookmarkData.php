@@ -1,21 +1,21 @@
 <?php
 if (isset($_POST['url']) && isset($_POST['linkName'])) {
   $url = filter_var($_POST['url'], FILTER_VALIDATE_URL);
-  $urlName = mb_strlen(trim($_POST['linkName']));
-
-  if (isset($url) && isset($urlName) && !is_null($url) && !is_null($urlName)) {
-    $mark = $mysqli->prepare('INSERT INTO bookmark(link,user_id,link_name) VALUES(?,?,?)');
-    $mark->bind_param('sis', $_POST['url'], $_SESSION['id'], $_POST['linkName']);
-    $mark->execute();
-    $mark->close();
-    $url = htmlentities($_POST['url']);
-    $linkName = htmlentities($_POST['linkName']);
-    $id = $mysqli->insert_id;
-    $data = array('url' => $url, 'linkName' => $linkName, 'id' => $id);
-    header("Content-type: application/json; charset=UTF-8");
-    echo json_encode($data);
-    exit;
-  }
+  $urlName = trim($_POST['linkName']);
+  $urlNameLen = mb_strlen($urlName);
+}
+if (isset($url) && isset($urlName) && !is_null($url) && !is_null($urlName) && $urlNameLen != 0) {
+  $mark = $mysqli->prepare('INSERT INTO bookmark(link,user_id,link_name) VALUES(?,?,?)');
+  $mark->bind_param('sis', $_POST['url'], $_SESSION['id'], $_POST['linkName']);
+  $mark->execute();
+  $mark->close();
+  $url = htmlentities($_POST['url']);
+  $linkName = htmlentities($_POST['linkName']);
+  $id = $mysqli->insert_id;
+  $data = array('url' => $url, 'linkName' => $linkName, 'id' => $id);
+  header("Content-type: application/json; charset=UTF-8");
+  echo json_encode($data);
+  exit;
 }
 
 if (isset($_POST['delId'])) {
@@ -44,7 +44,7 @@ if (isset($_POST['memoId']) && isset($_POST['dragId'])) {
 }
 
 if (isset($_POST['bookName']) && isset($_POST['bookLink'])) {
-  $bookName = mb_strlen(trim($_POST['bookName']));
+  $bookName = trim($_POST['bookName']);
   $bookLink = filter_var($_POST['bookLink'], FILTER_VALIDATE_URL);
   if (isset($bookName) && !is_null($bookName) && isset($bookLink) && !is_null($bookLink)) {
     $bookId = $_POST['bookId'];
@@ -58,7 +58,7 @@ if (isset($_POST['bookName']) && isset($_POST['bookLink'])) {
     exit();
   }
 } else if (isset($_POST['bookName'])) {
-  $bookName = mb_strlen(trim($_POST['bookName']));
+  $bookName = trim($_POST['bookName']);
   if (isset($bookName) && !is_null($bookName)) {
     $bookId = $_POST['bookId'];
     $bookUpdate = $mysqli->prepare('UPDATE bookmark SET link_name = ? WHERE id = ?');
