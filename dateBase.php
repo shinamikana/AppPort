@@ -1,4 +1,4 @@
-<?php session_start();
+<?php
     include('env.php');
         $host = getenv("DB_HOSTNAME");
         $dbname = getenv('DB_NAME');
