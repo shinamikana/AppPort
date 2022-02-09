@@ -164,6 +164,7 @@ function h($str)
         if (val == '') {
 
         } else {
+          console.log(val);
           $('#submit').hide();
           $('#load').show();
           $.ajax({
