@@ -1,1 +1,1 @@
-web: heroku-php-nginx -i user.ini /
+web: heroku-php-nginx
