@@ -1,11 +1,10 @@
 <?php
 session_start();
-phpinfo();
+session_regenerate_id(TRUE);
 require_once('dateBase.php');
 require_once('memoData.php');
 require_once('bookmarkData.php');
 require_once('mapData.php');
-session_regenerate_id(TRUE);
 
 //メモアプリでメモのカラム表示
 $showMemo = $mysqli->prepare('SELECT *, memo.id AS memo_id FROM memo WHERE user_id = ? AND showFlag = 1 ORDER BY memo.id DESC');
