@@ -1,4 +1,5 @@
 <?php
+session_start();
 include('dateBase.php');
 if (isset($_SESSION['id'])) {
     session_regenerate_id(TRUE);
