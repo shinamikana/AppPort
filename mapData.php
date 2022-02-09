@@ -24,29 +24,25 @@ if (isset($_POST['lat']) && isset($_POST['lng'])) {
 }
 
 if (isset($_POST['mapDel'])) {
+  $delId = $_POST['mapDel'];
   $mapDel = $mysqli->prepare('DELETE map,map_memo FROM map LEFT JOIN map_memo ON map.id = map_memo.map_id WHERE map.id = ?');
-  $mapDel->bind_param('i', $_POST['mapDel']);
+  $mapDel->bind_param('i', $delId);
   $mapDel->execute();
   $mapDel->close();
-  $delId = $_POST['mapDel'];
   $data = array('mapdel' => $delId);
   header("Content-type: application/json; charset=UTF-8");
   echo json_encode($data);
   exit;
 }
 
-if (isset($_POST['mapEdit'])) {
+if (isset($_POST['mapEdit']) && $_POST['mapEditId']) {
   $edit = trim($_POST['mapEdit']);
-  $editLen = mb_strlen($edit);
-}
-
-if (isset($edit) && !is_null($edit) && isset($_POST['mapEditId']) && $editLen != 0) {
-  $edit = $_POST['mapEdit'];
   $editId = $_POST['mapEditId'];
   $mapEdit = $mysqli->prepare('UPDATE map set field_name = ? WHERE id = ?');
   $mapEdit->bind_param('si', $edit, $editId);
   $mapEdit->execute();
   $mapEdit->close();
+  $edit = h($edit);
   $data = array('mapEdit' => $edit, 'mapEditId' => $editId);
   header('Content-type:application/json;charset=UTF-8');
   echo json_encode($data);

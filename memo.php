@@ -60,8 +60,8 @@ $resultShowMemoBook = $showMemoBook -> get_result(); */
 if (empty($_SESSION['username'])) {
   header('Location:login.php');
 }
-function h($str)
-{
+
+function h($str){
   return htmlspecialchars($str, ENT_QUOTES | ENT_HTML5, 'UTF-8');
 }
 ?>

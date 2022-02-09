@@ -6,15 +6,19 @@ $date = date("Y/m/d H:i:s");
 //メモ処理
 //memoがポストされたなら
 if (isset($_POST['text'])) {
-  $memoPost = $mysqli->prepare('INSERT INTO memo(text,date,user_id) VALUES(?,?,?)');
-  $memoPost->bind_param('ssi', $text, $date, $_SESSION['id']);
-  $memoPost->execute();
-  $memoPost->close();
-  $insert = $mysqli->insert_id;
-  $data = array('text' => $text, 'insert' => $insert, 'date' => $date);
-  header("Content-type: application/json; charset=UTF-8");
-  echo json_encode($data);
-  exit;
+  $text = trim($_POST['text'] ?? '');
+  if (mb_strlen($text)) {
+    $memoPost = $mysqli->prepare('INSERT INTO memo(text,date,user_id) VALUES(?,?,?)');
+    $memoPost->bind_param('ssi', $text, $date, $_SESSION['id']);
+    $memoPost->execute();
+    $memoPost->close();
+    $insert = $mysqli->insert_id;
+    $text = h($text);
+    $data = array('text' => $text, 'insert' => $insert, 'date' => $date);
+    header("Content-type: application/json; charset=UTF-8");
+    echo json_encode($data);
+    exit;
+  }
 }
 
 //メモ削除
