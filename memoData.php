@@ -9,6 +9,8 @@ $date = date("Y/m/d H:i:s");
 if (isset($_POST['text'])) {
   $text = trim($_POST['text']);
   $textLen = mb_strlen($text);
+  var_dump($text);
+  var_dump($textLen);
   if (isset($text) && !empty($text) && $textLen != 0) {
     $memoPost = $mysqli->prepare('INSERT INTO memo(text,date,user_id) VALUES(?,?,?)');
     $memoPost->bind_param('ssi', $text, $date, $_SESSION['id']);
