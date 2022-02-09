@@ -1,6 +1,5 @@
 <?php
 session_start();
-phpinfo();
 require_once('dateBase.php');
 require_once('memoData.php');
 require_once('bookmarkData.php');
