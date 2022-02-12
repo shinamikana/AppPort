@@ -1,10 +1,17 @@
 <?php
+session_start();
+require('dateBase.php');
 
 $showMark = $mysqli->prepare('SELECT *,map.id AS mapId FROM map LEFT JOIN map_memo ON map.id = map_memo.map_id WHERE user_id = ? AND map_memo.id IS NULL ORDER BY mapId DESC');
 $showMark->bind_param('i', $_SESSION['id']);
 $showMark->execute();
 $resultMark = $showMark->get_result();
 $mapCount = 0;
+
+function h($str){
+  return htmlspecialchars($str, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+}
+
 while ($resultMark->fetch_assoc()) {
   ++$mapCount;
 }

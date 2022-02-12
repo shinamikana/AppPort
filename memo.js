@@ -10,7 +10,7 @@ $(function() {
             });
             $.ajax({
                 type: 'POST',
-                url: 'memo.php',
+                url: 'memoData.php',
                 data: {
                     'del': delId
                 },
@@ -33,7 +33,7 @@ $(function() {
         $('#load').show();
         $.ajax({
             type: 'POST',
-            url: 'memo.php',
+            url: 'memoData.php',
             data: {
                 'text': val
             },

@@ -1,14 +1,21 @@
 <?php
+session_start();
+require('dateBase.php');
+
+function h($str){
+  return htmlspecialchars($str, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+}
+
 if (isset($_POST['url']) && isset($_POST['linkName'])) {
-  $url = filter_var($_POST['url'], FILTER_VALIDATE_URL);
-  $urlName = trim($_POST['linkName']);
-  if ($url && mb_strlen($urlName)) {
+  $url = filter_var(trim($_POST['url']), FILTER_VALIDATE_URL);
+  $linkName = trim($_POST['linkName']);
+  if ($url && mb_strlen($linkName)) {
     $mark = $mysqli->prepare('INSERT INTO bookmark(link,user_id,link_name) VALUES(?,?,?)');
-    $mark->bind_param('sis', $_POST['url'], $_SESSION['id'], $_POST['linkName']);
+    $mark->bind_param('sis', $url, $_SESSION['id'], $linkName);
     $mark->execute();
     $mark->close();
-    $url = h($_POST['url']);
-    $linkName = h($_POST['linkName']);
+    $url = h($url);
+    $linkName = h($linkName);
     $id = $mysqli->insert_id;
     $data = array('url' => $url, 'linkName' => $linkName, 'id' => $id);
     header("Content-type: application/json; charset=UTF-8");

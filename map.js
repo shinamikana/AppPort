@@ -55,7 +55,7 @@ $(() => {
       let $this = $(this);
       $.ajax({
         type: 'POST',
-        url: 'memo.php',
+        url: 'mapData.php',
         data: {
           'mapDel': mapDel
         },
@@ -77,7 +77,7 @@ $(() => {
     });
     $.ajax({
       type: 'POST',
-      url: 'memo.php',
+      url: 'mapData.php',
       data: {
         'lat': lat,
         'lng': lng
@@ -150,8 +150,6 @@ $(() => {
     $this.hide();
     $this.parent().find('.markInput').hide();
     $this.parent().find('.columnMark').show();
-    console.log(mapEdit);
-    console.log(mapText);
     if (mapEdit === mapText) {
       $this.parent().find('.loadGif1').hide();
       $this.parent().find('.fa-edit').show();
@@ -167,7 +165,7 @@ $(() => {
       } else {
         $.ajax({
           type: 'POST',
-          url: 'memo.php',
+          url: 'mapData.php',
           data: {
             'mapEdit': mapEdit,
             'mapEditId': mapEditId

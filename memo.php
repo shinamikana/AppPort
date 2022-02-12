@@ -1,10 +1,8 @@
 <?php
 session_start();
-session_regenerate_id(TRUE);
+header('X-FRAME-OPTIONS:SAMEORIGIN');
 require_once('dateBase.php');
-require_once('memoData.php');
-require_once('bookmarkData.php');
-require_once('mapData.php');
+session_regenerate_id(TRUE);
 
 //メモアプリでメモのカラム表示
 $showMemo = $mysqli->prepare('SELECT *, memo.id AS memo_id FROM memo WHERE user_id = ? AND showFlag = 1 ORDER BY memo.id DESC');
@@ -142,7 +140,7 @@ function h($str){
           });
           $.ajax({
             type: 'POST',
-            url: 'memo.php',
+            url: 'memoData.php',
             data: {
               'del': delId
             },
@@ -170,7 +168,7 @@ function h($str){
           $('#load').show();
           $.ajax({
             type: 'POST',
-            url: 'memo.php',
+            url: 'memoData.php',
             data: {
               'text': val
             },
@@ -249,7 +247,7 @@ function h($str){
             if (memoId != undefined && bookId != undefined) {
               $.ajax({
                 type: 'POST',
-                url: 'memo.php',
+                url: 'memoData.php',
                 data: {
                   'memoId': memoId,
                   'bookId': bookId
@@ -265,7 +263,7 @@ function h($str){
             if (mapId != undefined && memoId != undefined) {
               $.ajax({
                 type: 'POST',
-                url: 'memo.php',
+                url: 'memoData.php',
                 data: {
                   'memoId': memoId,
                   'mapId': mapId
@@ -301,7 +299,7 @@ function h($str){
             if (rBookId != undefined) {
               $.ajax({
                 type: 'POST',
-                url: 'memo.php',
+                url: 'memoData.php',
                 data: {
                   'rBookId': rBookId,
                 },
@@ -316,7 +314,7 @@ function h($str){
             if (rMapId != undefined) {
               $.ajax({
                 type: 'POST',
-                url: 'memo.php',
+                url: 'memoData.php',
                 data: {
                   'rMapId': rMapId,
                 },
@@ -373,7 +371,7 @@ function h($str){
         $this.parent().parent().fadeOut();  //ToDoカラムを非表示に
         $.ajax({
           type: 'POST',
-          url: 'memo.php',
+          url: 'memoData.php',
           data: {
             'flagId': flagId
           },

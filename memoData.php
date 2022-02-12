@@ -1,8 +1,15 @@
 <?php
+session_start();
+require('dateBase.php');
 //東京のタイムゾーンをセット
 date_default_timezone_set('Asia/Tokyo');
 
 $date = date("Y/m/d H:i:s");
+
+function h($str){
+  return htmlspecialchars($str, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+}
+
 //メモ処理
 //memoがポストされたなら
 if (isset($_POST['text'])) {

@@ -1,5 +1,6 @@
 <?php
 session_start();
+header('X-FRAME-OPTIONS:SAMEORIGIN');
 include('dateBase.php');
 if (isset($_SESSION['id'])) {
     session_regenerate_id(TRUE);

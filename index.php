@@ -1,5 +1,10 @@
 <?php
 session_start();
+header('X-FRAME-OPTIONS:SAMEORIGIN');
+//本だと「リクエストヘッダはレスポンスボディが送信されたら送れないから絶対に最初に書くんじゃ」
+///って書いてあったけど
+//PHP8.0では出力バッファリングはデフォではOnになってるんだってさ
+
 function h($str)
 {
     return htmlspecialchars($str, ENT_QUOTES | ENT_HTML5, 'UTF-8');
