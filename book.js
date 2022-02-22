@@ -48,8 +48,8 @@ $(function () {
         $('#url').val('');
         $('#linkName').val('');
         $delete();
-        sortableLeft();
-        sortableRight();
+        window.sortableLeft();
+        window.sortableRight();
         $('.bookWrapper').find('.bookmarking').first().find('.fa-bars').click(function () {
           $(this).parent().find('#deltn1').slideToggle();
         });
@@ -99,7 +99,7 @@ $(function () {
   $delete();
 
   const bookEdit = function () {
-    $('.fa-edit').click(function () {
+    $('.bookmarking').find('.fa-edit').click(function () {
       $(this).hide();
       $(this).parent().find('.bookA').hide();
       $(this).parent().find('.bookNameInput').show();
@@ -139,7 +139,7 @@ $(function () {
 
   //編集を送信する処理
   const bookSubmit = function () {
-    $('.fa-check').click(function () {
+    $('.bookLi').find('.fa-check').click(function () {
       let $this = $(this);
       let bookNameVal = $this.parent().find('.bookNameInput').val();
       let bookLinkVal = $this.parent().find('.bookLinkInput').val();

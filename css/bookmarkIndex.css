@@ -41,7 +41,7 @@
 
 .bookmarking .fa-edit{
     float: left;
-    margin-left:10px;
+    margin-left:0px;
     line-height: 20px;
     font-size: 18px;
     cursor: pointer;
@@ -50,8 +50,6 @@
 .bookmarking .fa-check{
     display: none;
     float: left;
-    margin-left:10px;
-    line-height: 40px;
     font-size: 18px;
     cursor: pointer;
 }
@@ -60,7 +58,6 @@
     display: none;
     float: right;
     margin-right:10px;
-    line-height: 40px;
     font-size: 18px;
     cursor: pointer;
 }

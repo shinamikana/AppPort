@@ -86,15 +86,15 @@ $(() => {
     }).done(function (data) {
       $('.load').hide();
       $('#mapUl').prepend('<div class="showMark noDragM"><div class="columns"><i class="fas fa-check"></i><i class="fas fa-edit"></i><img src="/img/load.gif" alt="" class="loadGif1"><p class="columnMark">登録した地点</p><input type="hidden" value="' + data.lat + '" class="mapLat"><input type="hidden" value="' + data.lng + '" class="mapLng"><input type="text" class="markInput" value="登録した地点"><img src="/img/load.gif" alt="" class="loadGif"><input type="hidden" value="' + data.insert_id + '" class="mapId"><i class="fas fa-bars"></i><ul class="mapEdit"><li class="mapDel">削除</li></ul></div></div>');
-      $('.showMark').first().find('.mapEdit').slideUp(0);
-      $('.columns').first().find('.fa-bars').click(function () {
+      $('#mapUl').find('.showMark').first().find('.mapEdit').slideUp(0);
+      $('#mapUl').find('.columns').first().find('.fa-bars').click(function () {
         $(this).parent().find('.mapEdit').slideToggle(200);
       });
       mapDelete();
       mapEdit();
       mapCheck();
-      sortableLeft();
-      sortableRight();
+      window.sortableLeft();
+      window.sortableRight();
     }).fail(function (HMLHttpRequest, status, e) {
       console.log('error number:' + XMLHttpRequest + ',status:' + status + ',thrown:' + e);
       alert('fail');

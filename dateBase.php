@@ -1,5 +1,4 @@
 <?php
-    include('env.php');
         $host = getenv("DB_HOSTNAME");
         $dbname = getenv('DB_NAME');
             $dsn = "mysql:dbname=${dbname};host=${host};charset=utf8";
