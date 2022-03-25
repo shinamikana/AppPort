@@ -46,6 +46,11 @@ while ($resultMark->fetch_assoc()) {
   ++$mapCount;
 }
 
+$showAlarm = $mysqli -> prepare('SELECT * FROM alarm WHERE user_id = ?');
+$showAlarm -> bind_param('i',$_SESSION['id']);
+$showAlarm -> execute();
+$resultAlarm = $showAlarm -> get_result();
+
 /* $showMemoMap = $mysqli -> prepare('SELECT *,map.id AS memoId FROM map_bookmark LEFT JOIN map ON map_bookmark.map_id = map.id WHERE map.user_id = ?');
 $showMemoMap -> bind_param('i',$_SESSION['id']);
 $showMemoMap -> execute();
@@ -77,13 +82,15 @@ function h($str){
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Kaisei+Tokumin:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
   <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
-  <link rel="stylesheet" href="/css/memoIndexL.css">
-  <link rel="stylesheet" href="/css/bookmarkIndex.css">
-  <link rel="stylesheet" href="/css/map.css">
+  <link rel="stylesheet" href="./css/memoIndexL.css">
+  <link rel="stylesheet" href="./css/bookmarkIndex.css">
+  <link rel="stylesheet" href="./css/map.css">
+  <link rel="stylesheet" href="./css/alarm.css">
 
 </head>
 
@@ -112,9 +119,10 @@ function h($str){
       </div>
       <?php require_once('bookmarkIndex.php') ?>
       <?php require_once('mapIndex.php'); ?>
+      <?php require_once('alarm.php') ?>
     </div>
+    <audio src="./bgm/osirase.mp3" id="alarmBGM"></audio>
   </main>
-
   <script src="book.js"></script>
   <script>
     document.getElementById('byte').innerText = '0/500';
@@ -175,7 +183,7 @@ function h($str){
             dataType: 'json',
           }).done(function(data) {
             $('#text').val('');
-            $('#memoWrapper').prepend('<div class="memo memoShadow" data-toggle="buttons"><div class="memos"><i class="fas fa-map-pin"></i><p id="mainText">' + val + '</p><p id="date">' + data.date + '</p><i class="fas fa-bars"></i><input type="checkbox" id="check' + data.insert + '"><label for="check' + data.insert + '" class="label"></label><button type="submit" value="' + data.insert + '" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload"><input type="hidden" value="' + data.insert + '" class="memoId"></div><ul class="dragUl">ここにドロップ</ul></div>')
+            $('#memoWrapper').prepend('<div class="memo memoShadow" data-toggle="buttons"><div class="memos"><i class="fas fa-map-pin"></i><p id="mainText">' + val + '</p><p id="date">' + data.date + '</p><i class="fas fa-bars"></i><input type="checkbox" id="check' + data.insert + '"><label for="check' + data.insert + '" class="label"></label><button type="submit" value="' + data.insert + '" name="del" id="delbtn">削除</button><img src="/img/load.gif" alt="" id="deload"><input type="hidden" value="' + data.insert + '" class="memoId"></div><ul class="dragUl">ここにドロップ</ul></div>');
             $('#load').hide();
             $('#submit').show();
             $memoDel();
@@ -434,6 +442,7 @@ function h($str){
     });
   </script>
   <script src="map.js"></script>
+  <script src="alarm.js"></script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=<?= getenv('API_KEY_MAP') ?>&callback=initMap&v=weekly"></script>
 </body>
 

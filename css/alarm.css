@@ -1,0 +1,68 @@
+#alarmWrapper{
+    width:100%;
+    height:auto;
+    display:inline-block;
+    border:1px solid black;
+    float:right;
+    padding-bottom:30px;
+    z-index: 5;
+}
+
+#alarmH1{
+    font-family: 'Kaisei Opti', serif;
+    margin-top:0;
+    border-bottom:1px solid black;
+    text-align: center;
+    font-weight:lighter;
+}
+
+#alarmForm{
+    text-align: center;
+    padding:3rem 0;
+}
+
+#alarmForm input:not(#alarmSubmit){
+    font-size: 2.5rem;
+    font-family: 'Orbitron', sans-serif;
+    background-color: rgba(255,255,255,0.6);
+}
+
+#alarmSubmit{
+    font-size:1rem;
+    border-radius:0px;
+    background-color: ghostwhite;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: ghostwhite;
+    outline: none;
+    border: 1px solid black;
+    box-shadow: 1px 1px 1px gray;
+}
+
+#alarmColumn{
+    width:100%;
+    border-top:1px solid;
+    padding:3rem 0;
+    text-align: center;
+}
+
+.alarms{
+    width:50%;
+    height:10%;
+    display: inline-block;
+    margin:1rem 0;
+    text-align: center;
+    background-color: black;
+    border:1px solid white;
+    cursor: pointer;
+}
+
+.alarms span{
+    font-size:1.2rem;
+    color:white;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.alarms :first-child{
+    margin-right:10%;
+}
