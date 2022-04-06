@@ -358,6 +358,10 @@ function h($str){
           $('.mapWrapper').show();
           $('.bookWrapper').hide();
           $('#alarmWrapper').hide();
+        }else if(memoRVal === 'alarm'){
+          $('.bookWrapper').hide();
+          $('.mapWrapper').hide();
+          $('#alarmWrapper').show();
         }
       });
 
@@ -465,11 +469,18 @@ function h($str){
         }
       });
 
+      //ToDo側からアラーム側に移動する時の処理
       $('.batteryUl').sortable({
         connectWith:'#alarmColumn',
         placeholder:'memoDiv',
+        appendTo:'body',
+        helper:'clone',
         stop:function(event,ui){
           console.log('betteryUi stop');
+        },
+        start:function(event,ui){
+          let item = ui.item;
+          $(item).hide();
         },
         update:function(){
           console.log('update');
