@@ -6,7 +6,7 @@
     width:100%;
 }
 
-.miniLogo a{
+.miniLogo a, #hi{
     font-family: 'Michroma', sans-serif;
     background-color:transparent;
     border-right:1px solid black;
@@ -34,4 +34,9 @@
   border-left:1px solid black;
   display:inline-block;
   cursor: pointer;
+}
+
+#hi{
+  border-right:none;
+  margin-left:2rem;
 }

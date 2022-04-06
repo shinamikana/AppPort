@@ -84,8 +84,7 @@ function h($str){
   <link href="https://fonts.googleapis.com/css2?family=Kaisei+Tokumin:wght@500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
-  <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+  <script src="./jquery-ui.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
   <link rel="stylesheet" href="./css/memoIndexL.css">
   <link rel="stylesheet" href="./css/bookmarkIndex.css">
@@ -115,6 +114,7 @@ function h($str){
         <select name="memoR" id="memoR">
           <option value="bookmark">ブックマーク(<?php echo $bookCount ?>)</option>
           <option value="map">マップ(<?php echo $mapCount ?>)</option>
+          <option value="alarm">アラーム</option>
         </select>
       </div>
       <?php require_once('bookmarkIndex.php') ?>
@@ -213,6 +213,7 @@ function h($str){
         $('.dragUl').sortable({
           connectWith: '.sortUl',
           placeholder: 'memoDiv',
+          helper:"clone",
           scroll: false,
           start: function(event, ui) {
             let item = ui.item;
@@ -236,8 +237,7 @@ function h($str){
               $('#rightClose').show();
             }
           },
-          out: function(item) {
-            console.log(item);
+          out: function(event,ui) {
             $('.wrapper').css('overflow-y', 'visible');
           },
           over: function() {
@@ -346,9 +346,11 @@ function h($str){
         if (memoRVal === 'bookmark') {
           $('.bookWrapper').show();
           $('.mapWrapper').hide();
+          $('#alarmWrapper').hide();
         } else if (memoRVal === 'map') {
           $('.mapWrapper').show();
           $('.bookWrapper').hide();
+          $('#alarmWrapper').hide();
         }
       });
 
@@ -438,6 +440,33 @@ function h($str){
       //設定ラッパーの「×」をクリックしたときの非表示処理
       $('#settingWrapper').find('.fa-times').on('click',function(){
         $('#settingWrapper').hide();
+      });
+
+      //アラームカラムをToDoに移動したら
+      $('#alarmColumn').sortable({
+        connectWith:'.batteryUl',
+        placeholder:'memoDiv',
+        stop:function(){
+          if($('.batteryUl').find('.empty').length){
+            let $column = $('.batteryUl').find('.empty');
+            let id = $column.find('.alarmId').val();
+            $column.removeClass('empty').addClass('blink');
+          }
+        },
+        update:function(event,ui){
+          console.log('update');
+        }
+      });
+
+      $('.batteryUl').sortable({
+        connectWith:'#alarmColumn',
+        placeholder:'memoDiv',
+        stop:function(event,ui){
+          console.log('betteryUi stop');
+        },
+        update:function(){
+          console.log('update');
+        }
       });
     });
   </script>

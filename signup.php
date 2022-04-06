@@ -4,7 +4,7 @@ header('X-FRAME-OPTIONS:SAMEORIGIN');
 include('dateBase.php');
 if(isset($_SESSION['id'])){
     session_regenerate_id(TRUE);
-    header('Location:index.php');
+    header('Location:memo.php');
     exit();
 }
 
@@ -14,7 +14,7 @@ if(count($_POST) === 0){
     if (isset($_POST['guest'])) {
         $_SESSION['id'] = 25;
         $_SESSION['username'] = 'ゲスト';
-        header('Location:index.php');
+        header('Location:memo.php');
     }
     if(empty($_POST['username']) && empty($_POST['email']) && empty($_POST['password'])){
         $message = '入力されていない箇所があります';
@@ -37,7 +37,7 @@ if(count($_POST) === 0){
                 session_regenerate_id(TRUE);
                 $_SESSION['username'] = $_POST['username'];
                 $_SESSION['id'] = $mysqli->insert_id;
-                header('Location:index.php');
+                header('Location:memo.php');
                 exit();
             }
         }

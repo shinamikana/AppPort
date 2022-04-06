@@ -39,6 +39,9 @@
 }
 
 #alarmColumn{
+    display: flex;
+    flex-flow: column;
+    margin:0 auto;
     width:100%;
     border-top:1px solid;
     padding:3rem 0;
@@ -47,22 +50,59 @@
 
 .alarms{
     width:50%;
-    height:10%;
+    height:1.7rem;
     display: inline-block;
-    margin:1rem 0;
+    margin:1rem auto;
     text-align: center;
-    background-color: black;
-    border:1px solid white;
+    background-color: gold;
+    border:1px solid black;
     cursor: pointer;
+    color:black;
+}
+
+.empty{
+    background-color: black;
+    color:white;
+    border:1px solid white;
 }
 
 .alarms span{
     font-size:1.2rem;
-    color:white;
     text-align: center;
     font-family: 'Orbitron', sans-serif;
 }
 
 .alarms :first-child{
     margin-right:10%;
+}
+
+#alarmBolt{
+    margin-left:10px;
+    font-size:1.3rem;
+    line-height: 1.7rem;
+    float:left;
+}
+
+.rAlarms{
+    background-color: azure;
+    color:black;
+}
+
+.blink{
+    animation-duration: 1s;
+    animation-name: blink;
+    animation-timing-function: ease;
+    animation-iteration-count: infinite;    
+}
+
+@keyframes blink{
+    0%{
+        background-color: gold;
+    }
+    50%{
+        background-color: orange;
+    }
+    100%{
+        background-color: gold;
+    }
 }

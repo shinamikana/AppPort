@@ -96,10 +96,14 @@ $(() => {
         for(let i=0; i < alarms.length; i++){
             let now = new Date();
             let alarmDate = new Date(window.alarmTime[i]);
-            console.log(alarms.length);
+            //console.log(alarms.length);
             if(alarmDate.getFullYear() == now.getFullYear()){
-                console.log('true');
+                //console.log('true');
             }
         }
     },1000);
+
+    $('.alarms').find('.fa-bolt').click(function(){
+        $(this).parent().toggleClass('rAlarms');
+    });
 });

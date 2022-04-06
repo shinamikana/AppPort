@@ -43,7 +43,7 @@ html,body{
   position:absolute;
   top:53px;
   left:100%;
-  width:49%;
+  width:48%;
   display: none;
 }
 
@@ -58,7 +58,7 @@ html,body{
       left:100%;
     }
     to{
-      left:50%;
+      left:51%;
     }
 }
 
@@ -70,7 +70,7 @@ html,body{
 
 @keyframes rightCloseA{
   from{
-    left:50%;
+    left:51%;
   }
   to{
     left:100%;
@@ -84,6 +84,7 @@ html,body{
     bottom:0;
     left:10px;
     overflow-y:scroll;
+    overflow-x:visible;
     width:98.8%;
     float:left;
     border:1px solid black;
@@ -453,4 +454,40 @@ input[type="checkbox"]{
   to{
     opacity:0;
   }
+}
+
+
+.batteryUlWrapper{
+  position: relative;
+  background-color: black;
+  border:dashed 1px white;
+  height:2rem;
+  width:100%;
+  text-align: center;
+  padding: 0;
+}
+
+.batteryUlWrapper .fa-battery-empty{
+  color:white;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  margin:0;
+}
+
+.batteryUl{
+  position: absolute;
+  top:0;
+  display: block;
+  height:100%;
+  width:100%;
+  background-color: rgba(255,255,255,0);
+  z-index: 2;
+  padding: 0;
+}
+
+.batteryUl .alarms{
+  margin: 0;
+  padding:0;
+  height:100%;
+  width:100%;
 }

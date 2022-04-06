@@ -6,7 +6,7 @@
         <br>
         <input type="submit" value="設定する" id="alarmSubmit">
     </div>
-    <div id="alarmColumn" class="sortUl">
+    <div id="alarmColumn">
         <?php if(isset($resultAlarm)): ?>
             <?php foreach($resultAlarm as $alarm) :?>
                 <?php [$dates,$times] = explode(' ',$alarm['date']);
@@ -20,7 +20,8 @@
                     $dates = implode('-',$dates);
                 }
                 ?>
-                <?="<div class='alarms'>" ?>
+                <?="<div class='alarms empty'>" ?>
+                <i class="fa-solid fa-bolt" id="alarmBolt"></i>
                     <?= "<span>".$dates."</span>" ?>
                     <?= "<span>".$setTime[0].':'.$setTime[1]."</span>" ?>
                     <?= "<input class='alarmsInput' value='".$alarm['date']."' type='hidden'></input>" ?>

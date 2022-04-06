@@ -32,7 +32,7 @@ if (count($_POST) === 0) {
                 session_regenerate_id(TRUE);
                 $_SESSION['id'] = $result['id'];
                 $_SESSION['username'] = $result['username'];
-                header('Location:index.php');
+                header('Location:memo.php');
             }
         }
     }

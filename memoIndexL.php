@@ -46,6 +46,12 @@
                 <?php endforeach ?>
               <?php endif ?>
             </ul>
+            <ul class="batteryUlWrapper">
+            <i class="fa-solid fa-battery-empty"></i>
+            <div class="batteryUl">
+
+            </div>
+            </ul>
           </div>
         <?php endforeach ?>
       <?php endif ?>

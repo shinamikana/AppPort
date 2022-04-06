@@ -7,7 +7,10 @@
 </head>
 
 <div class="miniLogo">
-  <a href="index.php">AppPort</a>
+  <a href="memo.php">AppPort</a>
+  <?php if(isset($_SESSION['username'])): ?>
+  <span id="hi">こんにちは！<?= $_SESSION['username'] ?>さん！</span>
+  <?php endif ?>
   <a href="info.php" id="info">お問い合わせ</a>
-  <a href="#" id="setting">設定</a>
+  <a href="#" id="setting"><i class="fa-solid fa-gear"></i></a>
 </div>
