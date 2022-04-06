@@ -213,10 +213,14 @@ function h($str){
         $('.dragUl').sortable({
           connectWith: '.sortUl',
           placeholder: 'memoDiv',
-          helper:"clone",
+          appendTo:'body',
+          helper: 'clone',
           scroll: false,
           start: function(event, ui) {
             let item = ui.item;
+            let item1 = ui.item[0];
+            $(item1).hide();
+            console.log(item1);
             if (item.hasClass('showMark')) {
               $('.bookWrapper').hide();
               $('.mapWrapper').show();
@@ -238,13 +242,16 @@ function h($str){
             }
           },
           out: function(event,ui) {
-            $('.wrapper').css('overflow-y', 'visible');
+
           },
           over: function() {
             $('.wrapper').css('overflow-y', 'scroll');
           },
-          stop: function() {
+          stop: function(event,ui) {
+            let item = ui.item;
+            item.show();
             $('.wrapper').css('overflow-y', 'scroll');
+
           },
           update: function() {
             $this = $(this);
